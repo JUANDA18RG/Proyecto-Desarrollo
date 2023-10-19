@@ -5,6 +5,7 @@ import LoginPage from './pages/INICIO/LoginPage';
 import Register from './pages/INICIO/Registre';
 import Contenido from './pages/LIBROS/Contenido';
 import BookDetails from './pages/LIBROS/BookDetails';
+import Meritos from './pages/LIBROS/Meritos';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/Contenido" element={<Contenido />} />
       <Route path="/book/:id" element={<BookDetails />} />
+      <Route path="/Meritos" element={<Meritos />} />
     </Routes>
   );
 }

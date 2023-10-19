@@ -66,7 +66,7 @@ const NavBar = () => {
     >
       <nav className="container mx-auto flex items-center justify-between">
         <div data-aos="fade-down" className="logo">
-          <Link to="/" className="flex items-center text-white">
+          <Link className="flex items-center text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -87,9 +87,9 @@ const NavBar = () => {
         <ul className="flex items-center space-x-4">
           {navItems.map((item) => (
             <li key={item.id}>
-              <a
+              <Link
                 href={`#${item.name}`}
-                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center" // Añadimos "flex items-center" para alinear el ícono y el texto
+                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector(`#${item.name}`).scrollIntoView({
@@ -99,12 +99,22 @@ const NavBar = () => {
               >
                 {item.icon}
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
+          <ul className="flex items-center space-x-4">
+            <li>
+            <Link to="/Meritos" className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center">
+              <span className="text-lg">Acerca de</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+              </svg>
+            </Link>
+            </li>
+          </ul>
           <li>
             <Link to="/profile" className="hover:text-purple-800 transition duration-500 ease-in-out text-xl">
-              <button className="bg-blue-700 text-white px-5 py-3 rounded-md flex items-center hover:bg-white hover:text-black transition duration-500 ease-in-out">
+              <button className="bg-blue-700 text-white px-5 py-3 rounded-md flex items-center hover:bg-white hover:text-pink-600 transition duration-500 ease-in-out">
                 <span className="text-lg">Profile</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />

@@ -8,11 +8,11 @@ const Footer = () => {
         <h2 
         data-aos="zoom-out"
          className=" font-bold text-5xl sm:text-3xl text-white">BookFinder</h2>
-        <div className="sm:text-[12px] text-white">
+         <div className="sm:text-[12px] text-white">
           | Copyright &copy; <span>2023 BookFinder</span>
           <a href="#"></a> |
         </div>
-      </div>
+     </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { LibrosData } from '../../data';
-import Header from './Header';
+
 
 
 const BookDetails = () => {
@@ -20,8 +20,7 @@ const BookDetails = () => {
 
   return (
     <>
-      <Header />
- <div className="absolute bottom-10 right-7 cursor-pointer flex items-center rounded-md hover:bg-pink-600 hover:text-white transition-all" onClick={goBack}>
+  <div className="bg-pink-500 text-white absolute bottom-10 right-7 cursor-pointer flex items-center rounded-md hover:bg-white hover:text-pink-500 transition-all" onClick={goBack}>
     <span className="text-3xl m-1">Back</span>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -29,7 +28,7 @@ const BookDetails = () => {
 
   </div>
       <div className="flex justify-center items-center h-screen">
-      <div className="w-1/2 max-w-md mt-10">
+      <div className="w-1/2 max-w-md ">
       <img
         src={book.image}
         alt={book.Titulo}
@@ -37,12 +36,11 @@ const BookDetails = () => {
       />
     </div>
         <div className="w-1/2 bg-white p-8">
-          <div className=' border-b border-pink-500 mb-2 mt-10'>
+        <div className="border-b-4 border-pink-500 mb-2 mt-10">
           <h2 className="text-4xl font-semibold text-center mb-4">
-        {book.Titulo}
-        </h2>
-          </div>
-       
+            {book.Titulo}
+          </h2>
+        </div>
           <h4 className="text-gray-700 text-lg"><span className='text-black text-xl font-semibold'>Author: </span>{book.Author}</h4>
           <h5 className="text-gray-700 text-lg"><span className='text-black text-xl font-semibold'>Año: </span>{book.year}</h5>
           <div className="flex items-center mt-4">
@@ -51,7 +49,7 @@ const BookDetails = () => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-500 mr-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-lg">{book.Disponibles}</span>
+              <span className="text-lg text-green-700">{book.Disponibles}</span>
             </div>
           </div>
           <div className="flex items-center mt-2">
@@ -60,7 +58,7 @@ const BookDetails = () => {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-red-500 mr-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-lg">{book.Prestados}</span>
+              <span className="text-lg text-red-700">{book.Prestados}</span>
             </div>
           </div>
           <div className="flex items-center mt-4">
