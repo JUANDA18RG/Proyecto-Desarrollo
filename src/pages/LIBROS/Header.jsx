@@ -16,9 +16,8 @@ const navItems = [
     name: "Carrusel",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-</svg>
-
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+      </svg>
     ),
   },
   {
@@ -26,9 +25,8 @@ const navItems = [
     name: "Busqueda",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-   </svg>
-
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      </svg>
     ),
   },
   {
@@ -36,15 +34,15 @@ const navItems = [
     name: "Info",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-</svg>
-
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+      </svg>
     ),
   },
 ];
 
 const NavBar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +55,10 @@ const NavBar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen(!isProfileMenuOpen);
+  };
 
   return (
     <div
@@ -102,7 +104,7 @@ const NavBar = () => {
               </Link>
             </li>
           ))}
-          <ul className="flex items-center space-x-4">
+            <ul className="flex items-center space-x-4">
             <li>
             <Link to="/Meritos" className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center">
               <span className="text-lg">Acerca de</span>
@@ -112,16 +114,51 @@ const NavBar = () => {
             </Link>
             </li>
           </ul>
-          <li>
-            <Link to="/profile" className="hover:text-purple-800 transition duration-500 ease-in-out text-xl">
-              <button className="bg-blue-700 text-white px-5 py-3 rounded-md flex items-center hover:bg-white hover:text-pink-600 transition duration-500 ease-in-out">
-                <span className="text-lg">Profile</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-              </button>
-            </Link>
-          </li>
+ <div className="relative group">
+  <div className="flex">
+  <button
+    onClick={toggleProfileMenu}
+    className="hover:scale-110 hover:text-pink-600 transition duration-500 ease-in-out text-xl bg-white rounded flex items-center px-4 py-4 text-pink-600 font-bold shadow-md"
+  >
+    <span className="text-lg">Profile</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6 ml-2"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+    </svg>
+  </button>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mt-6 ml-2 text-white">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+</svg>
+  </div>
+  {isProfileMenuOpen && (
+    <div className="absolute right-0 mt-2 w-40 bg-slate-50 shadow-md rounded">
+      <ul className="py-4 px-4">
+        <li>
+          <Link to="/User" className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded">
+            Tu perfil
+          </Link>
+        </li>
+        <li>
+          <Link to="/settings" className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded">
+            Ajustes
+          </Link>
+        </li>
+        <li>
+          <Link to="/signout" className="block px-4 py-2 text-sm hover:bg-blue-500 hover:text-white rounded">
+            Salir
+          </Link>
+        </li>
+      </ul>
+    </div>
+  )}
+</div>
+
         </ul>
       </nav>
     </div>

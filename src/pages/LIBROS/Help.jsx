@@ -102,7 +102,7 @@ const FloatingButton = () => {
               style={{ resize: 'none' }} // Evitar la redimensión del textarea
             ></textarea>
             <button
-              className="bg-pink-500 hover-bg-pink-700 text-white font-semibold rounded-full w-full h-10 mt-2"
+              className="bg-pink-500 hover-bg-pink-700 text-white font-semibold rounded-full w-full h-10 mt-2 "
               onClick={handleSendMessage}
             >
               Enviar
@@ -112,13 +112,13 @@ const FloatingButton = () => {
       ) : null}
 
       {showHelp && (
-        <div className="absolute right-24 bg-white text-gray-600 p-2 rounded-lg shadow opacity-90">
+        <div className="absolute right-24 bg-white text-gray-600 p-2 rounded-lg shadow opacity-90 text-center">
           ¿Necesitas ayuda?
         </div>
       )}
 
       <button
-        className="bg-pink-500 hover-bg-pink-700 text-white font-semibold rounded-full w-20 h-20 flex items-center justify-center shadow-lg"
+        className="bg-pink-500 hover-bg-pink-700 text-white font-semibold rounded-full w-20 h-20 flex items-center justify-center shadow-lg hover:bg-pink-700 transition-all duration-300"
         onClick={toggleChat}
         style={{ position: 'relative', left: '0', bottom: '0' }}
       >

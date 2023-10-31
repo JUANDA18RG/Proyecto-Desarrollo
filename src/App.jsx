@@ -6,6 +6,8 @@ import Register from './pages/INICIO/Registre';
 import Contenido from './pages/LIBROS/Contenido';
 import BookDetails from './pages/LIBROS/BookDetails';
 import Meritos from './pages/LIBROS/Meritos';
+import User from './pages/USUARIO/User';
+import EditUser from './pages/USUARIO/EditUser';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Route path="/Contenido" element={<Contenido />} />
       <Route path="/book/:id" element={<BookDetails />} />
       <Route path="/Meritos" element={<Meritos />} />
+      <Route path="/User" element={<User />} />
+      <Route path="/EditUser" element={<EditUser />} />
     </Routes>
   );
 }

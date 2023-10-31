@@ -68,7 +68,7 @@ function Romance() {
           {librosDeRomance.map((libro, index) => (
                        <div
                        key={libro.id}
-                       className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-105 transition-transform duration-300 rounded-md"
+                       className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-90 transition-transform duration-300 rounded-md"
                      >
                        <Link to={`/book/${libro.id}`} className="block">
                          <div className="image-container">
