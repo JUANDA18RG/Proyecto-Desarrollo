@@ -44,15 +44,14 @@ export default function LibraryProfile() {
     return (
         <>
 
-        <div className="bg-pink-500 text-white absolute bottom-10 right-7 cursor-pointer flex items-center rounded-md hover:bg-white hover:text-pink-500 transition-all" onClick={goBack}>
-            <span className="text-3xl m-1">Back</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-        </div>
+<button className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-700 hover:text-white" onClick={goBack}>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+</button>
 
 <div className="min-h-screen bg-gray-100">
-                                            <div className="bg-pink-500 h-96 w-screen " >
+                                     <div className="bg-pink-500 h-96 w-screen " >
                                                 <div
                                                     className="bg-cover bg-center h-full w-screen"
                                                     style={{

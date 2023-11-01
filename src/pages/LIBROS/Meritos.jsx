@@ -8,13 +8,12 @@
 
     return (
 <div>
-<div className="bg-pink-500 text-white absolute bottom-10 right-7 cursor-pointer flex items-center rounded-md hover:bg-white hover:text-pink-500 transition-all" onClick={goBack}>
-    <span className="text-3xl m-1">Back</span>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-  </svg>
-</div>
-  <div className="text-center">
+<button className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-700 hover:text-white" onClick={goBack}>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+</button>
+<div className="text-center">
             <h2 className=" bg-pink-600 inline-block mt-10 backdrop-blur-lg rounded-lg px-4 py-10 text-white text-5xl font-bold sm:text-5xl m-2 text-center">
              Desarrolladores de BookFinder
              </h2>
