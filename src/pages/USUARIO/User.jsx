@@ -12,6 +12,8 @@ export default function LibraryProfile() {
     window.history.back();
   };
 
+  const username = localStorage.getItem("username");
+
   const [userBooks, setUserBooks] = useState([]);
   const [userComments, setUserComments] = useState([]);
   const [recommendedBooks, setRecommendedBooks] = useState([]);
@@ -92,7 +94,7 @@ export default function LibraryProfile() {
             <div className="bg-pink-500 bg-opacity-50 h-full  w-full p-4 text-center">
               <div className="m-5 mt-16 inline-block">
                 <h1 className="text-5xl font-bold sm:text-5xl bg-white bg-opacity-60 rounded-lg p-4">
-                  {UserData.UserName}
+                  {username}
                 </h1>
               </div>
               <h2 className="text-2xl font-semibold">{UserData.Name}</h2>
