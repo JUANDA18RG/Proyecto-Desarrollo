@@ -18,34 +18,35 @@ export default function LoginPage() {
         correo: email,
         password: password,
       });
-      //console.log("Response: ", response);
+      console.log("Response: ", response);
       // Aquí es donde se recibe el token
       const token = response.data.token;
+      console.log(token);
+      ///se puedes obtener el username
       const username = response.data.username;
-     // console.log(username);
+      console.log(username);
       // Ahora puedes almacenar el token en el almacenamiento local para su uso futuro
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
 
-      // Redirigir al usuario a la página principal (o donde quieras) después de iniciar sesión
-      //this.props.history.push("/Contenido"); // Si estás usando react-router
       navigate("/Contenido");
     } catch (error) {
-      //console.log("Error: ", error);
+      console.log("Error: ", error);
       // Manejar errores
       if (error.response) {
         // La solicitud se realizó y el servidor respondió con un código de estado
         // que cae fuera del rango de 2xx
-        /**console.log(error.response.data);
+        console.log(error.response.data);
         console.log(error.response.status);
-        console.log(error.response.headers); */
+        console.log(error.response.headers);
         setError(error.response.data.error);
       } else if (error.request) {
         // La solicitud se realizó pero no se recibió ninguna respuesta
-        //console.log(error.request);
+        console.log(error.request);
         setError("No se recibió ninguna respuesta del servidor.");
       } else {
         // Algo sucedió en la configuración de la solicitud que provocó un error
-        //console.log("Error", error.message);
+        console.log("Error", error.message);
         setError(error.message);
       }
     }
