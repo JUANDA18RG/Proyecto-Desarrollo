@@ -1,6 +1,43 @@
 import { Link } from 'react-router-dom';
+import React, { useState } from "react";
 
 export default function forgotPassword(){
+
+  const [formData, setFormData] = useState({
+    correo: '',
+    
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.correo)) {
+      newErrors.correo = 'Debes ingresar un correo valido';
+      isValid = false;
+    }
+  setErrors(newErrors);
+  return isValid;
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (validateForm()) {
+    console.log("Correo: ", formData.correo);
+  }
+};
+  
+
+
+   
    return(
        <div
         className="flex items-center justify-center min-h-screen"
@@ -22,15 +59,19 @@ export default function forgotPassword(){
             className="w-40 h-40 rounded-full mx-auto mt-2 border-4 border-pink-500"
           />
        
-          <form className="space-y-4" id= "recuperacionContraseña">
+          <form className="space-y-4" id= "recuperacionContraseña"onSubmit={handleSubmit}>
           <input
-              id = "email"
+              name = "correo"
               type="text"
               placeholder="Email"
               className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
+              value={formData.correo}
+              onChange={handleChange}
+          
               required
             />
-            <button className="w-full py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-300">
+             {errors.correo && (<div style={{top: '100%', fontFamily: 'Helvética', fontSize: '10px', color:'red', marginTop: '-9px', marginLeft: '9px'}}>{errors.correo}</div>)}
+            <button type="submit" className="w-full py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-300">
               Enviar
             </button>
           </form>
@@ -39,26 +80,3 @@ export default function forgotPassword(){
   ) ;
 }
 
-/*
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#recuperacionContraseña");
-  if (form){
-    form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formulario = getFormulario(e);
-    console.log(formulario);
-  });
-} else {
-  console.log ("El formulario no existe!!!");
-}
-});
-
-function getFormulario(e) {
-  const formularioJSON = JSON.stringify({
-    email: e.target.elements.email.value,
-  });
-  console.log(formularioJSON)
-  return formularioJSON;
-}
-
-*/ 
