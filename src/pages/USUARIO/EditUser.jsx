@@ -23,6 +23,7 @@ const UserProfileEdit = () => {
     e.preventDefault();
     try {
       const username = localStorage.getItem("username");
+      const token = localStorage.getItem("token");
 
       if (username) {
         console.log("username: ", username);
@@ -39,7 +40,7 @@ const UserProfileEdit = () => {
           },
           {
             headers: {
-              Authorization: `Bearer ${username}`,
+              Authorization: `Bearer ${token}`
             },
           }
         );
@@ -51,6 +52,22 @@ const UserProfileEdit = () => {
       }
     } catch (error) {
       console.log("Error: ", error);
+      if (error.response) {
+        // La solicitud se realizó y el servidor respondió con un código de estado
+        // que cae fuera del rango de 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        setError(error.response.data.error);
+      } else if (error.request) {
+        // La solicitud se realizó pero no se recibió ninguna respuesta
+        console.log(error.request);
+        setError("No se recibió ninguna respuesta del servidor.");
+      } else {
+        // Algo sucedió en la configuración de la solicitud que provocó un error
+        console.log("Error", error.message);
+        setError(error.message);
+      }
     }
   };
 
@@ -156,6 +173,7 @@ const UserProfileEdit = () => {
                   </button>
                 </div>
               )}
+                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
             </div>
           </div>
           {editableField && (
