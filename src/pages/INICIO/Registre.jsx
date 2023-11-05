@@ -167,13 +167,14 @@ export default function Register() {
             {errors.apellidos && (<div style={{top: '100%', fontFamily: 'Open Sans', fontSize: '14px', color:'red', marginTop: '-2px', marginLeft: '9px'}}>{errors.apellidos}</div>)}
             
             <input
-              name = "correo"
-              type= "texto"  
-              placeholder="Email"
-              value={formData.correo}
-              onChange={handleChange}
-              className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
+             name = "correo"
+             type="text"
+             placeholder="Email"
+             value={formData.correo}
+             onChange={handleChange}
+             className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
             />
+
              {errors.correo && (<div style={{top: '100%', fontFamily: 'Open Sans', fontSize: '14px', color:'red', marginTop: '2px', marginLeft: '9px'}}>{errors.correo}</div>)}
              <input
               name = "username"
