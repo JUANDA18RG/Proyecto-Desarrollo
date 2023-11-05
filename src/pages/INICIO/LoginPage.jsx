@@ -94,7 +94,7 @@ export default function LoginPage() {
             Login
           </button>
         </form>
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500 text-center m-1">{error}</p>}
         <div className="text-center mt-4 text-gray-600">
           Don't have an account?
           <Link to="/register" className="ml-1 text-blue-500 hover:underline">
@@ -102,10 +102,13 @@ export default function LoginPage() {
           </Link>
         </div>
         <div className="text-center">
-        <Link to="/ForgotPassword" className="ml-1 text-blue-500 hover:underline">
+          <Link
+            to="/ForgotPassword"
+            className="ml-1 text-blue-500 hover:underline"
+          >
             Forgot password?
           </Link>
-          </div>
+        </div>
       </div>
     </div>
   );
