@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from "react";
 
-export default function forgotPassword(){
+export default function ForgotPassword(){
 
   const [formData, setFormData] = useState({
     correo: '',
