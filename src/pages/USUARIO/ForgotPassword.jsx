@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import React, { useState } from "react";
 
 export default function ForgotPassword(){
 
   const [formData, setFormData] = useState({
-    correo: '',
-    
+    correo: ''
   });
 
   const handleChange = (e) => {
@@ -59,14 +58,14 @@ const handleSubmit = async (e) => {
             className="w-40 h-40 rounded-full mx-auto mt-2 border-4 border-pink-500"
           />
        
-          <form className="space-y-4" id= "recuperacionContraseña"onSubmit={handleSubmit}>
+          <form className = "space-y-4" id= "recuperacionContraseña" onSubmit={handleSubmit}>
           <input
               name = "correo"
-              type="text"
-              placeholder="Email"
-              className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
-              value={formData.correo}
-              onChange={handleChange}
+              type ="text"
+              placeholder ="Email"
+              className ="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
+              value = {formData.correo}
+              onChange = {handleChange}
           
               required
             />
