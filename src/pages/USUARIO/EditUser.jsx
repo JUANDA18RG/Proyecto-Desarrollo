@@ -211,7 +211,7 @@ const UserProfileEdit = () => {
             </div>
           </div>
           {registrationSuccess && (
-            <p className="text-green-600 text-center m-2 text-2xl">
+            <p className="text-green-600 text-center m-2">
               Cambio de datos Exitoso{" "}
             </p>
           )}
