@@ -21,10 +21,7 @@ export default function LoginPage() {
       console.log("Response: ", response);
       // Aquí es donde se recibe el token
       const token = response.data.token;
-      console.log(token);
-      ///se puedes obtener el username
       const username = response.data.username;
-      console.log(username);
       // Ahora puedes almacenar el token en el almacenamiento local para su uso futuro
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
@@ -104,6 +101,11 @@ export default function LoginPage() {
             Register now
           </Link>
         </div>
+        <div className="text-center">
+        <Link to="/ForgotPassword" className="ml-1 text-blue-500 hover:underline">
+            Forgot password?
+          </Link>
+          </div>
       </div>
     </div>
   );
