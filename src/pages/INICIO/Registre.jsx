@@ -54,7 +54,7 @@ export default function Register() {
     }
 
     // Validación para que la contraseña tenga al menos una mayúscula, una minúscula y un carácter especial
-    if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*]).{8,}$/.test(formData.password)) {
+    if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$-%^&*]).{8,}$/.test(formData.password)) {
       newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long';
       isValid = false;
     }
