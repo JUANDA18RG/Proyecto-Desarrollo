@@ -21,6 +21,7 @@ export default function LoginPage() {
       console.log("Response: ", response);
       // Aquí es donde se recibe el token
       const token = response.data.token;
+      const username = response.data.username;
       // Ahora puedes almacenar el token en el almacenamiento local para su uso futuro
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
