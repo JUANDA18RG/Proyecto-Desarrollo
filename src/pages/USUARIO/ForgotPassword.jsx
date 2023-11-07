@@ -1,20 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 
 export default function ForgotPassword(){
+  const navigate = useNavigate();
 
    const [formData, setFormData] = useState({
     email: "",  
     codigo: "",
-    nuevaContraseña: "",
-    confirmarContraseña: "", 
+    nuevaContraseña: " ",
+    confirmarContraseña: " ", 
   });
 
 
-  const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState('');
-  const [step, setStep] = useState(1);
-  let   [errorMsg, setErrorMsg] = useState('');
+  const [errors, setErrors] = useState({}); //Errores en la verificacion
+  const [message, setMessage] = useState('');  //Mensajes
+  const [step, setStep] = useState(1);      
+  let   [errorMsg, setErrorMsg] = useState(''); //Errrores traidos del backend
 
   const handleChange = (e) => {
     setFormData({
@@ -23,34 +25,39 @@ export default function ForgotPassword(){
     });
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    let isValid = true;
+  // ...
 
-    if(step == 1){
+const validateForm = () => {
+  const newErrors = {};
+  let isValid = true;
+
+  if (step === 1) {
     if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
-      newErrors.email = 'Debes ingresar un correo valido';
+      newErrors.email = 'Debes ingresar un correo válido';
       isValid = false;
     }
-  } else if(step == 2){
-     //Validar el codigo
-
-    } else if(step == 3){
-      const expresionRegular = /^(?=.[A-Z])(?=.[a-z])(?=.[!@#$-_%^&]).{8,}$/;
-      if (!expresionRegular.test(formData.nuevaContraseña)) {
-        newErrors.nuevaContraseña ="Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long";
-        isValid = false;
-      } else if(!expresionRegular.test(formData.confirmarContraseña)) {
-        newErrors.confirmarContraseña ="Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long";
-        isValid = false;
-      }if(formData.nuevaContraseña !== formData.confirmarContraseña) {
-        newErrors.confirmarContraseña = "Las contraseñas no coinciden.";
-        isValid = false;
-      }
+  } else if (step === 3) {
+    const expresiónRegular = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$-_%^&*]).{8,}$/;
+    if (!expresiónRegular.test(formData.nuevaContraseña)) {
+      newErrors.nuevaContraseña =
+        "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial y tener al menos 8 caracteres de longitud.";
+      isValid = false;
+    } else if (!expresiónRegular.test(formData.confirmarContraseña)) {
+      newErrors.confirmarContraseña =
+        "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial y tener al menos 8 caracteres de longitud.";
+      isValid = false;
     }
+    if (formData.nuevaContraseña !== formData.confirmarContraseña) {
+      newErrors.confirmarContraseña = "Las contraseñas no coinciden.";
+      isValid = false;
+    }
+  }
   setErrors(newErrors);
   return isValid;
 };
+
+// ...
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -65,20 +72,18 @@ const handleSubmit = async (e) => {
          email: formData.email});
           
       if (response.data.success) {
-
         setStep(2);
-        console.log("Paso 2");
         setMessage("Se ha enviado un código de recuperación a su correo electrónico."); 
       }
       }
       catch (error){
-        
+    
         if (error.response) {
-          setErrorMsg(error.response.data.msg);
+          setErrorMsg(error.response.data.message);
         }
         else if (error.request)
         {console.error(error);
-        setErrorMsg("Error al comunicarse con el servidor", msg);
+        setErrorMsg("Error al comunicarse con el servidor", message);
       }
     }  
   }
@@ -87,7 +92,6 @@ const handleSubmit = async (e) => {
     //Mandar codigo de validacion
     else if (step === 2) {
      try {
-        
         console.log("Código de recuperación: ", formData.codigo);
         const response = await axios.post('http://localhost:4000/verificacion', {
           email: formData.email,
@@ -97,16 +101,22 @@ const handleSubmit = async (e) => {
           setStep(3);
           setMessage("Código de recuperación válido. Ahora puedes cambiar tu contraseña.");
         }
-      } catch (error) {
-        console.error(error);
-        setErrorMsg("Error al comunicarse con el servidor");
+      } catch (error){
+        
+        if (error.response) {
+          setErrorMsg(error.response.data.message);
+        }
+        else if (error.request)
+        {console.error(error);
+        setErrorMsg("Error al comunicarse con el servidor", message);
       }
     }
+  }
     
     // Cambia la contraseña y muestra un mensaje de éxito
     else if (step === 3) {
       try {
-        {
+          console.log("Nueva contraseña: ", formData.email);
           console.log("Nueva contraseña: ", formData.nuevaContraseña);
           const response = await axios.post('http://localhost:4000/reset', {
             correo: formData.email,
@@ -114,24 +124,25 @@ const handleSubmit = async (e) => {
           });
     
           if (response.data.success) {
+            setMessage('');
             setMessage("Contraseña cambiada con éxito");
+            setTimeout(() => {
+            navigate("/login");
+            }, 3000);
           } else {
-            setErrorMsg(response.data.msg);
+            setErrorMsg(response.data.message);
           }
-        } 
-      } catch (error) {
+        } catch (error) {
+          if (error.response) {
+            setErrorMsg(error.response.data.message);
+          }
         console.error(error);
         setErrorMsg("Error al comunicarse con el servidor");
-      }
-      
+      } 
     }
-    
   }
 };
-
-
-   
-   return(
+     return(
        <div
         className="flex items-center justify-center min-h-screen"
         style={{
@@ -168,6 +179,7 @@ const handleSubmit = async (e) => {
               type="text"
               placeholder="Código de recuperación"
               className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
+              maxLength={6} 
               value={formData.codigo}
               onChange={handleChange}
             />
@@ -222,7 +234,6 @@ const handleSubmit = async (e) => {
     </div>
   );
 }
-
 
 
 
