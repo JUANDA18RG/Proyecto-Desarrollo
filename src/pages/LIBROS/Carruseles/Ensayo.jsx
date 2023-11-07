@@ -4,9 +4,9 @@ import Carousel from "react-multi-carousel";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Romance() {
+function Ensayo() {
   const [books, setBooks] = useState([]);
-  const [romanceBooks, setromanceBooks] = useState([]);
+  const [ensayoBooks, setensayoBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const carouselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,7 +22,7 @@ function Romance() {
   const goToNextSlide = () => {
     if (carouselRef.current) {
       carouselRef.current.next(1);
-      setCurrentSlide((prev) => (prev + 1) % romanceBooks.length);
+      setCurrentSlide((prev) => (prev + 1) % ensayoBooks.length);
     }
   };
 
@@ -30,7 +30,7 @@ function Romance() {
     if (carouselRef.current) {
       carouselRef.current.previous(1);
       setCurrentSlide(
-        (prev) => (prev - 1 + romanceBooks.length) % romanceBooks.length
+        (prev) => (prev - 1 + ensayoBooks.length) % ensayoBooks.length
       );
     }
   };
@@ -42,10 +42,10 @@ function Romance() {
         setBooks(response.data);
         setLoading(false);
 
-        const librosRomance = response.data.filter(
-          (libro) => libro.genero === "romance"
+        const LibrosEnsayo = response.data.filter(
+          (libro) => libro.genero === "ensayo"
         );
-        setromanceBooks(librosRomance);
+        setensayoBooks(LibrosEnsayo);
       })
       .catch((error) => {
         console.error("Error al obtener los libros", error);
@@ -75,7 +75,7 @@ function Romance() {
         </svg>
       </button>
       <div className="container mb-10">
-        <h4 className="text-3xl font-bold mb-4">Categoría de Romance</h4>
+        <h4 className="text-3xl font-bold mb-4">Categoría de Ensayo</h4>
         {loading ? (
           <p>Cargando libros...</p>
         ) : (
@@ -89,7 +89,7 @@ function Romance() {
             ref={carouselRef}
             additionalTransfrom={-currentSlide * 40}
           >
-            {romanceBooks.map((libro, index) => (
+            {ensayoBooks.map((libro, index) => (
               <div
                 key={libro.ISBN}
                 className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-90 transition-transform duration-300 rounded-md"
@@ -142,4 +142,4 @@ function Romance() {
   );
 }
 
-export default Romance;
+export default Ensayo;
