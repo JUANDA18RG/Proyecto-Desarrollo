@@ -8,8 +8,8 @@ export default function ForgotPassword(){
    const [formData, setFormData] = useState({
     email: "",  
     codigo: "",
-    nuevaContraseña: " ",
-    confirmarContraseña: " ", 
+    nuevaContraseña: "",
+    confirmarContraseña: "", 
   });
 
 
@@ -123,7 +123,7 @@ const handleSubmit = async (e) => {
     
           if (response.data.success) {
             setMessage('');
-            setMessage("Contraseña cambiada con éxito....Redirigiendo a inicio de sesion");
+            setMessage("Contraseña cambiada con éxito....Redirigiendo a la página de inicio de sesión");
             setTimeout(() => {
             navigate("/login");
             }, 3000);
@@ -225,9 +225,7 @@ const handleSubmit = async (e) => {
         {message} </p> )}
 
         {errorMsg && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px" }}>
-        {errorMsg} </p> )}
-
-        
+        {errorMsg} </p> )}  
       </div>
     </div>
   );
