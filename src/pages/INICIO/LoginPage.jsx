@@ -101,12 +101,13 @@ export default function LoginPage() {
             Register now
           </Link>
         </div>
-        <div className="text-center">
+        <div className="text-center mt-4 text-gray-600">
+        Forgot password?
           <Link
             to="/ForgotPassword"
             className="ml-1 text-blue-500 hover:underline"
           >
-            Forgot password?
+            Recover password
           </Link>
         </div>
       </div>
