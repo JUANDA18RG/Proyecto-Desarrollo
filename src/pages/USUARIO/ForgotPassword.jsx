@@ -56,12 +56,12 @@ const validateForm = () => {
   return isValid;
 };
 
-// ...
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-
+  setMessage(''); // Limpia el mensaje
+  setErrorMsg(''); // Limpia el mensaje de error
   if (validateForm()) {
     if (step === 1) {
       try
@@ -75,20 +75,19 @@ const handleSubmit = async (e) => {
         setStep(2);
         setMessage("Se ha enviado un código de recuperación a su correo electrónico."); 
       }
-      }
+    }
       catch (error){
     
         if (error.response) {
-          setErrorMsg(error.response.data.message);
+          setErrorMsg(error.response.data.msg);
         }
         else if (error.request)
         {console.error(error);
-        setErrorMsg("Error al comunicarse con el servidor", message);
+        setErrorMsg("Error al comunicarse con el servidor", msg);
       }
     }  
   }
-  
-    
+
     //Mandar codigo de validacion
     else if (step === 2) {
      try {
@@ -116,7 +115,6 @@ const handleSubmit = async (e) => {
     // Cambia la contraseña y muestra un mensaje de éxito
     else if (step === 3) {
       try {
-          console.log("Nueva contraseña: ", formData.email);
           console.log("Nueva contraseña: ", formData.nuevaContraseña);
           const response = await axios.post('http://localhost:4000/reset', {
             correo: formData.email,
@@ -125,7 +123,7 @@ const handleSubmit = async (e) => {
     
           if (response.data.success) {
             setMessage('');
-            setMessage("Contraseña cambiada con éxito");
+            setMessage("Contraseña cambiada con éxito....Redirigiendo a inicio de sesion");
             setTimeout(() => {
             navigate("/login");
             }, 3000);
