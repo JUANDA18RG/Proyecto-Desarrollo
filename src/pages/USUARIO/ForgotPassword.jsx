@@ -221,10 +221,12 @@ const handleSubmit = async (e) => {
           </button>
         </form>
 
-        {message && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px" }}>
-        {message} </p> )}
+        {message && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px", display: "flex",
+         justifyContent: "center", alignItems: "center"  }}>{message} </p> )}
 
-        {errorMsg && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px" }}>
+        {errorMsg && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px",  display: "flex",
+    justifyContent: "center",
+    alignItems: "center" }}>
         {errorMsg} </p> )}  
       </div>
     </div>
