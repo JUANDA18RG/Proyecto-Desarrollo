@@ -120,11 +120,29 @@ const NavBar = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    const closeMenu = () => {
+      if (isProfileMenuOpen) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    if (isProfileMenuOpen) {
+      document.addEventListener("click", closeMenu);
+    } else {
+      document.removeEventListener("click", closeMenu);
+    }
+
+    return () => {
+      document.removeEventListener("click", closeMenu);
+    };
+  }, [isProfileMenuOpen]);
+
   return (
     <div
       className={`w-full mx-auto fixed top-0 py-8 sm:py-6 z-30 ${
         scrollPosition > 0 ? "bg-pink-600" : "bg-pink-600"
-      } `}
+      } shadow-md`}
     >
       <nav className="container mx-auto flex items-center justify-between">
         <div data-aos="fade-down" className="logo">
@@ -153,7 +171,7 @@ const NavBar = () => {
             <li key={item.id}>
               <Link
                 href={`#${item.name}`}
-                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center"
+                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center transition duration-500 ease-in-out hover:scale-110"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector(`#${item.name}`).scrollIntoView({
@@ -170,7 +188,7 @@ const NavBar = () => {
             <li>
               <Link
                 to="/Meritos"
-                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center"
+                className="cursor-pointer text-white hover:text-purple-800 font-bold m-4 text-xl flex items-center transition duration-500 ease-in-out hover:scale-110"
               >
                 <span className="text-lg">Acerca de</span>
                 <svg
@@ -193,7 +211,10 @@ const NavBar = () => {
           <div className="relative group">
             <div className="flex">
               <button
-                onClick={toggleProfileMenu}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleProfileMenu();
+                }}
                 className="hover:scale-110 hover:text-pink-600 transition duration-500 ease-in-out text-xl bg-white rounded flex items-center px-4 py-4 text-pink-600 font-bold shadow-md"
               >
                 <span className="text-lg">Profile</span>
@@ -228,33 +249,35 @@ const NavBar = () => {
               </svg>
             </div>
             {isProfileMenuOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-slate-50 shadow-md rounded">
-                <ul className="py-4 px-4">
-                  <li>
-                    <Link
-                      to="/User"
-                      className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded"
-                    >
-                      Tu perfil
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/settings"
-                      className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded"
-                    >
-                      Ajustes
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="block px-4 py-2 text-sm hover:bg-blue-500 hover:text-white rounded text-center"
-                    >
-                      Salir
-                    </button>
-                  </li>
-                </ul>
+              <div className="absolute right-0 mt-2 w-40  shadow-sm rounded">
+                <div className="bg-slate-50 rounded">
+                  <ul className="py-4 px-4">
+                    <li>
+                      <Link
+                        to="/User"
+                        className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded hover:scale-110 transition duration-300 ease-in-out"
+                      >
+                        Tu perfil
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/settings"
+                        className="block px-4 py-2 text-sm hover:bg-pink-500 hover:text-white rounded hover:scale-110 transition duration-300 ease-in-out"
+                      >
+                        Ajustes
+                      </Link>
+                    </li>
+                    <li className="hover:bg-blue-500 hover:text-white rounded hover:scale-110 transition duration-300 ease-in-out">
+                      <button
+                        onClick={handleLogout}
+                        className="block px-4 py-2 text-sm  rounded text-center"
+                      >
+                        Salir
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             )}
           </div>
