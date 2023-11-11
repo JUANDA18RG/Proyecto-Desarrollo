@@ -11,7 +11,6 @@ import EditUser from './pages/USUARIO/EditUser';
 import ForgotPassword from './pages/USUARIO/ForgotPassword';
 import ReservationPage from './pages/RESERVAS/Reservationpage';
 
-
 function App() {
   return (
     <Routes>
