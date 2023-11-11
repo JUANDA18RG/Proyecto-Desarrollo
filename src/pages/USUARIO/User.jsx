@@ -88,7 +88,7 @@ export default function LibraryProfile() {
           <div
             className="bg-cover bg-center h-full w-screen"
             style={{
-              backgroundImage: `url('https://www.pixelstalk.net/wp-content/uploads/2016/06/Book-Wallpapers-HD.jpg')`,
+              backgroundImage: `url('https://c1.wallpaperflare.com/preview/821/335/782/book-reading-hand-legs.jpg')`,
             }}
           >
             <div className="bg-pink-500 bg-opacity-50 h-full  w-full p-4 text-center">

@@ -22,7 +22,6 @@ const BookList = () => {
   return (
     <div>
       <div id="Busqueda" className="px-5 py-5"></div>
-      <div></div>
       <div className="mt-10">
         <div className="text-center">
           <h2 className="bg-pink-600 mt-10  backdrop-blur-lg rounded-lg px-4 py-10 text-white text-5xl font-bold sm:text-5xl m-3 text-center inline-block">
@@ -37,28 +36,78 @@ const BookList = () => {
               books.map((libro) => (
                 <div
                   key={libro.ISBN}
-                  className="bg-white rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 relative"
+                  className="bg-white rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 m-4"
                 >
                   <Link to={`/book/${libro.ISBN}`} className="block">
                     <img
-                      src={libro.portada}
+                      src={`http://localhost:4000${libro.portada}`}
                       alt={libro.titulo}
-                      className="w-full h-64 object-cover"
+                      className="w-full h-96 object-cover rounded-t-md"
                     />
                     <div className="p-4">
-                      <h2 className="text-xl font-semibold">{libro.titulo}</h2>
-                      <p className="text-gray-600">Author: {libro.autor}</p>
+                      <h2 className="text-xl font-semibold text-center mb-4">
+                        {libro.titulo}
+                      </h2>
+                      <p className="text-gray-600 m-1 text-center">
+                        Author: {libro.autor}
+                      </p>
+                      <p className="text-gray-600 m-1 text-center">
+                        Categoria: {libro.genero}
+                      </p>
+                    </div>
+                    <div className="text-gray-700 flex p-3">
+                      <div className="flex items-center bg-green-400 rounded m-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6 m-1 text-green-800"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        <p className="m-1 text-black">
+                          Disponibles: {libro.copiasDisponibles}
+                        </p>
+                      </div>
+                      <div className="flex items-center bg-red-400 rounded m-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6 m-1 text-red-800"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <p className="m-1 text-black">
+                          Reservados: {libro.copiasReservadas}
+                        </p>
+                      </div>
                     </div>
                   </Link>
-                  <div className="absolute bottom-4 right-4 flex items-center">
-                    <span className="p-2 bg-white rounded-full">
+                  <div className="flex items-center justify-center m-2">
+                    <span className="text-yellow-500 text-lg">
+                      Valoración: {libro.valoracion}
+                    </span>
+                    <span className="p-2 bg-white rounded-full ml-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="transparent"
-                        className="w-8 h-8 text-yellow-500"
+                        className="w-10 h-10 text-yellow-500 animate-pulse"
                       >
                         <path
                           strokeLinecap="round"
@@ -68,7 +117,6 @@ const BookList = () => {
                         />
                       </svg>
                     </span>
-                    <p className="text-yellow-700 text-center ml-1"></p>
                   </div>
                 </div>
               ))
