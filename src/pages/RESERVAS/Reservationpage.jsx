@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ReservationPage  = () => {
   //const [selectedBook, setSelectedBook] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
   const urlImagen = "https://i.pinimg.com/564x/bf/61/9d/bf619dc27df4224a57c97124688bece1.jpg";
-
+  const navigate = useNavigate();
 
   const goBack = () => {
     window.history.back();
   };
+
   
 const periodoEntrega = (e) =>{
   setSelectedPeriod(e.target.value);
@@ -17,9 +19,14 @@ const periodoEntrega = (e) =>{
 }
 
 const confirmarReserva = () =>{
-  
-  
- 
+          Swal.fire({
+            title: 'Reserva Confirmada',
+            text: 'Tu reserva ha sido confirmada con éxito.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then(() =>
+          {navigate('/Contenido')})
+       
 }
 
 
@@ -68,13 +75,13 @@ const confirmarReserva = () =>{
           <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
 
           <div className="border-b-4 border-pink-500 mb-4">
-          <h1 className="text-4xl text-center mb-4">RESERVA</h1>
+          <h1 className="text-6xl font-semibold text-center mb-4">RESERVA</h1>
           </div>
 
-          <h2 className="text-5xl font-semibold text-center mb-6">Titulo del libro </h2>
+          <h2 className="text-4xl font-semibold text-center mb-6">Titulo del libro </h2>
 
-        <div>
-        <h6 className="text-2xl font-semibold mb-2">Seleccione un tiempo </h6>
+          <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
+        <div className="mb-6 text-center">
         <select id="periodSelect" value={selectedPeriod} onChange={periodoEntrega} 
             style={{
               width: '250px', 
@@ -88,12 +95,10 @@ const confirmarReserva = () =>{
             <option value="30"style={{ fontSize: '20px' }}>Un mes</option>
         </select>
         </div>
-  
-        <div className="flex">
+        <div className = 'mb-8 text-center'> 
         <button onClick={confirmarReserva}
          className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
           Confirmar Reserva</button>
-      
         </div>
 
 
@@ -102,7 +107,7 @@ const confirmarReserva = () =>{
         </>
     </div>
    </>
-);
+  );
 }
 
 

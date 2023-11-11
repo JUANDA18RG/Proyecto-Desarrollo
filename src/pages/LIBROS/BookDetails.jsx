@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-
 
 const BookDetails = () => {
   const [book, setBook] = useState(null);
@@ -171,9 +170,9 @@ const BookDetails = () => {
               </p>
             </div>
             <div className="mt-10 flex justify-center">
-              <Link to = "/ReservationPage">
+            <Link to = "/ReservationPage">
               <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out">
-                <span className="text-lg"> Reservar Libro </span>
+                <span className="text-lg"> Reservar Libro</span>
               </button>
               </Link>
             </div>
