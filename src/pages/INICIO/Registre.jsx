@@ -334,9 +334,6 @@ export default function Register() {
               ></div>
             }
           </form>
-         
-          
-          
           <div className="text-center mt-4 text-gray-500">
             Already have an account?
             <Link to="/login" className="ml-1 text-blue-500 hover:underline">
