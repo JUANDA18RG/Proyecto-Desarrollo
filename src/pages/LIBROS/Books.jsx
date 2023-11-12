@@ -55,7 +55,7 @@ const BookList = () => {
                         Categoria: {libro.genero}
                       </p>
                     </div>
-                    <div className="text-gray-700 flex p-3">
+                    <div className="text-gray-700 flex p-2 mx-auto">
                       <div className="flex items-center bg-green-400 rounded m-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

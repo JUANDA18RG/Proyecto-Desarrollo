@@ -5,8 +5,6 @@ import axios from "axios";
 const BookDetails = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -66,12 +64,19 @@ const BookDetails = () => {
               />
             </svg>
           </button>
-          <div key={book.id} className="w-1/2 max-w-md z-10">
+          <div key={book.id} className="w-1/2 max-w-md z-10 relative">
             <img
               src={`http://localhost:4000${book.image}`}
               alt={book.Titulo}
               className="w-full h-auto rounded-t-lg object-fi"
             />
+            {book.Disponibles === 0 && (
+              <img
+                src="https://www.globalgiftgala.com/globalgiftgala/wp-content/uploads/2019/05/agotado.png"
+                alt="Agotado"
+                className="absolute top-0 left-0 w-full h-full"
+              />
+            )}
           </div>
           <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
             <div className="border-b-4 border-pink-500 mb-4">
@@ -169,7 +174,14 @@ const BookDetails = () => {
               </p>
             </div>
             <div className="mt-10 flex justify-center">
-              <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out">
+              <button
+                disabled={book.Disponibles === 0}
+                className={`${
+                  book.Disponibles === 0
+                    ? "bg-gray-500 cursor-not-allowed py-6 px-8 rounded"
+                    : "bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out"
+                }`}
+              >
                 <span className="text-lg"> Reservar Libro</span>
               </button>
             </div>
