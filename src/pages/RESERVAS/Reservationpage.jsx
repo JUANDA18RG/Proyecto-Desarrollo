@@ -7,27 +7,56 @@ const ReservationPage = () => {
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
   const navigate = useNavigate();
-  //const { id } = useParams();
+  const { id } = useParams();
 
   const goBack = () => {
     window.history.back();
   };
+
+  useEffect(() => {
+    axios.get(`http://localhost:4000/booksdata/${id}`)
+      .then(response => {
+        setSelectedBook(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener la información del libro:', error);
+      });
+  }, [id]);
 
 const periodoEntrega = (e) =>{
   setSelectedPeriod(e.target.value);
   console.log('Día seleccionado:', e.target.value);
 }
 
-const confirmarReserva = () =>{
- axios.post(`http://localhost:4000/reserva/booking`, {
-    book: selectedBook,
-    tiempo: selectedPeriod,
-  })
-    .then(response => {
-      // Maneja la respuesta del backend
-      Swal.fire({
+
+const [reservationConfirmed, setReservationConfirmed] = useState(false);
+
+const confirmarReserva = () => {
+  
+  const token = localStorage.getItem('token');
+ 
+  if (!token) {
+    console.error('Token no disponible');
+    return;
+  }
+  const username = localStorage.getItem('username');
+  
+  setReservationConfirmed(true); // Marcar la reserva como confirmada
+  axios.post(
+    `http://localhost:4000/reserva/booking`, 
+    {
+    username: username,
+    book: selectedBook.id,
+    time: selectedPeriod,
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }) .then(resultado  => {
+       //const reservaId = resultado.id;
+       Swal.fire({
         title: 'Reserva Confirmada',
-        text: 'Tu reserva ha sido confirmada con éxito.',
+        text: 'Tu reserva con ID ha sido confirmada con éxito',
         icon: 'success',
         confirmButtonText: 'Aceptar',
       }).then(() => {
@@ -35,11 +64,16 @@ const confirmarReserva = () =>{
       });
     })
     .catch(error => {
-      // Maneja el error en la solicitud al backend
-      console.error('Error al confirmar la reserva:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la reserva',
+        text: error.response.data.message || 'Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.',
+      })
+      .then(() => {
+        setReservationConfirmed(false);
+     });
     });       
 }
-
 
   return(
    <>
@@ -73,17 +107,22 @@ const confirmarReserva = () =>{
               />
             </svg>
           </button>
-          
+          <div key={selectedBook.id} className="w-1/2 max-w-md z-10">
+            <img
+              src={`http://localhost:4000${selectedBook.image}`}
+              alt={selectedBook.Titulo}
+              className="w-full h-auto rounded-t-lg object-fi"
+            />
+          </div>
           <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
-
           <div className="border-b-4 border-pink-500 mb-4">
           <h1 className="text-6xl font-semibold text-center mb-4">RESERVA</h1>
           </div>
-
+    
           <h2 className="text-5xl font-semibold text-center mb-6">
-          {book.Titulo} </h2>
+          {selectedBook.Titulo}</h2>
 
-          <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
+        <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
         <div className="mb-6 text-center">
         <select id="periodSelect" value={selectedPeriod} onChange={periodoEntrega} 
             style={{
@@ -100,12 +139,11 @@ const confirmarReserva = () =>{
         </div>
         <div className = 'mb-8 text-center'> 
         <button onClick={confirmarReserva}
+        disabled={reservationConfirmed}
          className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
           Confirmar Reserva</button>
-        </div>
-
-         
           </div>
+         </div>
         </>
     </div>
    </>
