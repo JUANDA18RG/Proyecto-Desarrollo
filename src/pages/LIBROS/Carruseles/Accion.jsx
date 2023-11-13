@@ -6,7 +6,7 @@ import axios from "axios";
 
 function Historico() {
   const [books, setBooks] = useState([]);
-  const [DramaBooks, setDramaBooks] = useState([]);
+  const [AccionBooks, setAccionBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const carouselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,7 +22,7 @@ function Historico() {
   const goToNextSlide = () => {
     if (carouselRef.current) {
       carouselRef.current.next(1);
-      setCurrentSlide((prev) => (prev + 1) % DramaBooks.length);
+      setCurrentSlide((prev) => (prev + 1) % AccionBooks.length);
     }
   };
 
@@ -30,7 +30,7 @@ function Historico() {
     if (carouselRef.current) {
       carouselRef.current.previous(1);
       setCurrentSlide(
-        (prev) => (prev - 1 + DramaBooks.length) % DramaBooks.length
+        (prev) => (prev - 1 + AccionBooks.length) % AccionBooks.length
       );
     }
   };
@@ -42,10 +42,10 @@ function Historico() {
         setBooks(response.data);
         setLoading(false);
 
-        const DramaBooks = response.data.filter(
-          (libro) => libro.genero === "drama"
+        const AccionBooks = response.data.filter(
+          (libro) => libro.genero === "accion"
         );
-        setDramaBooks(DramaBooks);
+        setAccionBooks(AccionBooks);
       })
       .catch((error) => {
         console.error("Error al obtener los libros", error);
@@ -75,7 +75,7 @@ function Historico() {
         </svg>
       </button>
       <div className="container mb-10">
-        <h4 className="text-3xl font-bold mb-4">Categoría de Drama</h4>
+        <h4 className="text-3xl font-bold mb-4">Categoría de Accion</h4>
         {loading ? (
           <p>Cargando libros...</p>
         ) : (
@@ -89,7 +89,7 @@ function Historico() {
             ref={carouselRef}
             additionalTransfrom={-currentSlide * 40}
           >
-            {DramaBooks.map((libro, index) => (
+            {AccionBooks.map((libro, index) => (
               <div
                 key={libro.ISBN}
                 className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-90 transition-transform duration-300 rounded-md"

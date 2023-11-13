@@ -1,9 +1,13 @@
 import React from "react";
-import Historico from "./Historico";
+import Accion from "./Accion";
 import Romance from "./romance";
 import Drama from "./Drama";
 import Suspenso from "./Suspenso";
-import Ensayo from "./Ensayo";
+import Terror from "./Terror";
+import CienciaFiccion from "./CienciaFiccion";
+import RealismoDegradado from "./RealimosDegradado";
+import Policiacas from "./Policiacas";
+import Mitologia from "./Mitologia";
 
 export default function Contenido() {
   return (
@@ -16,11 +20,15 @@ export default function Contenido() {
             CATEGORIA DE LOS LIBROS
           </h2>
         </div>
-        <Historico />
+        <Accion />
         <Romance />
         <Drama />
         <Suspenso />
-        <Ensayo />
+        <Terror />
+        <CienciaFiccion />
+        <RealismoDegradado />
+        <Policiacas />
+        <Mitologia />
       </div>
     </>
   );

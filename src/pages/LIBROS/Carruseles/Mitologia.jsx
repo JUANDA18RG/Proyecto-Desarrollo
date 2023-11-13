@@ -4,9 +4,9 @@ import Carousel from "react-multi-carousel";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function Ensayo() {
+function Mitologia() {
   const [books, setBooks] = useState([]);
-  const [ensayoBooks, setensayoBooks] = useState([]);
+  const [MitologiaBooks, setMitologiaBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const carouselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,7 +22,7 @@ function Ensayo() {
   const goToNextSlide = () => {
     if (carouselRef.current) {
       carouselRef.current.next(1);
-      setCurrentSlide((prev) => (prev + 1) % ensayoBooks.length);
+      setCurrentSlide((prev) => (prev + 1) % MitologiaBooks.length);
     }
   };
 
@@ -30,7 +30,7 @@ function Ensayo() {
     if (carouselRef.current) {
       carouselRef.current.previous(1);
       setCurrentSlide(
-        (prev) => (prev - 1 + ensayoBooks.length) % ensayoBooks.length
+        (prev) => (prev - 1 + MitologiaBooks.length) % MitologiaBooks.length
       );
     }
   };
@@ -42,10 +42,10 @@ function Ensayo() {
         setBooks(response.data);
         setLoading(false);
 
-        const LibrosEnsayo = response.data.filter(
-          (libro) => libro.genero === "ensayo"
+        const MitologiaBooks = response.data.filter(
+          (libro) => libro.genero === "policiacas"
         );
-        setensayoBooks(LibrosEnsayo);
+        setMitologiaBooks(MitologiaBooks);
       })
       .catch((error) => {
         console.error("Error al obtener los libros", error);
@@ -75,7 +75,7 @@ function Ensayo() {
         </svg>
       </button>
       <div className="container mb-10">
-        <h4 className="text-3xl font-bold mb-4">Categoría de Ensayo</h4>
+        <h4 className="text-3xl font-bold mb-4">Categoría de Mitologia</h4>
         {loading ? (
           <p>Cargando libros...</p>
         ) : (
@@ -89,7 +89,7 @@ function Ensayo() {
             ref={carouselRef}
             additionalTransfrom={-currentSlide * 40}
           >
-            {ensayoBooks.map((libro, index) => (
+            {MitologiaBooks.map((libro, index) => (
               <div
                 key={libro.ISBN}
                 className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-90 transition-transform duration-300 rounded-md"
@@ -201,4 +201,4 @@ function Ensayo() {
   );
 }
 
-export default Ensayo;
+export default Mitologia;

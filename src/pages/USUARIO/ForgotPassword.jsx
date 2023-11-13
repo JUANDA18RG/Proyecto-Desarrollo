@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export default function ForgotPassword(){
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ export default function ForgotPassword(){
     nuevaContraseña: "",
     confirmarContraseña: "", 
   });
-
 
   const [errors, setErrors] = useState({}); //Errores en la verificacion
   const [message, setMessage] = useState('');  //Mensajes
@@ -60,26 +60,30 @@ const validateForm = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  setMessage(''); // Limpia el mensaje
-  setErrorMsg(''); // Limpia el mensaje de error
   if (validateForm()) {
     if (step === 1) {
       try
-      {
-       console.log("Correo: ", formData.email);
-       const response = await axios.post
+      {const response = await axios.post
        ('http://localhost:4000/send/email', { 
          email: formData.email});
-          
+
       if (response.data.success) {
         setStep(2);
-        setMessage("Se ha enviado un código de recuperación a su correo electrónico."); 
+        await Swal.fire({
+          title: "Codigo enviado",
+          text: "Se ha enviado un código de recuperación a su correo electrónico.",
+          icon: "success",
+        });
       }
     }
       catch (error){
-    
         if (error.response) {
           setErrorMsg(error.response.data.msg);
+          await Swal.fire({
+            title: 'Error',
+            text: error.response.data.msg,
+            icon: 'error',
+          });
         }
         else if (error.request)
         {console.error(error);
@@ -91,19 +95,26 @@ const handleSubmit = async (e) => {
     //Mandar codigo de validacion
     else if (step === 2) {
      try {
-        console.log("Código de recuperación: ", formData.codigo);
         const response = await axios.post('http://localhost:4000/verificacion', {
           email: formData.email,
           codigo: formData.codigo
         });
         if (response.data.success) {
           setStep(3);
-          setMessage("Código de recuperación válido. Ahora puedes cambiar tu contraseña.");
+          await Swal.fire({
+            title: "Código Válido",
+            text: "Código de recuperación válido. Ahora puedes cambiar tu contraseña.",
+            icon: "success"
+          });
         }
-      } catch (error){
-        
+      } catch (error){ 
         if (error.response) {
           setErrorMsg(error.response.data.message);
+          await Swal.fire({
+            title: 'Error',
+            text: error.response.data.message,
+            icon: 'error',
+          });
         }
         else if (error.request)
         {console.error(error);
@@ -115,20 +126,27 @@ const handleSubmit = async (e) => {
     // Cambia la contraseña y muestra un mensaje de éxito
     else if (step === 3) {
       try {
-          console.log("Nueva contraseña: ", formData.nuevaContraseña);
           const response = await axios.post('http://localhost:4000/reset', {
             correo: formData.email,
             password: formData.nuevaContraseña,
           });
     
           if (response.data.success) {
-            setMessage('');
-            setMessage("Contraseña cambiada con éxito....Redirigiendo a la página de inicio de sesión");
+            await Swal.fire({
+              title: "Contraseña Cambiada",
+              text: "Contraseña cambiada con éxito. Redirigiendo a la página de inicio de sesión.",
+              icon: "success"
+            });
             setTimeout(() => {
             navigate("/login");
             }, 3000);
           } else {
             setErrorMsg(response.data.message);
+            await Swal.fire({
+              title: 'Error',
+              text: error.response.data.msg,
+              icon: 'error',
+            })
           }
         } catch (error) {
           if (error.response) {
@@ -220,14 +238,6 @@ const handleSubmit = async (e) => {
             Enviar
           </button>
         </form>
-
-        {message && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px", display: "flex",
-         justifyContent: "center", alignItems: "center"  }}>{message} </p> )}
-
-        {errorMsg && (<p style={{ color: "green", fontFamily: "Open Sans", fontSize: "18px",  display: "flex",
-    justifyContent: "center",
-    alignItems: "center" }}>
-        {errorMsg} </p> )}  
       </div>
     </div>
   );
