@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 const BookDetails = () => { 
@@ -9,7 +9,8 @@ const BookDetails = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     axios
       .get(`http://localhost:4000/booksdata/${id}`)
@@ -170,12 +171,14 @@ const BookDetails = () => {
               </p>
             </div>
             <div className="mt-10 flex justify-center">
-            <Link to = "/ReservationPage">
-              <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out">
+            
+              <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out"
+              onClick={() => navigate(`/reserva/${book.id}`)}>
                 <span className="text-lg"> Reservar Libro</span>
               </button>
-              </Link>
+             
             </div>
+
           </div>
         </>
       </div>
