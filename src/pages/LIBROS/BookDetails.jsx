@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-const BookDetails = () => { 
+const BookDetails = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -22,7 +22,15 @@ const BookDetails = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return (
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center">
+          <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+            <span class="hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!book) {
@@ -188,9 +196,7 @@ const BookDetails = () => {
               >
                 <span className="text-lg"> Reservar Libro</span>
               </button>
-             
             </div>
-
           </div>
         </>
       </div>

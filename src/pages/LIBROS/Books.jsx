@@ -20,29 +20,35 @@ const BookList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div id="Busqueda" className="px-5 py-5"></div>
-      <div className="mt-10">
+      <div className="mt-10 mx-auto">
         <div className="text-center">
-          <h2 className="bg-pink-600 mt-10  backdrop-blur-lg rounded-lg px-4 py-10 text-white text-5xl font-bold sm:text-5xl m-3 text-center inline-block">
+          <h2 className="bg-pink-600 mt-10 backdrop-blur-lg rounded-lg px-4 py-10 text-white text-5xl font-bold sm:text-5xl m-3 inline-block">
             BUSQUEDA DE LIBROS
           </h2>
         </div>
         <div className="container m-auto py-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {loading ? (
-              <p>Cargando libros...</p>
-            ) : (
-              books.map((libro) => (
+          {loading ? (
+            <div class="flex items-center justify-center min-h-screen">
+              <div class="flex items-center justify-center">
+                <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+                  <span class="hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {books.map((libro) => (
                 <div
                   key={libro.ISBN}
-                  className="bg-white rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 m-4"
+                  className="bg-white rounded overflow-hidden shadow-2xl transform transition-transform hover:scale-90 m-1 hover:border-4 hover:border-pink-500 duration-700 ease-in-out"
                 >
                   <Link to={`/book/${libro.ISBN}`} className="block">
                     <img
                       src={`http://localhost:4000${libro.portada}`}
                       alt={libro.titulo}
-                      className="w-full h-96 object-cover rounded-t-md"
+                      className="w-80 h-80 object-contain  mt-2 rounded items-center mx-auto"
                     />
                     <div className="p-4">
                       <h2 className="text-xl font-semibold text-center mb-4">
@@ -55,7 +61,7 @@ const BookList = () => {
                         Categoria: {libro.genero}
                       </p>
                     </div>
-                    <div className="text-gray-700 flex p-2 mx-auto">
+                    <div className="flex justify-center items-center text-gray-700 p-2 mx-auto">
                       <div className="flex items-center bg-green-400 rounded m-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +78,7 @@ const BookList = () => {
                           />
                         </svg>
                         <p className="m-1 text-black">
-                          Disponibles: {libro.copiasDisponibles}
+                          {libro.copiasDisponibles}
                         </p>
                       </div>
                       <div className="flex items-center bg-red-400 rounded m-2">
@@ -91,7 +97,7 @@ const BookList = () => {
                           />
                         </svg>
                         <p className="m-1 text-black">
-                          Reservados: {libro.copiasReservadas}
+                          {libro.copiasReservadas}
                         </p>
                       </div>
                     </div>
@@ -100,7 +106,7 @@ const BookList = () => {
                     <span className="text-yellow-500 text-lg">
                       Valoración: {libro.valoracion}
                     </span>
-                    <span className="p-2 bg-white rounded-full ml-2">
+                    <span className="p-2 bg-white rounded-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -119,9 +125,9 @@ const BookList = () => {
                     </span>
                   </div>
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
