@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const BookDetails = () => {
+const BookDetails = () => { 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [rating, setRating] = useState(0);

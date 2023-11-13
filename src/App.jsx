@@ -9,7 +9,7 @@ import Meritos from './pages/LIBROS/Meritos';
 import User from './pages/USUARIO/User';
 import EditUser from './pages/USUARIO/EditUser';
 import ForgotPassword from './pages/USUARIO/ForgotPassword';
-import ReservationPage from './pages/RESERVAS/Reservationpage';
+import ReservationPage from './pages/RESERVAS/ReservationPage';
 
 function App() {
   return (
@@ -23,8 +23,8 @@ function App() {
       <Route path="/User" element={<User />} />
       <Route path="/EditUser" element={<EditUser />} />
       <Route path="/ForgotPassword" element= {<ForgotPassword />} />
-      <Route path ="/ReservationPage" element = {<ReservationPage />} />
-      
+      <Route path="/reservationPage" element= {<ReservationPage />} />
+
     </Routes>
   );
 }

@@ -1,35 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const ReservationPage  = () => {
-  //const [selectedBook, setSelectedBook] = useState('');
+const ReservationPage = () => {
+  const [selectedBook, setSelectedBook] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
-  const urlImagen = "https://i.pinimg.com/564x/bf/61/9d/bf619dc27df4224a57c97124688bece1.jpg";
   const navigate = useNavigate();
+  //const { id } = useParams();
 
   const goBack = () => {
     window.history.back();
   };
 
-  
 const periodoEntrega = (e) =>{
   setSelectedPeriod(e.target.value);
   console.log('Día seleccionado:', e.target.value);
 }
 
 const confirmarReserva = () =>{
-          Swal.fire({
-            title: 'Reserva Confirmada',
-            text: 'Tu reserva ha sido confirmada con éxito.',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }).then(() =>
-          {navigate('/Contenido')})
-       
+ axios.post(`http://localhost:4000/reserva/booking`, {
+    book: selectedBook,
+    tiempo: selectedPeriod,
+  })
+    .then(response => {
+      // Maneja la respuesta del backend
+      Swal.fire({
+        title: 'Reserva Confirmada',
+        text: 'Tu reserva ha sido confirmada con éxito.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+      }).then(() => {
+        navigate('/Contenido');
+      });
+    })
+    .catch(error => {
+      // Maneja el error en la solicitud al backend
+      console.error('Error al confirmar la reserva:', error);
+    });       
 }
-
-
 
 
   return(
@@ -64,13 +73,6 @@ const confirmarReserva = () =>{
               />
             </svg>
           </button>
-
-          <div  className="w-1/2 max-w-md z-10">
-          <img 
-          src={urlImagen} 
-          alt="Imagen de ejemplo"
-          className="w-full h-auto rounded-t-lg object-fi" />
-          </div>
           
           <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
 
@@ -78,7 +80,8 @@ const confirmarReserva = () =>{
           <h1 className="text-6xl font-semibold text-center mb-4">RESERVA</h1>
           </div>
 
-          <h2 className="text-4xl font-semibold text-center mb-6">Titulo del libro </h2>
+          <h2 className="text-5xl font-semibold text-center mb-6">
+          {book.Titulo} </h2>
 
           <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
         <div className="mb-6 text-center">
@@ -101,14 +104,13 @@ const confirmarReserva = () =>{
           Confirmar Reserva</button>
         </div>
 
-
          
           </div>
         </>
     </div>
    </>
   );
-}
+};
 
 
 export default ReservationPage;
