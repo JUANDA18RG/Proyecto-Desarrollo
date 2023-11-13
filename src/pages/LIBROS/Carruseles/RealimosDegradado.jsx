@@ -81,7 +81,11 @@ function RealismoDegradado() {
           Categoría de Realismo Degradado
         </h4>
         {loading ? (
-          <p>Cargando libros...</p>
+          <div className="flex items-center justify-center">
+            <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+              <span className="hidden">Loading...</span>
+            </div>
+          </div>
         ) : (
           <Carousel
             responsive={responsive}
@@ -96,14 +100,14 @@ function RealismoDegradado() {
             {RealismoDegradadoBooks.map((libro, index) => (
               <div
                 key={libro.ISBN}
-                className="flex flex-col items-center bg-white p-4 mx-2 h-full hover:scale-90 transition-transform duration-300 rounded-md"
+                className="flex flex-col items-center bg-white max-w-xs p-4 mx-auto h-full hover:scale-90 transition-transform duration-300 rounded-md border-4 border-pink-500"
               >
                 <Link to={`/book/${libro.ISBN}`} className="block">
                   <div className="image-container">
                     <img
                       src={`http://localhost:4000${libro.portada}`}
                       alt={libro.titulo}
-                      className="w-48 h-64 object-cover mb-2 mx-auto"
+                      className="w-60 h-80 object-contain mb-2 mx-auto"
                     />
                   </div>
                   <h2 className="text-xl font-semibold text-center mb-2">
@@ -157,8 +161,8 @@ function RealismoDegradado() {
                     </div>
                   </div>
                   <div className="flex items-center justify-center">
-                    <p className="text-yellow-500 mr-2">{libro.valoracion}</p>
-                    <span className="p-2 bg-white rounded-full">
+                    <p className="text-yellow-500">{libro.valoracion}</p>
+                    <span className="p-2  rounded-full flex items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"

@@ -23,7 +23,15 @@ const BookDetails = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return (
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center">
+          <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+            <span class="hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!book) {
