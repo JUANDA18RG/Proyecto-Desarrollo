@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useState } from "react";
+import Swal from 'sweetalert2';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -14,9 +15,8 @@ export default function Register() {
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [error, setError] = useState("");
-  const [errors, setErrors] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(""); //Traidos del backend
+  const [errors, setErrors] = useState("");     
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   const handleChange = (e) => {
@@ -79,29 +79,39 @@ export default function Register() {
       formData.username.trim() === "" ||
       formData.password.trim() === ""
     ) {
-      setErrorMessage("Todos los campos son obligatorios");
+      Swal.fire({
+        title: 'Campos Obligatorios',
+        text: 'Todos los campos son obligatorios. Por favor, completa la información.',
+        icon: 'warning',
+      });
       return;
     }
 
     if (validateForm()) {
       try {
-        console.log("Username: ", formData.username);
-        console.log("Nombre: ", formData.nombres);
-        console.log("Apellidos: ", formData.apellidos);
-        console.log("Correo: ", formData.correo);
-        console.log("Contraseña: ", formData.password);
-
-        const response = await axios.post(
+      const response = await axios.post(
           "http://localhost:4000/register",
           formData
         );
         console.log("Registro exitoso", response.data);
+        Swal.fire({
+          title: "Registro Exitoso",
+          text: "Tu cuenta ha sido registrada exitosamente.",
+          icon: "success",
+        });
         setRegistrationSuccess(true);
         setTimeout(() => {
           navigate("/login");
         }, 3000);
       } catch (error) {
         console.log("Error: ", error);
+        
+        Swal.fire({
+          title: "Error",
+          text: error.response?.data?.message || "Hubo un error en el servidor.",
+          icon: "error",
+        });
+
         // Manejar errores
         if (error.response) {
           // La solicitud se realizó y el servidor respondió con un código de estado
@@ -119,10 +129,9 @@ export default function Register() {
           console.log("Error", error.message);
           setError(error.message);
         }
+       
       }
     }
-
-    setErrorMessage("");
   };
 
   return (
@@ -324,19 +333,7 @@ export default function Register() {
                 className="text-red-500 text-center mt-2"
               ></div>
             }
-            {errorMessage && (
-              <div className="text-red-500 text-center">{errorMessage}</div>
-            )}
-
-            {registrationSuccess && (
-              <p className="text-green-600 text-center m-2">
-                Registro exitoso. Redirigiendo a la página de inicio de
-                sesión...{" "}
-              </p>
-            )}
           </form>
-
-          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <div className="text-center mt-4 text-gray-500">
             Already have an account?
             <Link to="/login" className="ml-1 text-blue-500 hover:underline">

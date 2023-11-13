@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BookDetails = () => {
+const BookDetails = () => { 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
-
   useEffect(() => {
     axios
       .get(`http://localhost:4000/booksdata/${id}`)
@@ -197,7 +197,9 @@ const BookDetails = () => {
               >
                 <span className="text-lg"> Reservar Libro</span>
               </button>
+             
             </div>
+
           </div>
         </>
       </div>
