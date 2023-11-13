@@ -46,15 +46,17 @@ const confirmarReserva = () => {
     {
     book: selectedBook.id,
     time: selectedPeriod,
-  }, {
-    headers: {
+  }, 
+  {
+    headers: 
+    {
       Authorization: `Bearer ${token}`,
     },
   }) .then(resultado  => {
-       const reservaId = resultado.id;
+       //const reservaId = resultado.id;
        Swal.fire({
         title: 'Reserva Confirmada',
-        text: 'Tu reserva con ID ha sido confirmada con éxito',
+        text: `Tu reserva con ID N°${reservaId} ha sido realizada con éxito`,
         icon: 'success',
         confirmButtonText: 'Aceptar',
       }).then(() => {

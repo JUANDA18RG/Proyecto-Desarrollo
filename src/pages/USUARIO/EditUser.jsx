@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+  
 const UserProfileEdit = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
