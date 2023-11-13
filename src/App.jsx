@@ -10,6 +10,7 @@ import User from './pages/USUARIO/User';
 import EditUser from './pages/USUARIO/EditUser';
 import ForgotPassword from './pages/USUARIO/ForgotPassword';
 import ReservationPage from './pages/RESERVAS/Reservationpage';
+import EditReservation from './pages/RESERVAS/editReservation';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/EditUser" element={<EditUser />} />
       <Route path="/ForgotPassword" element= {<ForgotPassword />} />
       <Route path= "/reserva/:id" element= {<ReservationPage />} />
+      <Route path="/editReservation" element = {<EditReservation />} />
 
     </Routes>
   );

@@ -40,12 +40,10 @@ const confirmarReserva = () => {
     return;
   }
   const username = localStorage.getItem('username');
-  
   setReservationConfirmed(true); // Marcar la reserva como confirmada
   axios.post(
     `http://localhost:4000/reserva/booking`, 
     {
-    username: username,
     book: selectedBook.id,
     time: selectedPeriod,
   }, {
@@ -53,7 +51,7 @@ const confirmarReserva = () => {
       Authorization: `Bearer ${token}`,
     },
   }) .then(resultado  => {
-       //const reservaId = resultado.id;
+       const reservaId = resultado.id;
        Swal.fire({
         title: 'Reserva Confirmada',
         text: 'Tu reserva con ID ha sido confirmada con éxito',
@@ -73,7 +71,7 @@ const confirmarReserva = () => {
         setReservationConfirmed(false);
      });
     });       
-}
+} 
 
   return(
    <>
