@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const BookDetails = () => { 
   const [book, setBook] = useState(null);
@@ -184,7 +183,7 @@ const BookDetails = () => {
                     : "bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out"
                 }`}
                 onClick={() =>
-                  book.Disponibles > 0 && navigate("/ReservationPage")
+                  book.Disponibles > 0 && navigate(`/reserva/${book.id}`)
                 }
               >
                 <span className="text-lg"> Reservar Libro</span>

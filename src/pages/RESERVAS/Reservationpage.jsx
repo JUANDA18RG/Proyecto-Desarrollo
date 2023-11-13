@@ -45,18 +45,20 @@ const confirmarReserva = () => {
   axios.post(
     `http://localhost:4000/reserva/booking`, 
     {
-    username: username,
     book: selectedBook.id,
     time: selectedPeriod,
-  }, {
-    headers: {
+  }, 
+  {
+    headers: 
+    {
       Authorization: `Bearer ${token}`,
     },
-  }) .then(resultado  => {
-       //const reservaId = resultado.id;
+  }) .then(function (response) {
+       const reservaId = response.data.id;
+
        Swal.fire({
         title: 'Reserva Confirmada',
-        text: 'Tu reserva con ID ha sido confirmada con éxito',
+        text: `Tu reserva con ID N°${reservaId} ha sido realizada con éxito`,
         icon: 'success',
         confirmButtonText: 'Aceptar',
       }).then(() => {
