@@ -45,36 +45,40 @@ const confirmarReserva = () => {
   axios.post(
     `http://localhost:4000/reserva/booking`, 
     {
-    book: selectedBook.id,
-    time: selectedPeriod,
-  }, 
-  {
-    headers: 
+      book: selectedBook.id,
+      time: selectedPeriod,
+    }, 
     {
-      Authorization: `Bearer ${token}`,
-    },
-  }) .then(function (response) {
-       const reservaId = response.data.id;
-
-       Swal.fire({
-        title: 'Reserva Confirmada',
-        text: `Tu reserva con ID N°${reservaId} ha sido realizada con éxito`,
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-      }).then(() => {
-        navigate('/Contenido');
-      });
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(function (response) {
+      console.log('Respuesta de reserva:', response.data);
+      const reservaId = response.data.id;
+      if (reservaId) {
+        Swal.fire({
+          title: 'Reserva Confirmada',
+          text: `Tu reserva con ID N°${reservaId} ha sido realizada con éxito`,
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          navigate('/User');
+        });
+      } else {
+        console.error('Error al obtener el ID de la reserva');
+      }
     })
     .catch(error => {
       Swal.fire({
         icon: 'error',
         title: 'Error en la reserva',
         text: error.response.data.message || 'Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.',
-      })
-      .then(() => {
+      }).then(() => {
         setReservationConfirmed(false);
-     });
-    });       
+      });
+});
+    
 }
 
   return(
@@ -140,12 +144,12 @@ const confirmarReserva = () => {
         </select>
         </div>
         <div className = 'mb-8 text-center'> 
-        <button onClick={confirmarReserva}
-        disabled={reservationConfirmed}
-         className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
-          Confirmar Reserva</button>
-          </div>
+            <button onClick={confirmarReserva}
+            disabled={reservationConfirmed}
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
+             Confirmar Reserva</button>
          </div>
+        </div>
         </>
     </div>
    </>

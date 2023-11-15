@@ -25,8 +25,7 @@ function App() {
       <Route path="/EditUser" element={<EditUser />} />
       <Route path="/ForgotPassword" element= {<ForgotPassword />} />
       <Route path= "/reserva/:id" element= {<ReservationPage />} />
-      <Route path="/editReservation" element = {<EditReservation />} />
-
+      <Route path="/editReservation" element={<EditReservation />} />
     </Routes>
   );
 }
