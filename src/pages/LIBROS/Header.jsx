@@ -112,6 +112,7 @@ const NavBar = () => {
     console.log("Cierre de sesión solicitado");
     // Resto de la lógica
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
 
     // Reemplazar la entrada en el historial del navegador para evitar regresar a la página
     window.history.replaceState(null, null, "/");
@@ -140,7 +141,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`w-full mx-auto fixed top-0 py-8 sm:py-6 z-30 ${
+      className={`w-full mx-auto fixed top-0 py-8 sm:py-6 z-10 ${
         scrollPosition > 0 ? "bg-pink-600" : "bg-pink-600"
       } shadow-md`}
     >

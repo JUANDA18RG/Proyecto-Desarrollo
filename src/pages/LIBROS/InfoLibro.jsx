@@ -36,7 +36,7 @@ export default function InfoSection() {
               <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
                 <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
               </div>
-              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-10 title-font font-medium text-sm">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-5 title-font font-medium text-sm">
                 1
               </div>
               <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
@@ -68,7 +68,7 @@ export default function InfoSection() {
               <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
                 <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
               </div>
-              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-10 title-font font-medium text-sm">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-5 title-font font-medium text-sm">
                 2
               </div>
               <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
@@ -100,7 +100,7 @@ export default function InfoSection() {
               <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
                 <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
               </div>
-              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-10 title-font font-medium text-sm">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-5 title-font font-medium text-sm">
                 3
               </div>
               <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
@@ -133,7 +133,7 @@ export default function InfoSection() {
               <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
                 <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
               </div>
-              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-10 title-font font-medium text-sm">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-5 title-font font-medium text-sm">
                 4
               </div>
               <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
