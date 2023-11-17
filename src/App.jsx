@@ -11,6 +11,10 @@ import EditUser from "./pages/USUARIO/EditUser";
 import ForgotPassword from "./pages/USUARIO/ForgotPassword";
 import ReservationPage from "./pages/RESERVAS/Reservationpage";
 import SesionExpirada from "./pages/USUARIO/SesionExpirada";
+import DetallesReserva from "./pages/RESERVAS/detallesReserva";
+import EditReservation from "./pages/RESERVAS/editReservation"
+
+
 
 function App() {
   return (
@@ -27,6 +31,13 @@ function App() {
         <Route path="/EditUser" element={<EditUser />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/reserva/:id" element={<ReservationPage />} />
+        <Route path="/detalleReserva/:id" element={<DetallesReserva />} />
+        <Route path="/editReserva/:id" element={<EditReservation />} />
+        
+
+  
+       
+
       </Routes>
     </div>
   );

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -41,12 +43,21 @@ const HistorialReservas = ({ usuario }) => {
                   alt={`Portada de ${reserva.libro.titulo}`}
                   className="max-w-xs mt-4 mx-auto"
                 />
+                <div className='flex justify-end'> 
+                 <button onClick={() =>
+                  navigate(`/detalleReserva/${reserva.id}`)
+                }
+                 className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
+                 Ver detalles</button>
+                </div>
               </div>
             ))
           )}
         </ul>
       )}
     </div>
+    
+    
   );
 };
 

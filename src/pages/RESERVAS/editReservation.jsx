@@ -5,7 +5,7 @@ import axios from 'axios';
 const  EditReservation = () => {
     const [reservationDetails, setReservationDetails] = useState(null);
     const [editedPeriod, setEditedPeriod] = useState('');
-
+    const { id } = useParams();
 const goBack = () => {
         window.history.back();
 };
@@ -23,11 +23,11 @@ const confirmarReserva = () => {
     console.error('Token no disponible');
     return;
   }
-    console.log('ID a enviar:', reservationId);
+    console.log('ID a enviar:', id);
     axios.put(
       `http://localhost:4000/reserva/EditarReserva`,
       {
-        id: reservationId,  
+        id: id,  //Traerlo desde el historial
         time: editedPeriod,
       }, 
        {

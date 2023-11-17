@@ -148,7 +148,7 @@ const confirmarReserva = () => {
             disabled={reservationConfirmed}
             className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
              Confirmar Reserva</button>
-         </div>
+        </div>
         </div>
         </>
     </div>
