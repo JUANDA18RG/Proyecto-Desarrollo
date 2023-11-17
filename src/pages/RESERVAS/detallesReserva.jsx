@@ -111,11 +111,23 @@ return(
             </div>
 
             <div> 
-            <button onClick={() =>
-                  navigate(`/EditReserva/${id}`)
-                }
-            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
-            Editar </button>
+            <button
+             onClick={() => {
+            if (reserva.estado === 'Entregado') {
+             Swal.fire({
+             icon: 'info',
+             title: 'Reserva Entregada',
+             text: 'No puedes editar una reserva entregada.',
+      });
+    } else {
+      navigate(`/EditReserva/${id}`);
+    }
+  }}
+  className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
+>
+  Editar
+</button>
+
            </div>
     </div>
      </div>

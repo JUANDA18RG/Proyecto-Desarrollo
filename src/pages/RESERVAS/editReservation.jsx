@@ -1,33 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const  EditReservation = () => {
-    const [reservationDetails, setReservationDetails] = useState(null);
+
     const [editedPeriod, setEditedPeriod] = useState('');
     const { id } = useParams();
-const goBack = () => {
+    const navigate = useNavigate();
+
+    const goBack = () => {
         window.history.back();
 };
 
 
 
-const periodoEntrega = (e) =>{
-    setEditedPeriod(e.target.value);
-    console.log('Día seleccionado:', e.target.value)
-}
-      
+
+const periodoEntrega = (e) => {
+  const selectedValue = parseInt(e.target.value, 10);
+
+  if (!isNaN(selectedValue)) {
+    setEditedPeriod(selectedValue);
+    console.log('Día seleccionado:', selectedValue);
+  } else {
+    console.error('No se pudo convertir el valor seleccionado a número entero');
+  }
+};
+ 
 const confirmarReserva = () => {
   const token = localStorage.getItem('token');
   if (!token) {
     console.error('Token no disponible');
     return;
   }
-    console.log('ID a enviar:', id);
+  const username = localStorage.getItem('username');
     axios.put(
       `http://localhost:4000/reserva/EditarReserva`,
       {
-        id: id,  //Traerlo desde el historial
+        id: id, 
         time: editedPeriod,
       }, 
        {
@@ -36,25 +46,24 @@ const confirmarReserva = () => {
           Authorization: `Bearer ${token}`,
         },
     }).then(response => {
-        // Manejar la respuesta del backend
-        console.log(response.data);
+        const fechaDevolucion = response.data.fechaDevolucion;
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: `Reserva actualizada con éxito. Fecha de devolución: ${fechaDevolucion}`,
+        }).then(() => {
+          navigate(`/user`);
+        });
       })
       .catch(error => {
-        // Manejar errores
-        console.error('Error al enviar el tiempo al backend:', error);
-        if (error.response) {
-          // El servidor respondió con un código de error
-          console.error('Código de error:', error.response.status);
-          console.error('Mensaje de error:', error.response.data.message);
-        } else if (error.request) {
-          // La solicitud fue hecha, pero no se recibió respuesta
-          console.error('No se recibió respuesta del servidor');
-        } else {
-          // Algo sucedió en la configuración de la solicitud que generó un error
-          console.error('Error en la configuración de la solicitud:', error.message);
-        }
-      });
-  };         
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en la reserva',
+          text: error.response.data.message || 'Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.',
+        })
+  });
+};  
+       
 return(
    <>
    <div
@@ -92,11 +101,11 @@ return(
           <h1 className="text-6xl font-semibold text-center mb-4">EDITAR RESERVA</h1>
           </div>
           <h2 className="text-5xl font-semibold text-center mb-6">
-          titulo </h2>
-
+           titulo </h2>
+        
         <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
         <div className="mb-6 text-center">
-        <select id="periodSelect" value={editedPeriod} onChange={periodoEntrega} 
+        <select id="periodEdit" value={editedPeriod} onChange={periodoEntrega} 
             style={{
               width: '250px', 
               border: '1px solid #ccc', 
@@ -109,7 +118,10 @@ return(
             <option value="30"style={{ fontSize: '20px' }}>Un mes</option>
         </select>
         </div>
-        <div className = 'mb-8 text-center'> 
+
+
+        
+         <div className = 'mb-8 text-center'> 
             <button onClick={confirmarReserva}
             className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
              Aceptar</button>
