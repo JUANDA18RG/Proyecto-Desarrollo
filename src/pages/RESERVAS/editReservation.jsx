@@ -13,9 +13,6 @@ const  EditReservation = () => {
         window.history.back();
 };
 
-
-
-
 const periodoEntrega = (e) => {
   const selectedValue = parseInt(e.target.value, 10);
 
@@ -104,9 +101,6 @@ return(
           <div className="border-b-4 border-pink-500 mb-4">
           <h1 className="text-6xl font-semibold text-center mb-4">EDITAR RESERVA</h1>
           </div>
-          <h2 className="text-5xl font-semibold text-center mb-6">
-           titulo </h2>
-        
         <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
         <div className="mb-6 text-center">
         <select id="periodEdit" value={editedPeriod} onChange={periodoEntrega} 
