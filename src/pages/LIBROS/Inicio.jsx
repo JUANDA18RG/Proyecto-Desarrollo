@@ -17,11 +17,11 @@ export default function Inicio() {
         <div className="text-center">
           <h2
             data-aos="fade-up"
-            className="bg-gradient-to-r from-pink-500 to-blue-500 backdrop-blur-lg rounded-lg p-10 text-white text-5xl font-bold sm:text-6xl m-3 relative z-10"
+            className="bg-gradient-to-r from-pink-500 to-blue-500 backdrop-blur-lg rounded-lg p-10 text-white text-5xl font-bold sm:text-6xl m-3 relative z-5"
           >
             ¡Bienvenido a Book Finder {username}!
           </h2>
-          <p className="bg-white bg-opacity-60 rounded-lg p-4 text-black text-2xl max-w-md mx-auto mt-4 relative z-10">
+          <p className="bg-white bg-opacity-60 rounded-lg p-4 text-black text-2xl max-w-md mx-auto mt-4 relative z-5">
             Encuentra tus libros favoritos y descubre nuevas lecturas. ¡Explora
             nuestra colección y comienza a leer hoy mismo!
           </p>

@@ -1,46 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export default function LibraryProfile() {
+const HistorialReservas = ({ usuario }) => {
+  const [reservas, setReservas] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/historeservas/${usuario}`)
+      .then((response) => {
+        setReservas(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error al obtener historial de reservas:', error);
+        setLoading(false);
+      });
+  }, [usuario]);
+
+  return (
+    <div>
+      <h2>Historial de Reservas</h2>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <ul>
+          {reservas.length === 0 ? (
+            <p>No se han hecho reservas.</p>
+          ) : (
+            reservas.map((reserva) => (
+              <div key={reserva.id} className="mb-4 border p-4 rounded">
+                <h3>{reserva.libro.titulo}</h3>
+                <p>ISBN: {reserva.libro.isbn}</p>
+                <p>Estado: {reserva.estado}</p>
+                <p>Fecha de reserva: {new Date(reserva.fechaReserva).toLocaleDateString()}</p>
+                <p>Fecha de devolución: {new Date(reserva.fechaDevolucion).toLocaleDateString()}</p>
+                <img
+                  src={`http://localhost:4000/${reserva.libro.portada}`}
+                  alt={`Portada de ${reserva.libro.titulo}`}
+                  className="max-w-xs mt-4 mx-auto"
+                />
+              </div>
+            ))
+          )}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+const LibraryProfile = () => {
   const [UserData, setUserData] = useState({
-    Name: "Nombre del usuario",
-    UserName: "UserName",
-    email: "correo@ejemplo.com",
+    Name: 'Nombre del usuario',
+    UserName: 'UserName',
+    email: 'correo@ejemplo.com',
   });
 
   const goBack = () => {
     window.history.back();
   };
 
-  const username = localStorage.getItem("username");
+  const username = localStorage.getItem('username');
 
-  const [userBooks, setUserBooks] = useState([]);
   const [userComments, setUserComments] = useState([]);
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
-  const [activeOption, setActiveOption] = useState("books"); // Opción activa: "books", "comments" o "recommended"
+  const [activeOption, setActiveOption] = useState('comments');
 
   useEffect(() => {
-    // Simular la obtención de datos del perfil de la biblioteca y del usuario desde una API o una fuente de datos
     setTimeout(() => {
-      setUserBooks([
-        { id: 1, title: "Libro 1" },
-        { id: 2, title: "Libro 2" },
-        // ... más libros del usuario
-      ]);
-
       setUserComments([
-        { id: 1, text: "Comentario 1" },
-        { id: 2, text: "Comentario 2" },
-        // ... más comentarios del usuario
+        { id: 1, text: 'Comentario 1' },
+        { id: 2, text: 'Comentario 2' },
       ]);
 
       setRecommendedBooks([
-        { id: 1, title: "Libro Recomendado 1" },
-        { id: 2, title: "Libro Recomendado 2" },
-        // ... más libros recomendados
+        { id: 1, title: 'Libro Recomendado 1' },
+        { id: 2, title: 'Libro Recomendado 2' },
       ]);
-    }, 1000); // Simulación de una solicitud de datos (puede ser una solicitud real a una API)
+    }, 1000);
   }, []);
 
   return (
@@ -57,13 +96,9 @@ export default function LibraryProfile() {
           stroke="currentColor"
           className="w-6 h-6"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
-      </button>{" "}
+      </button>{' '}
       <button
         className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
         onClick={goBack}
@@ -76,11 +111,7 @@ export default function LibraryProfile() {
           stroke="currentColor"
           className="w-6 h-6"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
       <div className="min-h-screen bg-gray-100">
@@ -101,7 +132,7 @@ export default function LibraryProfile() {
               <p className="text-gray-600">{UserData.email}</p>
               <div className="flex items-center justify-center">
                 <Link
-                  to={"/EditUser"}
+                  to={'/EditUser'}
                   className="bg-white text-pink-600 font-semibold py-2 px-4 rounded-full hover:scale-110 transition duration-300 flex items-center m-2"
                 >
                   Editar Perfil
@@ -129,46 +160,36 @@ export default function LibraryProfile() {
             <div className="mb-4 flex justify-center space-x-4">
               <button
                 className={`${
-                  activeOption === "books"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
+                  activeOption === 'comments'
+                    ? 'bg-pink-600 text-white'
+                    : 'bg-gray-200 text-gray-600'
                 } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("books")}
-              >
-                Mis Libros
-              </button>
-              <button
-                className={`${
-                  activeOption === "comments"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("comments")}
+                onClick={() => setActiveOption('comments')}
               >
                 Mis Comentarios
               </button>
               <button
                 className={`${
-                  activeOption === "recommended"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
+                  activeOption === 'recommended'
+                    ? 'bg-pink-600 text-white'
+                    : 'bg-gray-200 text-gray-600'
                 } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("recommended")}
+                onClick={() => setActiveOption('recommended')}
               >
                 Mis favoritos
               </button>
+              <button
+                className={`${
+                  activeOption === 'reservations'
+                    ? 'bg-pink-600 text-white'
+                    : 'bg-gray-200 text-gray-600'
+                } font-semibold py-2 px-4 rounded`}
+                onClick={() => setActiveOption('reservations')}
+              >
+                Historial de Reservas
+              </button>
             </div>
-            {activeOption === "books" && (
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Mis Libros</h2>
-                <ul>
-                  {userBooks.map((book) => (
-                    <li key={book.id}>{book.title}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {activeOption === "comments" && (
+            {activeOption === 'comments' && (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Mis Comentarios</h2>
                 <ul>
@@ -178,7 +199,7 @@ export default function LibraryProfile() {
                 </ul>
               </div>
             )}
-            {activeOption === "recommended" && (
+            {activeOption === 'recommended' && (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Mis Favoritos</h2>
                 <ul>
@@ -188,9 +209,12 @@ export default function LibraryProfile() {
                 </ul>
               </div>
             )}
+            {activeOption === 'reservations' && <HistorialReservas usuario={username} />}
           </div>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default LibraryProfile;
