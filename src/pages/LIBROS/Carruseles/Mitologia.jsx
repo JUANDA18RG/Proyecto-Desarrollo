@@ -43,7 +43,7 @@ function Mitologia() {
         setLoading(false);
 
         const MitologiaBooks = response.data.filter(
-          (libro) => libro.genero === "policiacas"
+          (libro) => libro.genero === "mitologia"
         );
         setMitologiaBooks(MitologiaBooks);
       })
