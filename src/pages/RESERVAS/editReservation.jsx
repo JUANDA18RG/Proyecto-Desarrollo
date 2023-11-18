@@ -5,10 +5,10 @@ import Swal from 'sweetalert2';
 
 const  EditReservation = () => {
 
-    const [editedPeriod, setEditedPeriod] = useState('');
+  const [editedPeriod, setEditedPeriod] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
-
+    
     const goBack = () => {
         window.history.back();
 };
@@ -27,13 +27,14 @@ const periodoEntrega = (e) => {
   }
 };
  
-const confirmarReserva = () => {
+const confirmarReserva =   () => {
   const token = localStorage.getItem('token');
   if (!token) {
     console.error('Token no disponible');
     return;
   }
   const username = localStorage.getItem('username');
+ 
     axios.put(
       `http://localhost:4000/reserva/EditarReserva`,
       {
@@ -46,13 +47,16 @@ const confirmarReserva = () => {
           Authorization: `Bearer ${token}`,
         },
     }).then(response => {
-        const fechaDevolucion = response.data.fechaDevolucion;
-        Swal.fire({
+      const fechaDevolucion = response.data.fechaDevolucion;
+      console.log('Fecha de devolución recibida en el frontend:', fechaDevolucion);
+      Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
           text: `Reserva actualizada con éxito. Fecha de devolución: ${fechaDevolucion}`,
+         
         }).then(() => {
           navigate(`/user`);
+         
         });
       })
       .catch(error => {
@@ -62,8 +66,8 @@ const confirmarReserva = () => {
           text: error.response.data.message || 'Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.',
         })
   });
-};  
-       
+};
+
 return(
    <>
    <div
