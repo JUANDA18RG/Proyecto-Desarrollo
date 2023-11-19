@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const  EditReservation = () => {
 
-  const [editedPeriod, setEditedPeriod] = useState('');
+    const [editedPeriod, setEditedPeriod] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
     

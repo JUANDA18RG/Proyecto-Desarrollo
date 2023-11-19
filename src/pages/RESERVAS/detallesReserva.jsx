@@ -8,7 +8,7 @@ const DetallesReserva = () =>{
     const [reserva, setReserva] = useState(null);
     const [confirmacionVisible, setConfirmacionVisible] = useState(false);
     const navigate = useNavigate();
-
+    
 const goBack = () => {
         window.history.back();
       };
@@ -26,16 +26,18 @@ useEffect(() => {
       }, [id]);
 
 
+
+
 const handleCancelarReserva = () => {
         if (reserva.estado === 'Reservado') {
+
          Swal.fire({
                 title: 'Confirmar cancelación',
-                text: `La reserva del siguiente libro "${reserva.titulo}" con ISBN: "" va a ser cancelada.`,
-                icon: 'warning',
+                //text: `La reserva del siguiente libro "${reserva.titulo}" con ISBN: "" va a ser cancelada.`,
+                text: `La reserva N°${id} va a ser cancelada.`,
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                
                 confirmButtonText: 'Sí, cancelar',
                 cancelButtonText: 'Cancelar',
               }).then((result) => {
