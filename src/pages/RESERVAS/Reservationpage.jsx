@@ -125,7 +125,7 @@ const confirmarReserva = () => {
           <h1 className="text-6xl font-semibold text-center mb-4">RESERVA</h1>
           </div>
     
-          <h2 className="text-5xl font-semibold text-center mb-6">
+          <h2 className="text-5xl text-center mb-6">
           {selectedBook.Titulo}</h2>
 
         <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>

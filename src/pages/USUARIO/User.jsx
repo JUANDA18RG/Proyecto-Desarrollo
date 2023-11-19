@@ -32,10 +32,10 @@ const HistorialReservas = ({ usuario }) => {
           ) : (
             reservas.map((reserva) => (
               <div key={reserva.id} className="mb-4 border p-6 rounded shadow-md">
-                <h3 className="text-lg font-semibold text-gray-900">{reserva.libro.titulo}</h3>
+                <h3 className="text-lg font-semibold text-gray-900">ID de la reserva: {reserva.id}</h3>
+                <p className="text-gray-600">Titulo: {reserva.libro.titulo}</p>
                 <p className="text-gray-600">ISBN: {reserva.libro.isbn}</p>
                 <p className="text-gray-600">Estado: {reserva.estado}</p>
-                <p className="text-gray-600">Fecha de devolución: {new Date(reserva.fechaDevolucion).toLocaleDateString()}</p>
                 <img
                   src={`http://localhost:4000/${reserva.libro.portada}`}
                   alt={`Portada de ${reserva.libro.titulo}`}
