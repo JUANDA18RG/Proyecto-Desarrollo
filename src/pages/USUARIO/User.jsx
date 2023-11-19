@@ -23,21 +23,19 @@ const HistorialReservas = ({ usuario }) => {
 
   return (
     <div>
-      <h2>Historial de Reservas</h2>
       {loading ? (
         <p>Cargando...</p>
       ) : (
-        <ul>
+        <ul className="list-none">
           {reservas.length === 0 ? (
             <p>No se han hecho reservas.</p>
           ) : (
             reservas.map((reserva) => (
-              <div key={reserva.id} className="mb-4 border p-4 rounded">
-                <h3>{reserva.libro.titulo}</h3>
-                <p>ISBN: {reserva.libro.isbn}</p>
-                <p>Estado: {reserva.estado}</p>
-                <p>Fecha de reserva: {new Date(reserva.fechaReserva).toLocaleDateString()}</p>
-                <p>Fecha de devolución: {new Date(reserva.fechaDevolucion).toLocaleDateString()}</p>
+              <div key={reserva.id} className="mb-4 border p-6 rounded shadow-md">
+                <h3 className="text-lg font-semibold text-gray-900">{reserva.libro.titulo}</h3>
+                <p className="text-gray-600">ISBN: {reserva.libro.isbn}</p>
+                <p className="text-gray-600">Estado: {reserva.estado}</p>
+                <p className="text-gray-600">Fecha de devolución: {new Date(reserva.fechaDevolucion).toLocaleDateString()}</p>
                 <img
                   src={`http://localhost:4000/${reserva.libro.portada}`}
                   alt={`Portada de ${reserva.libro.titulo}`}
@@ -62,19 +60,17 @@ const HistorialComentarios = () => {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div div className="bg-gray-100 p-3">
-
+    <div>
      <ul className="list-none">
-      <li className="bg-white p-4 rounded-md shadow-md">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-600">Titulo: Título de ejemplo</h2>
-          <p className="text-gray-600">Comentario: Este es un comentario de ejemplo.</p>
-          <p className="text-gray-600">Valoración: 5 estrellas</p>
+     <div className="mb-4 border p-4 rounded shadow-md">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Título de Ejemplo</h2>
+          <p className="text-gray-700 mb-6">Este es un comentario de ejemplo.</p>
+          <div className="flex items-center">
+            <span className="text-gray-700">Valoración:</span>
+            <span className="ml-2 text-pink-600">★★★★★</span>
+          </div>
         </div>
-      </li>
     </ul>
-
- 
  </div>
   );
 };
@@ -83,6 +79,7 @@ const HistorialComentarios = () => {
 
 
 const LibraryProfile = () => {
+  const navigate = useNavigate();
   const [UserData, setUserData] = useState({
     Name: 'Nombre del usuario',
     UserName: 'UserName',
@@ -93,9 +90,13 @@ const LibraryProfile = () => {
     window.history.back();
   };
 
+  const goToInicio = () => {
+    
+    navigate('/contenido');
+  };
+
   const username = localStorage.getItem('username');
 
-  const [userComments, setUserComments] = useState([]);
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
   const [activeOption, setActiveOption] = useState('comments');
@@ -103,11 +104,6 @@ const LibraryProfile = () => {
 
   useEffect(() => {
     setTimeout(() => {
-    /*  setUserComments([
-        { id: 1, text: 'Comentario 1' },
-        { id: 2, text: 'Comentario 2' },
-      ]);
-    */
       setRecommendedBooks([
         { id: 1, title: 'Libro Recomendado 1' },
         { id: 2, title: 'Libro Recomendado 2' },
@@ -147,6 +143,27 @@ const LibraryProfile = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
+
+      <button
+        className="absolute top-4 right-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
+        onClick={goToInicio}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M5 3V21l7-7 7 7V3m0 0l-7 7-7-7"
+          />
+        </svg>
+      </button>
+
       <div className="min-h-screen bg-gray-100">
         <div className="bg-pink-500 h-96 w-screen ">
           <div
