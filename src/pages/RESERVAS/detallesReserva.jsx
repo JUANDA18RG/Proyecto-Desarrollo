@@ -33,7 +33,6 @@ const handleCancelarReserva = () => {
 
          Swal.fire({
                 title: 'Confirmar cancelación',
-                //text: `La reserva del siguiente libro "${reserva.titulo}" con ISBN: "" va a ser cancelada.`,
                 text: `La reserva N°${id} va a ser cancelada.`,
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

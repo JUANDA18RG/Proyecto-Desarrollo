@@ -43,23 +43,44 @@ const HistorialReservas = ({ usuario }) => {
                   alt={`Portada de ${reserva.libro.titulo}`}
                   className="max-w-xs mt-4 mx-auto"
                 />
-                <div className='flex justify-end'> 
+                 <div className='flex justify-end'> 
                  <button onClick={() =>
-                  navigate(`/detalleReserva/${reserva.id}`)
-                }
-                 className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
-                 Ver detalles</button>
-                </div>
+                  navigate(`/detalleReserva/${reserva.id}`)}
+                  className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
+                   Ver detalles</button>
+                 </div>
               </div>
             ))
           )}
         </ul>
       )}
     </div>
-    
-    
   );
 };
+
+const HistorialComentarios = () => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <div div className="bg-gray-100 p-3">
+
+     <ul className="list-none">
+      <li className="bg-white p-4 rounded-md shadow-md">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-600">Titulo: Título de ejemplo</h2>
+          <p className="text-gray-600">Comentario: Este es un comentario de ejemplo.</p>
+          <p className="text-gray-600">Valoración: 5 estrellas</p>
+        </div>
+      </li>
+    </ul>
+
+ 
+ </div>
+  );
+};
+
+
+
 
 const LibraryProfile = () => {
   const [UserData, setUserData] = useState({
@@ -79,13 +100,14 @@ const LibraryProfile = () => {
 
   const [activeOption, setActiveOption] = useState('comments');
 
+
   useEffect(() => {
     setTimeout(() => {
-      setUserComments([
+    /*  setUserComments([
         { id: 1, text: 'Comentario 1' },
         { id: 2, text: 'Comentario 2' },
       ]);
-
+    */
       setRecommendedBooks([
         { id: 1, title: 'Libro Recomendado 1' },
         { id: 2, title: 'Libro Recomendado 2' },
@@ -177,7 +199,7 @@ const LibraryProfile = () => {
                 } font-semibold py-2 px-4 rounded`}
                 onClick={() => setActiveOption('comments')}
               >
-                Mis Comentarios
+                Historial de comentarios
               </button>
               <button
                 className={`${
@@ -200,16 +222,7 @@ const LibraryProfile = () => {
                 Historial de Reservas
               </button>
             </div>
-            {activeOption === 'comments' && (
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Mis Comentarios</h2>
-                <ul>
-                  {userComments.map((comment) => (
-                    <li key={comment.id}>{comment.text}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+           
             {activeOption === 'recommended' && (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Mis Favoritos</h2>
@@ -221,6 +234,7 @@ const LibraryProfile = () => {
               </div>
             )}
             {activeOption === 'reservations' && <HistorialReservas usuario={username} />}
+            {activeOption === 'comments' && <HistorialComentarios /> }
           </div>
         </div>
       </div>
