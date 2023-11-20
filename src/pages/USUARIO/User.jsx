@@ -67,8 +67,8 @@ const HistorialComentarios = () => {
   return (
     <div>
      <ul className="list-none">
-     <div className="mb-4 border p-4 rounded shadow-md">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Título de Ejemplo</h2>
+     <div className="mb-8 border p-8 rounded shadow-md">
+          <h2  className="text-lg font-semibold text-gray-900">Título de Ejemplo</h2>
           <p className="text-gray-700 mb-6">Este es un comentario de ejemplo.</p>
           <div className="flex items-center">
             <span className="text-gray-700">Valoración:</span>
