@@ -21,8 +21,8 @@ const HistorialReservas = ({ usuario }) => {
       });
   }, [usuario]);
 
-  return (
-    <div>
+return (
+  <div className="flex-col">
       {loading ? (
         <p>Cargando...</p>
       ) : (
@@ -31,22 +31,27 @@ const HistorialReservas = ({ usuario }) => {
             <p>No se han hecho reservas.</p>
           ) : (
             reservas.map((reserva) => (
-              <div key={reserva.id} className="mb-4 border p-6 rounded shadow-md">
+              <div key={reserva.id} className="mb-4 border p-6 rounded shadow-md flex">
+                <div>
                 <h3 className="text-lg font-semibold text-gray-900">ID de la reserva: {reserva.id}</h3>
                 <p className="text-gray-600">Titulo: {reserva.libro.titulo}</p>
                 <p className="text-gray-600">ISBN: {reserva.libro.isbn}</p>
                 <p className="text-gray-600">Estado: {reserva.estado}</p>
+                </div>
+                
                 <img
                   src={`http://localhost:4000/${reserva.libro.portada}`}
                   alt={`Portada de ${reserva.libro.titulo}`}
                   className="max-w-xs mt-4 mx-auto"
                 />
-                 <div className='flex justify-end'> 
+
+                 <div className="mt-auto">
                  <button onClick={() =>
                   navigate(`/detalleReserva/${reserva.id}`)}
-                  className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
-                   Ver detalles</button>
-                 </div>
+                  className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
+                  >
+                  Ver detalles</button>
+                  </div>
               </div>
             ))
           )}
