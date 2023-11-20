@@ -10,7 +10,7 @@ const HistorialReservas = ({ usuario }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/historeservas/${usuario}`)
+      .get(`http://localhost:4000/historeservas/${encodeURIComponent(usuario)}`)
       .then((response) => {
         setReservas(response.data);
         setLoading(false);
@@ -31,7 +31,7 @@ return (
             <p>No se han hecho reservas.</p>
           ) : (
             reservas.map((reserva) => (
-              <div key={reserva.id} className="mb-4 border p-6 rounded shadow-md flex">
+              <div key={reserva.id} className="mb-8 border p-8 rounded shadow-md flex">
                 <div>
                 <h3 className="text-lg font-semibold text-gray-900">ID de la reserva: {reserva.id}</h3>
                 <p className="text-gray-600">Titulo: {reserva.libro.titulo}</p>
