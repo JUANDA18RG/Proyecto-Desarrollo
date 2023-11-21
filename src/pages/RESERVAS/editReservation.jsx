@@ -18,7 +18,6 @@ const periodoEntrega = (e) => {
 
   if (!isNaN(selectedValue)) {
     setEditedPeriod(selectedValue);
-    console.log('Día seleccionado:', selectedValue);
   } else {
     console.error('No se pudo convertir el valor seleccionado a número entero');
   }
@@ -45,12 +44,10 @@ const confirmarReserva =   () => {
         },
     }).then(response => {
       const fechaDevolucion = response.data.fechaDevolucion;
-      console.log('Fecha de devolución recibida en el frontend:', fechaDevolucion);
       Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
           text: `Reserva actualizada con éxito. Fecha de devolución: ${fechaDevolucion}`,
-         
         }).then(() => {
           navigate(`/user`);
          

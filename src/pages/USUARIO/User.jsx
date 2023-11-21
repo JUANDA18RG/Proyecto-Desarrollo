@@ -33,10 +33,10 @@ return (
             reservas.map((reserva) => (
               <div key={reserva.id} className="mb-8 border p-8 rounded shadow-md flex">
                 <div>
-                <h1 className="text-2xl text-gray-800 font-semibold">ID de la reserva: {reserva.id}</h1>
-                <p className="text-gray-600 text-2xl">Titulo: {reserva.libro.titulo}</p>
-                <p className="text-gray-600 text-2xl">ISBN: {reserva.libro.isbn}</p>
-                <p className="text-gray-600 text-2xl">Estado: {reserva.estado}</p>
+                <h1 className="text-2xl text-gray-800 font-semibold ml-2">ID de la reserva: {reserva.id}</h1>
+                <p className="text-gray-600 text-2xl ml-2">Titulo: {reserva.libro.titulo}</p>
+                <p className="text-gray-600 text-2xl ml-2">ISBN: {reserva.libro.isbn}</p>
+                <p className="text-gray-600 text-2xl ml-2">Estado: {reserva.estado}</p>
                 </div>
                 
                 <img
@@ -85,12 +85,12 @@ const StarRating = ({ rating }) => {
       const starType =
         i <= Math.floor(rating) ? 'full' : i - Math.floor(rating) === 0.5 ? 'half' : 'empty';
       stars.push(
-        <span key={i} className={`text-3xl ${starType === 'full' ? 'text-yellow-400' : 'text-yellow-300'}`}>
+        <span key={i} className={`text-5xl ${starType === 'full' ? 'text-yellow-400' : 'text-yellow-300'}`}>
           {starType === 'full' ? '★' : starType === 'half' ? '★' : '☆'}
         </span>
       );
     }
-    return <div className="flex items-center">{stars}</div>
+    return <div className="flex items-center space-x-1">{stars}</div>
   };
 
 
@@ -106,10 +106,10 @@ return (
               valoracion.map((comentarios) => (
                 <div key={comentarios.id} className="comment-container mb-8 border p-8 rounded shadow-md flex">
                 <div className="comment-details">
-                  <h3 className="text-2xl text-gray-800 font-semibold">ISBN:{comentarios.libro.isbn}</h3>
-                  <p className="text-gray-600 text-2xl">Titulo: {comentarios.libro.titulo}</p>
-                 <p className="text-gray-600 text-2xl">Comentario: {comentarios.comentario}</p>
-                 <p className="text-gray-600 text-2xl">Valoracion: <StarRating rating={comentarios.valoracion} /></p>
+                  <h3 className="text-2xl text-gray-800 font-semibold ml-2">ISBN:{comentarios.libro.isbn}</h3>
+                  <p className="text-gray-600 text-2xl ml-2">Titulo: {comentarios.libro.titulo}</p>
+                 <p className="text-gray-600 text-2xl ml-2">Comentario: {comentarios.comentario}</p>
+                 <p className="text-gray-600 text-2xl ml-2">Valoracion: <StarRating rating={comentarios.valoracion} /></p>
                  </div>
                  <img
                   src={`http://localhost:4000/${comentarios.libro.portada}`}
