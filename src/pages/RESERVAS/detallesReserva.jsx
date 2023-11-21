@@ -27,7 +27,6 @@ useEffect(() => {
 
 const handleCancelarReserva = () => {
         if (reserva.estado === 'Reservado') {
-
          Swal.fire({
                 title: 'Confirmar cancelación',
                 text: `La reserva N°${id} va a ser cancelada.`,
