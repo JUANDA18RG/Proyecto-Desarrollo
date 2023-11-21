@@ -33,16 +33,16 @@ return (
             reservas.map((reserva) => (
               <div key={reserva.id} className="mb-8 border p-8 rounded shadow-md flex">
                 <div>
-                <h3 className="text-lg font-semibold text-gray-900">ID de la reserva: {reserva.id}</h3>
-                <p className="text-gray-600">Titulo: {reserva.libro.titulo}</p>
-                <p className="text-gray-600">ISBN: {reserva.libro.isbn}</p>
-                <p className="text-gray-600">Estado: {reserva.estado}</p>
+                <h1 className="text-2xl text-gray-800 font-semibold">ID de la reserva: {reserva.id}</h1>
+                <p className="text-gray-600 text-2xl">Titulo: {reserva.libro.titulo}</p>
+                <p className="text-gray-600 text-2xl">ISBN: {reserva.libro.isbn}</p>
+                <p className="text-gray-600 text-2xl">Estado: {reserva.estado}</p>
                 </div>
                 
                 <img
                   src={`http://localhost:4000/${reserva.libro.portada}`}
                   alt={`Portada de ${reserva.libro.titulo}`}
-                  className="max-w-xs mt-4 mx-auto"
+                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
                 />
 
                  <div className="mt-auto">
@@ -61,6 +61,7 @@ return (
   );
 };
 
+
 const HistorialComentarios = ({ usuario }) => {
   const [loading, setLoading] = useState(true);
   const [valoracion, setvaloracion] = useState ([]);
@@ -78,14 +79,22 @@ const HistorialComentarios = ({ usuario }) => {
       });
   }, [usuario]);
 
-  const StarRating = ({ rating }) => {
-  const stars = Array.from({ length: 5 }, (_, index) => (
-        <span key={index} className={index < rating ? 'filled' : 'empty'}>&#9733;</span>
-      ));
-    return <div>{stars}</div>;
+const StarRating = ({ rating }) => {
+    const stars = [];
+  for (let i = 1; i <= 5; i++) {
+      const starType =
+        i <= Math.floor(rating) ? 'full' : i - Math.floor(rating) === 0.5 ? 'half' : 'empty';
+      stars.push(
+        <span key={i} className={`text-3xl ${starType === 'full' ? 'text-yellow-400' : 'text-yellow-300'}`}>
+          {starType === 'full' ? '★' : starType === 'half' ? '★' : '☆'}
+        </span>
+      );
+    }
+    return <div className="flex items-center">{stars}</div>
   };
 
-  return (
+
+return (
     <div className="flex-col">
         {loading ? (
           <p>Cargando...</p>
@@ -94,15 +103,19 @@ const HistorialComentarios = ({ usuario }) => {
             {valoracion.length === 0 ? (
               <p>No se han hecho comentarios.</p>
             ) : (
-              reservas.map((valoracion) => (
-                <div key={valoracion.id} className="mb-8 border p-8 rounded shadow-md flex">
-                  <div>
-                  <h3 className="text-lg font-semibold text-gray-900">ID del comentario: {valoracion.id}</h3>
-                  <p className="text-gray-600">ISBN: {valoracion.libro.isbn}</p>
-                  <p className="text-gray-600">{valoracion.libro.titulo}</p>
-                  <p className="text-gray-600">Comentario: {valoracion.comentario}</p>
-                  <p className="text-gray-600">Valoracion: <StarRating rating={valoracion.valoracion} /></p>
-                  </div>
+              valoracion.map((comentarios) => (
+                <div key={comentarios.id} className="comment-container mb-8 border p-8 rounded shadow-md flex">
+                <div className="comment-details">
+                  <h3 className="text-2xl text-gray-800 font-semibold">ISBN:{comentarios.libro.isbn}</h3>
+                  <p className="text-gray-600 text-2xl">Titulo: {comentarios.libro.titulo}</p>
+                 <p className="text-gray-600 text-2xl">Comentario: {comentarios.comentario}</p>
+                 <p className="text-gray-600 text-2xl">Valoracion: <StarRating rating={comentarios.valoracion} /></p>
+                 </div>
+                 <img
+                  src={`http://localhost:4000/${comentarios.libro.portada}`}
+                  alt={`Portada de ${comentarios.libro.titulo}`}
+                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
+                />
                 </div>
               ))
             )}
@@ -285,7 +298,7 @@ const LibraryProfile = () => {
               </div>
             )}
             {activeOption === 'reservations' && <HistorialReservas usuario={username} />}
-            {activeOption === 'comments' && <HistorialComentarios /> }
+            {activeOption === 'comments' && <HistorialComentarios usuario={username}/> }
           </div>
         </div>
       </div>
