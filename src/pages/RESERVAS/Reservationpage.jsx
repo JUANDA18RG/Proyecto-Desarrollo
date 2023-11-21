@@ -34,50 +34,55 @@ const ReservationPage = () => {
   const confirmarReserva = () => {
     const token = localStorage.getItem("token");
 
-    if (!token) {
-      console.error("Token no disponible");
-      return;
-    }
-    const username = localStorage.getItem("username");
-
-    setReservationConfirmed(true); // Marcar la reserva como confirmada
-    axios
-      .post(
-        `http://localhost:4000/reserva/booking`,
-        {
-          book: selectedBook.id,
-          time: selectedPeriod,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then(function(response) {
-        const reservaId = response.data.id;
-
+const confirmarReserva = () => {
+  
+  const token = localStorage.getItem('token');
+ 
+  if (!token) {
+    console.error('Token no disponible');
+    return;
+  }
+  const username = localStorage.getItem('username');
+  
+  setReservationConfirmed(true); // Marcar la reserva como confirmada
+  axios.post(
+    `http://localhost:4000/reserva/booking`, 
+    {
+      book: selectedBook.id,
+      time: selectedPeriod,
+    }, 
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(function (response) {
+      console.log('Respuesta de reserva:', response.data);
+      const reservaId = response.data.id;
+      if (reservaId) {
         Swal.fire({
-          title: "Reserva Confirmada",
+          title: 'Reserva Confirmada',
           text: `Tu reserva con ID N°${reservaId} ha sido realizada con éxito`,
-          icon: "success",
-          confirmButtonText: "Aceptar",
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
         }).then(() => {
-          navigate("/Contenido");
+          navigate('/User');
         });
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Error en la reserva",
-          text:
-            error.response.data.message ||
-            "Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.",
-        }).then(() => {
-          setReservationConfirmed(false);
-        });
+      } else {
+        console.error('Error al obtener el ID de la reserva');
+      }
+    })
+    .catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la reserva',
+        text: error.response.data.message || 'Hubo un error al realizar la reserva. Por favor, inténtalo de nuevo.',
+      }).then(() => {
+        setReservationConfirmed(false);
       });
-  };
+});
+    
+}
 
   return (
     <>
@@ -119,53 +124,35 @@ const ReservationPage = () => {
             />
           </div>
           <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
-            <div className="border-b-4 border-pink-500 mb-4">
-              <h1 className="text-6xl font-semibold text-center mb-4">
-                RESERVA
-              </h1>
-            </div>
-
-            <h2 className="text-5xl font-semibold text-center mb-6">
-              {selectedBook.Titulo}
-            </h2>
-
-            <h6 className="text-2xl mb-4 text-center">Seleccione un tiempo </h6>
-            <div className="mb-6 text-center">
-              <select
-                id="periodSelect"
-                value={selectedPeriod}
-                onChange={periodoEntrega}
-                style={{
-                  width: "250px",
-                  border: "1px solid #ccc",
-                  padding: "8px",
-                  fontSize: "16px",
-                }}
-              >
-                <option value="" disabled>
-                  ----------------------------
-                </option>
-                <option value="8" style={{ fontSize: "20px" }}>
-                  8 días
-                </option>
-                <option value="15" style={{ fontSize: "20px" }}>
-                  15 días
-                </option>
-                <option value="30" style={{ fontSize: "20px" }}>
-                  Un mes
-                </option>
-              </select>
-            </div>
-            <div className="mb-8 text-center">
-              <button
-                onClick={confirmarReserva}
-                disabled={reservationConfirmed}
-                className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
-              >
-                Confirmar Reserva
-              </button>
-            </div>
+          <div className="border-b-4 border-pink-500 mb-4">
+          <h1 className="text-6xl font-semibold text-center mb-4">RESERVA</h1>
           </div>
+    
+          <h2 className="text-5xl text-center mb-6">
+          {selectedBook.Titulo}</h2>
+
+        <h6 className="text-2xl mb-4 text-center mb-2">Seleccione un tiempo </h6>
+        <div className="mb-6 text-center">
+        <select id="periodSelect" value={selectedPeriod} onChange={periodoEntrega} 
+            style={{
+              width: '250px', 
+              border: '1px solid #ccc', 
+              padding: '8px',
+              fontSize: '16px'
+          }} >
+            <option value="" disabled>----------------------------</option>
+            <option value="8" style={{ fontSize: '20px'}}>8 días</option>
+            <option value="15" style={{ fontSize: '20px' }}>15 días</option>
+            <option value="30"style={{ fontSize: '20px' }}>Un mes</option>
+        </select>
+        </div>
+        <div className = 'mb-8 text-center'> 
+            <button onClick={confirmarReserva}
+            disabled={reservationConfirmed}
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
+             Confirmar Reserva</button>
+        </div>
+        </div>
         </>
       </div>
     </>

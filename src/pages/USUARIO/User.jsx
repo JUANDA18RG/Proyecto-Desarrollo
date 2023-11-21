@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/historeservas/${usuario}`)
+      .get(`http://localhost:4000/historeservas/${encodeURIComponent(usuario)}`)
       .then((response) => {
         setReservas(response.data);
         setLoading(false);
@@ -20,7 +21,8 @@ const HistorialReservas = ({ usuario }) => {
   }, [usuario]);
 
   return (
-    <div className="">
+    <div>
+      <h2>Historial de Reservas</h2>
       {loading ? (
         <div className="flex items-center justify-center">
           <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
@@ -28,37 +30,28 @@ const HistorialReservas = ({ usuario }) => {
           </div>
         </div>
       ) : (
-        <ul>
+        <ul className="list-none">
           {reservas.length === 0 ? (
             <p className="mx-auto text-2xl">No se han hecho reservas.</p>
           ) : (
             reservas.map((reserva) => (
-              <div className="mb-8 p-10 rounded-lg border-2 border-pink-500 flex items-center max-w-2xl mx-auto shadow-lg hover:bg-pink-300 transition duration-300 ease-in-out">
-                <div className="image-container">
-                  <img
-                    src={`http://localhost:4000/${reserva.libro.portada}`}
-                    alt={`Portada de ${reserva.libro.titulo}`}
-                    className="w-48 h-64 object-cover rounded-md"
-                  />
-                </div>
-
-                <div className="ml-6">
-                  <h3 className="text-2xl font-bold mb-2">
-                    {reserva.libro.titulo}
-                  </h3>
-                  <p className="text-gray-600 mb-2">
-                    ISBN: {reserva.libro.isbn}
-                  </p>
-                  <p className="text-gray-600 mb-2">Estado: {reserva.estado}</p>
-                  <p className="text-gray-600 mb-2">
-                    Reservado el:{" "}
-                    {new Date(reserva.fechaReserva).toLocaleDateString()}
-                  </p>
-                  <p className="text-gray-600 mb-2">
-                    Devolución el:{" "}
-                    {new Date(reserva.fechaDevolucion).toLocaleDateString()}
-                  </p>
-                </div>
+              <div key={reserva.id} className="mb-4 border p-4 rounded">
+                <h3>{reserva.libro.titulo}</h3>
+                <p>ISBN: {reserva.libro.isbn}</p>
+                <p>Estado: {reserva.estado}</p>
+                <p>
+                  Fecha de reserva:{" "}
+                  {new Date(reserva.fechaReserva).toLocaleDateString()}
+                </p>
+                <p>
+                  Fecha de devolución:{" "}
+                  {new Date(reserva.fechaDevolucion).toLocaleDateString()}
+                </p>
+                <img
+                  src={`http://localhost:4000/${reserva.libro.portada}`}
+                  alt={`Portada de ${reserva.libro.titulo}`}
+                  className="max-w-xs mt-4 mx-auto"
+                />
               </div>
             ))
           )}
@@ -69,6 +62,7 @@ const HistorialReservas = ({ usuario }) => {
 };
 
 const LibraryProfile = () => {
+  const navigate = useNavigate();
   const [UserData, setUserData] = useState({
     Name: "Nombre del usuario",
     UserName: "UserName",
@@ -79,9 +73,12 @@ const LibraryProfile = () => {
     window.history.back();
   };
 
+  const goToInicio = () => {
+    navigate("/contenido");
+  };
+
   const username = localStorage.getItem("username");
 
-  const [userComments, setUserComments] = useState([]);
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
   const [activeOption, setActiveOption] = useState("comments");
@@ -140,8 +137,8 @@ const LibraryProfile = () => {
           />
         </svg>
       </button>
-      <div className="bg-gray-100 w-screen">
-        <div className="bg-pink-500">
+      <div className="min-h-screen bg-gray-100">
+        <div className="bg-pink-500 h-96 w-screen ">
           <div
             className="bg-cover bg-center h-full w-full"
             style={{
@@ -195,7 +192,7 @@ const LibraryProfile = () => {
                 } font-semibold py-2 px-4 rounded`}
                 onClick={() => setActiveOption("comments")}
               >
-                Mis Comentarios
+                Historial de comentarios
               </button>
               <button
                 className={`${
