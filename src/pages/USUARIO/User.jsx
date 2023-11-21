@@ -61,27 +61,56 @@ return (
   );
 };
 
-const HistorialComentarios = () => {
+const HistorialComentarios = ({ usuario }) => {
   const [loading, setLoading] = useState(true);
+  const [valoracion, setvaloracion] = useState ([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`)
+      .then((response) => {
+        setvaloracion(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error al obtener historial de valoraciones:', error);
+        setLoading(false);
+      });
+  }, [usuario]);
+
+  const StarRating = ({ rating }) => {
+  const stars = Array.from({ length: 5 }, (_, index) => (
+        <span key={index} className={index < rating ? 'filled' : 'empty'}>&#9733;</span>
+      ));
+    return <div>{stars}</div>;
+  };
 
   return (
-    <div>
-     <ul className="list-none">
-     <div className="mb-8 border p-8 rounded shadow-md">
-          <h2  className="text-lg font-semibold text-gray-900">Título de Ejemplo</h2>
-          <p className="text-gray-700 mb-6">Este es un comentario de ejemplo.</p>
-          <div className="flex items-center">
-            <span className="text-gray-700">Valoración:</span>
-            <span className="ml-2 text-pink-600">★★★★★</span>
-          </div>
-        </div>
-    </ul>
- </div>
-  );
+    <div className="flex-col">
+        {loading ? (
+          <p>Cargando...</p>
+        ) : (
+          <ul className="list-none">
+            {valoracion.length === 0 ? (
+              <p>No se han hecho comentarios.</p>
+            ) : (
+              reservas.map((valoracion) => (
+                <div key={valoracion.id} className="mb-8 border p-8 rounded shadow-md flex">
+                  <div>
+                  <h3 className="text-lg font-semibold text-gray-900">ID del comentario: {valoracion.id}</h3>
+                  <p className="text-gray-600">ISBN: {valoracion.libro.isbn}</p>
+                  <p className="text-gray-600">{valoracion.libro.titulo}</p>
+                  <p className="text-gray-600">Comentario: {valoracion.comentario}</p>
+                  <p className="text-gray-600">Valoracion: <StarRating rating={valoracion.valoracion} /></p>
+                  </div>
+                </div>
+              ))
+            )}
+          </ul>
+        )}
+      </div>
+    );
 };
-
-
-
 
 const LibraryProfile = () => {
   const navigate = useNavigate();
