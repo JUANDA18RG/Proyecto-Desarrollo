@@ -77,7 +77,7 @@ function RealismoDegradado() {
         </svg>
       </button>
       <div className="container mb-10">
-        <h4 className="text-3xl font-bold mb-4">
+        <h4 className="text-3xl font-bold mb-4 bg-white bg-opacity-70 rounded-lg p-4 text-black inline-block  mt-4 relative">
           Categoría de Realismo Degradado
         </h4>
         {loading ? (
