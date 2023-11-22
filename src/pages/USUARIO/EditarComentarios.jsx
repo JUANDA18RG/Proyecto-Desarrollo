@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
-
-// ...
+import { useLocation } from "react-router-dom";
 
 const EditarComentario = () => {
   const [comentario, setComentario] = useState("");
@@ -12,6 +11,8 @@ const EditarComentario = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { isbn } = useParams();
+  const location = useLocation();
+  const Comentario = location.state.comentario;
 
   useEffect(() => {
     setLoading(false); // Assuming the data loading is mocked or handled elsewhere
@@ -93,28 +94,43 @@ const EditarComentario = () => {
           }}
         >
           <div className="bg-pink-400 bg-opacity-50 absolute inset-0"></div>
-          <>
-            <button
-              className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out z-10"
-              onClick={goBack}
+          <button
+            className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out z-10"
+            onClick={goBack}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <div className="w-full md:w-1/2 pr-4 m-4 z-20">
+            <div className="bg-white border-4 border-pink-500 m-5 p-4 flex items-center">
+              <img
+                src={`http://localhost:4000/${Comentario.libro.portada}`}
+                alt={`Portada de ${Comentario.libro.titulo}`}
+                className="w-60 h-80 object-contain mb-2 mx-auto mt-5"
+              />
+              <div className="ml-4">
+                <p className="text-gray-600 text-2xl mb-2">
+                  Comentario: {Comentario.comentario}
+                </p>
+                <p className="text-gray-600 text-2xl flex items-center">
+                  Valoracion: <StarRating rating={Comentario.valoracion} />
+                </p>
+              </div>
+            </div>
             <div className="flex flex-col justify-center items-center h-full z-10">
-              <h1 className="text-4xl text-white font-bold mb-4">
+              <h1 className="text-4xl text-white font-bold mb-4 z-10">
                 Editar comentario
               </h1>
               <textarea
@@ -145,7 +161,7 @@ const EditarComentario = () => {
                 </button>
               </div>
             </div>
-          </>
+          </div>
         </div>
       )}
     </>
@@ -169,5 +185,28 @@ const Star = ({ filled, onClick, className }) => (
     />
   </svg>
 );
+
+const StarRating = ({ rating }) => {
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    const starType =
+      i <= Math.floor(rating)
+        ? "full"
+        : i - Math.floor(rating) === 0.5
+        ? "half"
+        : "empty";
+    stars.push(
+      <span
+        key={i}
+        className={`text-5xl ${
+          starType === "full" ? "text-yellow-400" : "text-yellow-300"
+        }`}
+      >
+        {starType === "full" ? "★" : starType === "half" ? "★" : "☆"}
+      </span>
+    );
+  }
+  return <div className="flex items-center space-x-1">{stars}</div>;
+};
 
 export default EditarComentario;

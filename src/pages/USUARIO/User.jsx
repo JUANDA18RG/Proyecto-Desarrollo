@@ -164,8 +164,9 @@ const HistorialComentarios = ({ usuario }) => {
                 <div className="mt-auto">
                   <button
                     onClick={() => {
-                      console.log(comentarios.libro.isbn); // Imprime el isbn en la consola
-                      navigate(`/editarComentario/${comentarios.libro.isbn}`);
+                      navigate(`/editarComentario/${comentarios.libro.isbn}`, {
+                        state: { comentario: comentarios },
+                      });
                     }}
                     className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
                   >
