@@ -31,9 +31,6 @@ const ReservationPage = () => {
 
   const [reservationConfirmed, setReservationConfirmed] = useState(false);
 
-  const confirmarReserva = () => {
-    const token = localStorage.getItem("token");
-
     const confirmarReserva = () => {
       const token = localStorage.getItem("token");
 
@@ -41,8 +38,7 @@ const ReservationPage = () => {
         console.error("Token no disponible");
         return;
       }
-      const username = localStorage.getItem("username");
-
+      
       setReservationConfirmed(true); // Marcar la reserva como confirmada
       axios
         .post(
@@ -84,8 +80,7 @@ const ReservationPage = () => {
             setReservationConfirmed(false);
           });
         });
-    };
-
+      }
     return (
       <>
         <div
@@ -180,6 +175,6 @@ const ReservationPage = () => {
       </>
     );
   };
-};
+
 
 export default ReservationPage;
