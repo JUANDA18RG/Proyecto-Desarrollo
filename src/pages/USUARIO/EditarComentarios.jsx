@@ -56,7 +56,7 @@ const EditarComentario = () => {
         Swal.fire({
           icon: "success",
           title: "Reserva realizada",
-          text: "La reserva se ha realizado correctamente",
+          text: "Comentario actualizado",
         }).then(() => {
           navigate(`/user`);
         });
