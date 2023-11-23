@@ -17,7 +17,7 @@ const SesionExpirada = () => {
       // Si el token existe, establece un temporizador para mostrar el modal después de 1 minuto
       timerId = setTimeout(() => {
         setShowPopup(true);
-      }, 3600000);
+      }, 60000 * 30);
     }
 
     return () => {

@@ -38,17 +38,17 @@ const BookList = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 overflow-hidden">
               {books.map((libro) => (
                 <div
                   key={libro.ISBN}
-                  className="bg-white rounded overflow-hidden shadow-2xl transform transition-transform hover:scale-90 m-1 hover:border-4 hover:border-pink-500 duration-700 ease-in-out"
+                  className="group bg-white rounded-xl m-5 shadow-2xl transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-pink-500 relative"
                 >
                   <Link to={`/book/${libro.ISBN}`} className="block">
                     <img
                       src={`http://localhost:4000${libro.portada}`}
                       alt={libro.titulo}
-                      className="w-80 h-80 object-contain  mt-2 rounded items-center mx-auto"
+                      className="w-80 h-80 object-contain  mt-5 rounded items-center mx-auto"
                     />
                     <div className="p-4">
                       <h2 className="text-xl font-semibold text-center mb-4">

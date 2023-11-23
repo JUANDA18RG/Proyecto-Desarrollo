@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const HistorialReservas = ({ usuario }) => {
@@ -10,45 +10,65 @@ const HistorialReservas = ({ usuario }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/historeservas/${usuario}`)
+      .get(`http://localhost:4000/historeservas/${encodeURIComponent(usuario)}`)
       .then((response) => {
         setReservas(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error al obtener historial de reservas:', error);
+        console.error("Error al obtener historial de reservas:", error);
         setLoading(false);
       });
   }, [usuario]);
 
   return (
-    <div>
-      <h2>Historial de Reservas</h2>
+    <div className="flex-col">
       {loading ? (
-        <p>Cargando...</p>
+        <div class="flex items-center justify-center min-h-screen">
+          <div class="flex items-center justify-center">
+            <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+              <span class="hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
       ) : (
-        <ul>
+        <ul className="list-none">
           {reservas.length === 0 ? (
-            <p>No se han hecho reservas.</p>
+            <p className="text-lg text-center">No se han hecho reservas.</p>
           ) : (
             reservas.map((reserva) => (
-              <div key={reserva.id} className="mb-4 border p-4 rounded">
-                <h3>{reserva.libro.titulo}</h3>
-                <p>ISBN: {reserva.libro.isbn}</p>
-                <p>Estado: {reserva.estado}</p>
-                <p>Fecha de reserva: {new Date(reserva.fechaReserva).toLocaleDateString()}</p>
-                <p>Fecha de devolución: {new Date(reserva.fechaDevolucion).toLocaleDateString()}</p>
+              <div
+                key={reserva.id}
+                className="mb-8 border p-8 rounded shadow-md flex"
+              >
+                <div>
+                  <h1 className="text-2xl text-gray-800 font-semibold ml-2">
+                    ID de la reserva: {reserva.id}
+                  </h1>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    Titulo: {reserva.libro.titulo}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    ISBN: {reserva.libro.isbn}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    Estado: {reserva.estado}
+                  </p>
+                </div>
+
                 <img
                   src={`http://localhost:4000/${reserva.libro.portada}`}
                   alt={`Portada de ${reserva.libro.titulo}`}
-                  className="max-w-xs mt-4 mx-auto"
+                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
                 />
-                <div className='flex justify-end'> 
-                 <button onClick={() =>
-                  navigate(`/detalleReserva/${reserva.id}`)
-                }
-                 className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto">
-                 Ver detalles</button>
+
+                <div className="mt-auto">
+                  <button
+                    onClick={() => navigate(`/detalleReserva/${reserva.id}`)}
+                    className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
+                  >
+                    Ver detalles
+                  </button>
                 </div>
               </div>
             ))
@@ -56,39 +76,139 @@ const HistorialReservas = ({ usuario }) => {
         </ul>
       )}
     </div>
-    
-    
+  );
+};
+
+const HistorialComentarios = ({ usuario }) => {
+  const [loading, setLoading] = useState(true);
+  const [valoracion, setvaloracion] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`
+      )
+      .then((response) => {
+        setvaloracion(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error al obtener historial de valoraciones:", error);
+        setLoading(false);
+      });
+  }, [usuario]);
+
+  const StarRating = ({ rating }) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      const starType =
+        i <= Math.floor(rating)
+          ? "full"
+          : i - Math.floor(rating) === 0.5
+          ? "half"
+          : "empty";
+      stars.push(
+        <span
+          key={i}
+          className={`text-5xl ${
+            starType === "full" ? "text-yellow-400" : "text-yellow-300"
+          }`}
+        >
+          {starType === "full" ? "★" : starType === "half" ? "★" : "☆"}
+        </span>
+      );
+    }
+    return <div className="flex items-center space-x-1">{stars}</div>;
+  };
+
+  return (
+    <div className="flex-col">
+      {loading ? (
+        <div class="flex items-center justify-center min-h-screen">
+          <div class="flex items-center justify-center">
+            <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+              <span class="hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <ul className="list-none">
+          {valoracion.length === 0 ? (
+            <p className="text-lg text-center">No se han hecho comentarios.</p>
+          ) : (
+            valoracion.map((comentarios) => (
+              <div
+                key={comentarios.id}
+                className="comment-container mb-8 border p-8 rounded shadow-md flex"
+              >
+                <div className="comment-details">
+                  <h3 className="text-2xl text-gray-800 font-semibold ml-2">
+                    ISBN:{comentarios.libro.isbn}
+                  </h3>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    Titulo: {comentarios.libro.titulo}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    Comentario: {comentarios.comentario}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2">
+                    Valoracion: <StarRating rating={comentarios.valoracion} />
+                  </p>
+                </div>
+                <img
+                  src={`http://localhost:4000/${comentarios.libro.portada}`}
+                  alt={`Portada de ${comentarios.libro.titulo}`}
+                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
+                />
+                <div className="mt-auto">
+                  <button
+                    onClick={() => {
+                      navigate(`/editarComentario/${comentarios.libro.isbn}`, {
+                        state: { comentario: comentarios },
+                      });
+                    }}
+                    className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
+                  >
+                    Editar comentario
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </ul>
+      )}
+    </div>
   );
 };
 
 const LibraryProfile = () => {
+  const navigate = useNavigate();
   const [UserData, setUserData] = useState({
-    Name: 'Nombre del usuario',
-    UserName: 'UserName',
-    email: 'correo@ejemplo.com',
+    Name: "Nombre del usuario",
+    UserName: "UserName",
+    email: "correo@ejemplo.com",
   });
 
   const goBack = () => {
     window.history.back();
   };
 
-  const username = localStorage.getItem('username');
+  const goToInicio = () => {
+    navigate("/contenido");
+  };
 
-  const [userComments, setUserComments] = useState([]);
+  const username = localStorage.getItem("username");
+
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
-  const [activeOption, setActiveOption] = useState('comments');
+  const [activeOption, setActiveOption] = useState("comments");
 
   useEffect(() => {
     setTimeout(() => {
-      setUserComments([
-        { id: 1, text: 'Comentario 1' },
-        { id: 2, text: 'Comentario 2' },
-      ]);
-
       setRecommendedBooks([
-        { id: 1, title: 'Libro Recomendado 1' },
-        { id: 2, title: 'Libro Recomendado 2' },
+        { id: 1, title: "Libro Recomendado 1" },
+        { id: 2, title: "Libro Recomendado 2" },
       ]);
     }, 1000);
   }, []);
@@ -107,9 +227,13 @@ const LibraryProfile = () => {
           stroke="currentColor"
           className="w-6 h-6"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
         </svg>
-      </button>{' '}
+      </button>{" "}
       <button
         className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
         onClick={goBack}
@@ -122,10 +246,33 @@ const LibraryProfile = () => {
           stroke="currentColor"
           className="w-6 h-6"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
         </svg>
       </button>
-      <div className="min-h-screen bg-gray-100">
+      <button
+        className="absolute top-4 right-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
+        onClick={goToInicio}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+        </svg>
+      </button>
+      <div className=" bg-gray-100">
         <div className="bg-pink-500 h-96 w-screen ">
           <div
             className="bg-cover bg-center h-full w-screen"
@@ -143,7 +290,7 @@ const LibraryProfile = () => {
               <p className="text-gray-600">{UserData.email}</p>
               <div className="flex items-center justify-center">
                 <Link
-                  to={'/EditUser'}
+                  to={"/EditUser"}
                   className="bg-white text-pink-600 font-semibold py-2 px-4 rounded-full hover:scale-110 transition duration-300 flex items-center m-2"
                 >
                   Editar Perfil
@@ -171,46 +318,37 @@ const LibraryProfile = () => {
             <div className="mb-4 flex justify-center space-x-4">
               <button
                 className={`${
-                  activeOption === 'comments'
-                    ? 'bg-pink-600 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                  activeOption === "comments"
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-200 text-gray-600"
                 } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption('comments')}
+                onClick={() => setActiveOption("comments")}
               >
-                Mis Comentarios
+                Historial de comentarios
               </button>
               <button
                 className={`${
-                  activeOption === 'recommended'
-                    ? 'bg-pink-600 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                  activeOption === "recommended"
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-200 text-gray-600"
                 } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption('recommended')}
+                onClick={() => setActiveOption("recommended")}
               >
                 Mis favoritos
               </button>
               <button
                 className={`${
-                  activeOption === 'reservations'
-                    ? 'bg-pink-600 text-white'
-                    : 'bg-gray-200 text-gray-600'
+                  activeOption === "reservations"
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-200 text-gray-600"
                 } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption('reservations')}
+                onClick={() => setActiveOption("reservations")}
               >
                 Historial de Reservas
               </button>
             </div>
-            {activeOption === 'comments' && (
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Mis Comentarios</h2>
-                <ul>
-                  {userComments.map((comment) => (
-                    <li key={comment.id}>{comment.text}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {activeOption === 'recommended' && (
+
+            {activeOption === "recommended" && (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Mis Favoritos</h2>
                 <ul>
@@ -220,7 +358,12 @@ const LibraryProfile = () => {
                 </ul>
               </div>
             )}
-            {activeOption === 'reservations' && <HistorialReservas usuario={username} />}
+            {activeOption === "reservations" && (
+              <HistorialReservas usuario={username} />
+            )}
+            {activeOption === "comments" && (
+              <HistorialComentarios usuario={username} />
+            )}
           </div>
         </div>
       </div>
