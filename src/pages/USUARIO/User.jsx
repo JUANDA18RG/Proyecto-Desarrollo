@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert";
+/*hola*/
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,16 +82,16 @@ const HistorialReservas = ({ usuario }) => {
 
 const HistorialComentarios = ({ usuario }) => {
   const [loading, setLoading] = useState(true);
-  const [valoracion, setvaloracion] = useState([]);
+  const [valoracion, setValoracion] = useState([]);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+  const [ratingToDelete, setRatingToDelete] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`
-      )
+      .get(`http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`)
       .then((response) => {
-        setvaloracion(response.data);
+        setValoracion(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -121,14 +122,93 @@ const HistorialComentarios = ({ usuario }) => {
     }
     return <div className="flex items-center space-x-1">{stars}</div>;
   };
+//eliminar comentarios
+  const handleDeleteComment = async () => {
+    try {
+      await axios.delete(`http://localhost:4000/eliminarComentario/${commentToDelete.id}`);
+      setValoracion((prevValoracion) =>
+        prevValoracion.filter((comment) => comment.id !== commentToDelete.id)
+      );
+      showSuccessAlert("¡Comentario eliminado!");
+    } catch (error) {
+      console.error("Error al eliminar comentario:", error);
+      showErrorAlert("Hubo un error al eliminar el comentario.");
+    } finally {
+      setCommentToDelete(null);
+    }
+  };
+//eliminar valoracion
+  const handleDeleteRating = async () => {
+    try {
+      await axios.delete(`http://localhost:4000/eliminarValoracion/${ratingToDelete.id}`);
+      setValoracion((prevValoracion) =>
+        prevValoracion.filter((rating) => rating.id !== ratingToDelete.id)
+      );
+      showSuccessAlert("¡Valoración eliminada!");
+    } catch (error) {
+      console.error("Error al eliminar valoración:", error);
+      showErrorAlert("Hubo un error al eliminar la valoración.");
+    } finally {
+      setRatingToDelete(null);
+    }
+  };
+
+  const showSuccessAlert = (message) => {
+    Swal({
+      title: message,
+      icon: "success",
+    });
+  };
+
+  const showErrorAlert = (message) => {
+    Swal({
+      title: "Error",
+      text: message,
+      icon: "error",
+    });
+  };
+//alerta para confirmar la eliminacion del comentario
+  const showCommentConfirmation = (comment) => {
+    setCommentToDelete(comment);
+    Swal({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminado, no podrás recuperar este comentario.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        handleDeleteComment();
+      } else {
+        showErrorAlert("El comentario no ha sido eliminado.");
+      }
+    });
+  };
+//alerta para confirmar la eliminacion de la valoracion
+  const showRatingConfirmation = (rating) => {
+    setRatingToDelete(rating);
+    Swal({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminada, no podrás recuperar esta valoración.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        handleDeleteRating();
+      } else {
+        showErrorAlert("La valoración no ha sido eliminada.");
+      }
+    });
+  };
 
   return (
     <div className="flex-col">
       {loading ? (
-        <div class="flex items-center justify-center min-h-screen">
-          <div class="flex items-center justify-center">
-            <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
-              <span class="hidden">Loading...</span>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="flex items-center justify-center">
+            <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+              <span className="hidden">Loading...</span>
             </div>
           </div>
         </div>
@@ -144,7 +224,7 @@ const HistorialComentarios = ({ usuario }) => {
               >
                 <div className="comment-details">
                   <h3 className="text-2xl text-gray-800 font-semibold ml-2">
-                    ISBN:{comentarios.libro.isbn}
+                    ISBN: {comentarios.libro.isbn}
                   </h3>
                   <p className="text-gray-600 text-2xl ml-2">
                     Titulo: {comentarios.libro.titulo}
@@ -162,16 +242,30 @@ const HistorialComentarios = ({ usuario }) => {
                   className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
                 />
                 <div className="mt-auto">
-                  <button
-                    onClick={() => {
-                      navigate(`/editarComentario/${comentarios.libro.isbn}`, {
-                        state: { comentario: comentarios },
-                      });
-                    }}
-                    className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
-                  >
-                    Editar comentario
-                  </button>
+                  <div className="flex flex-col space-y-4">
+                    <button
+                      onClick={() => {
+                        navigate(`/editarComentario/${comentarios.libro.isbn}`, {
+                          state: { comentario: comentarios },
+                        });
+                      }}
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                    >
+                      Editar comentario
+                    </button>
+                    <button
+                      onClick={() => showCommentConfirmation(comentarios)}
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                    >
+                      Eliminar comentario
+                    </button>
+                    <button
+                      onClick={() => showRatingConfirmation(comentarios)}
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                    >
+                      Eliminar valoración
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
