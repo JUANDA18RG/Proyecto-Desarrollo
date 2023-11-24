@@ -7,9 +7,9 @@ export default function Reseñas({ libroId }) {
   const [comentarios, setComentarios] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    console.log("libroId en el frontend:", libroId);
+  const valoracionToSend = valoracion === 0 ? null : valoracion;
 
+  useEffect(() => {
     const fetchComentarios = async () => {
       setLoading(true);
       axios
@@ -18,7 +18,6 @@ export default function Reseñas({ libroId }) {
         )
         .then((response) => {
           setComentarios(response.data.val);
-          console.log(response.data.val);
         })
         .catch((error) => {
           console.error("Error al obtener comentarios:", error);
@@ -42,17 +41,13 @@ export default function Reseñas({ libroId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setComentarios((prevComentarios) => [
-      ...prevComentarios,
-      { valoracion, comentario },
-    ]);
-
     axios
       .post(
         "http://localhost:4000/comentarios/comentar",
         {
+          username: localStorage.getItem("username"),
           book: libroId,
-          valoracion: valoracion,
+          valoracion: valoracionToSend,
           comentario: comentario,
         },
         {
@@ -62,9 +57,16 @@ export default function Reseñas({ libroId }) {
         }
       )
       .then((response) => {
-        // Actualizar localmente la lista de comentarios solo si la solicitud es exitosa
         setComentario("");
         setValoracion(0);
+        setComentarios((prevComentarios) => [
+          ...prevComentarios,
+          {
+            valoracion: valoracionToSend,
+            comentario,
+            usuario: localStorage.getItem("username"),
+          },
+        ]);
       })
       .catch((error) => {
         console.error("Error al enviar comentario:", error);
@@ -73,7 +75,6 @@ export default function Reseñas({ libroId }) {
 
   return (
     <div className="mx-auto p-8 bg-white rounded shadow-lg flex flex-col-reverse md:flex-row">
-      {/* Lista de comentarios */}
       <div className="w-full md:w-1/2 pr-4 m-4">
         <h2 className="text-2xl font-bold mb-4 text-pink-600 text-center">
           Comentarios
@@ -92,10 +93,10 @@ export default function Reseñas({ libroId }) {
                     Valoración: {comentario.valoracion}
                   </p>
                   <div className="flex ml-2">
-                    {[1, 2, 3, 4, 5].map((value) => (
+                    {[1, 2, 3, 4, 5].map((value, index) => (
                       <Star
-                        key={value}
-                        filled={value <= comentario.valoracion}
+                        key={index}
+                        filled={value <= (comentario.valoracion || 0)}
                         onClick={() => {}}
                         className="w-10 h-10 cursor-pointer mr-2 transition duration-300 ease-in-out transform hover:scale-125 text-yellow-500"
                       />
@@ -114,7 +115,6 @@ export default function Reseñas({ libroId }) {
         )}
       </div>
 
-      {/* Formulario de comentarios */}
       <div className="w-full md:w-1/2 m-4">
         <h2 className="text-2xl font-bold mb-4 text-pink-600 text-center">
           Dejar un comentario
@@ -129,9 +129,9 @@ export default function Reseñas({ libroId }) {
           <div className="flex items-center justify-center mb-4">
             <label className="mr-4 text-lg">Valoración:</label>
             <div className="flex">
-              {[1, 2, 3, 4, 5].map((value) => (
+              {[1, 2, 3, 4, 5].map((value, index) => (
                 <Star
-                  key={value}
+                  key={index}
                   filled={value <= valoracion}
                   onClick={() => handleStarClick(value)}
                   className="w-10 h-10 cursor-pointer mr-2 transition duration-300 ease-in-out transform hover:scale-125 text-yellow-500"

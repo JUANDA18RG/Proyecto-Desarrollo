@@ -16,6 +16,7 @@ import Reseñas from "./pages/LIBROS/Reseñas";
 import DetallesReserva from "./pages/RESERVAS/detallesReserva";
 import EditReservation from "./pages/RESERVAS/editReservation";
 import EditarComentarios from "./pages/USUARIO/EditarComentarios";
+import ContenidoAdmin from "./pages/ADMIN/ContenidoAdmin";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/detalleReserva/:id" element={<DetallesReserva />} />
         <Route path="/editReserva/:id" element={<EditReservation />} />
         <Route path="/editarComentario/:isbn" element={<EditarComentarios />} />
+        <Route path="/ContenidoAdmin" element={<ContenidoAdmin />} />
       </Routes>
     </div>
   );
