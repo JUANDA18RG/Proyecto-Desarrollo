@@ -31,9 +31,6 @@ const ReservationPage = () => {
 
   const [reservationConfirmed, setReservationConfirmed] = useState(false);
 
-  const confirmarReserva = () => {
-    const token = localStorage.getItem("token");
-
     const confirmarReserva = () => {
       const token = localStorage.getItem("token");
 
@@ -84,7 +81,7 @@ const ReservationPage = () => {
             setReservationConfirmed(false);
           });
         });
-    };
+      }
 
     return (
       <>
@@ -180,6 +177,5 @@ const ReservationPage = () => {
       </>
     );
   };
-};
 
 export default ReservationPage;
