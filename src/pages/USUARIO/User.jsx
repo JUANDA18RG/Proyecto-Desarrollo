@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert";
+import Swal from "sweetalert2";
+
 /*hola*/
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
@@ -89,7 +90,9 @@ const HistorialComentarios = ({ usuario }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`)
+      .get(
+        `http://localhost:4000/histovaloraciones/${encodeURIComponent(usuario)}`
+      )
       .then((response) => {
         setValoracion(response.data);
         setLoading(false);
@@ -122,10 +125,12 @@ const HistorialComentarios = ({ usuario }) => {
     }
     return <div className="flex items-center space-x-1">{stars}</div>;
   };
-//eliminar comentarios
+  //eliminar comentarios
   const handleDeleteComment = async () => {
     try {
-      await axios.delete(`http://localhost:4000/eliminarComentario/${commentToDelete.id}`);
+      await axios.delete(
+        `http://localhost:4000/eliminarComentario/${commentToDelete.id}`
+      );
       setValoracion((prevValoracion) =>
         prevValoracion.filter((comment) => comment.id !== commentToDelete.id)
       );
@@ -137,10 +142,12 @@ const HistorialComentarios = ({ usuario }) => {
       setCommentToDelete(null);
     }
   };
-//eliminar valoracion
+  //eliminar valoracion
   const handleDeleteRating = async () => {
     try {
-      await axios.delete(`http://localhost:4000/eliminarValoracion/${ratingToDelete.id}`);
+      await axios.delete(
+        `http://localhost:4000/eliminarValoracion/${ratingToDelete.id}`
+      );
       setValoracion((prevValoracion) =>
         prevValoracion.filter((rating) => rating.id !== ratingToDelete.id)
       );
@@ -167,7 +174,7 @@ const HistorialComentarios = ({ usuario }) => {
       icon: "error",
     });
   };
-//alerta para confirmar la eliminacion del comentario
+  //alerta para confirmar la eliminacion del comentario
   const showCommentConfirmation = (comment) => {
     setCommentToDelete(comment);
     Swal({
@@ -184,7 +191,7 @@ const HistorialComentarios = ({ usuario }) => {
       }
     });
   };
-//alerta para confirmar la eliminacion de la valoracion
+  //alerta para confirmar la eliminacion de la valoracion
   const showRatingConfirmation = (rating) => {
     setRatingToDelete(rating);
     Swal({
@@ -245,9 +252,12 @@ const HistorialComentarios = ({ usuario }) => {
                   <div className="flex flex-col space-y-4">
                     <button
                       onClick={() => {
-                        navigate(`/editarComentario/${comentarios.libro.isbn}`, {
-                          state: { comentario: comentarios },
-                        });
+                        navigate(
+                          `/editarComentario/${comentarios.libro.isbn}`,
+                          {
+                            state: { comentario: comentarios },
+                          }
+                        );
                       }}
                       className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
                     >
