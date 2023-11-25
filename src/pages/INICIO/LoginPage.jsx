@@ -32,7 +32,6 @@ export default function LoginPage() {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);
-        console.log(error.response.headers);
         setError(error.response.data.error);
       } else if (error.request) {
         console.log(error.request);
