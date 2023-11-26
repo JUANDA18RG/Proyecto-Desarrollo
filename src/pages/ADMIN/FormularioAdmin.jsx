@@ -8,8 +8,6 @@ export default function FormularioAdmin() {
 
   const [formData, setFormData] = useState({
     username: "",
-    nombres: "",
-    apellidos: "",
     correo: "",
     password: "",
   });
@@ -29,18 +27,6 @@ export default function FormularioAdmin() {
   const validateForm = () => {
     const newErrors = {};
     let isValid = true;
-
-    //Que el nombre y apellido solo contenga letras
-    const nombreApellido = /^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/;
-    if (!nombreApellido.test(formData.nombres)) {
-      newErrors.nombres = "Name should contain only letters";
-      isValid = false;
-    }
-
-    if (!nombreApellido.test(formData.apellidos)) {
-      newErrors.apellidos = "Last name should contain only letters";
-      isValid = false;
-    }
 
     // Validación para que el username no comience con números
     if (!/^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/.test(formData.username)) {
@@ -73,8 +59,6 @@ export default function FormularioAdmin() {
 
     // Validación adicional para comprobar que los campos obligatorios no estén vacíos
     if (
-      formData.nombres.trim() === "" ||
-      formData.apellidos.trim() === "" ||
       formData.correo.trim() === "" ||
       formData.username.trim() === "" ||
       formData.password.trim() === ""
@@ -141,52 +125,6 @@ export default function FormularioAdmin() {
             id="formulario_Registro"
             onSubmit={handleSubmit}
           >
-            <input
-              name="nombres"
-              type="text"
-              placeholder="Name"
-              value={formData.nombres}
-              onChange={handleChange}
-              className="w-full py-2 px-3 border rounded focus:outline-none focus:border-pink-500"
-            />
-            {errors.nombres && (
-              <div
-                style={{
-                  top: "100%",
-                  fontFamily: "Open Sans",
-                  fontSize: "14px",
-                  color: "red",
-                  marginTop: "-9px",
-                  marginLeft: "9px",
-                }}
-              >
-                {errors.nombres}
-              </div>
-            )}
-
-            <input
-              name="apellidos"
-              type="text"
-              placeholder="Last name"
-              value={formData.apellidos}
-              onChange={handleChange}
-              className="w-full py-2 px-3 border rounded focus:outline-none focus:border-pink-500"
-            />
-            {errors.apellidos && (
-              <div
-                style={{
-                  top: "100%",
-                  fontFamily: "Open Sans",
-                  fontSize: "14px",
-                  color: "red",
-                  marginTop: "-2px",
-                  marginLeft: "9px",
-                }}
-              >
-                {errors.apellidos}
-              </div>
-            )}
-
             <input
               name="correo"
               type="text"
