@@ -1,21 +1,62 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ContenidoAdmin() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("isAdmin");
+    navigate("/");
+  };
+
+  const handleAdmin = () => {
+    navigate("/FormularioAdmin");
+  };
+
   return (
     <div className="min-h-screen flex">
-      <div className="w-1/2 flex flex-col items-center justify-center p-8">
+      <button className="absolute  border-4 border-pink-500 top-4 left-4 bg-white p-6 shadow-lg rounded-full hover:bg-pink-500 hover:scale-105 hover:border-4 hover:border-white transition duration-300 ease-in-out z-20">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+          onClick={handleLogout}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+          />
+        </svg>
+      </button>
+      <div
+        className="w-1/2 flex flex-col items-center justify-center p-8 first-letter"
+        style={{
+          backgroundImage:
+            'url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9uZG8lMjBkZSUyMGxhJTIwYmlibGlvdGVjYXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="absolute inset-0 bg-pink-400 opacity-50"></div>
         <img
           src="https://png.pngtree.com/template/20190316/ourmid/pngtree-books-logo-image_80041.jpg"
           alt=""
           className="w-96 h-96 object-cover border-4 border-pink-500 rounded-full m-3 animate-bounce"
         />
-        <h1 className="text-4xl font-bold mt-10 text-center">
+        <h1 className="text-4xl font-bold mt-10 text-center sm:text-5xl bg-white bg-opacity-60 rounded-lg p-4 z-10">
           SECCION ADMINISTRADOR
         </h1>
       </div>
 
-      <div className="w-1/2 bg-pink-500 flex flex-col justify-center items-center p-8">
+      <div className="w-1/2 bg-pink-500 flex flex-col justify-center items-center p-8 z-10">
         <div className="bg-white shadow-2xl rounded-lg p-10 w-150">
           <h2 className="text-4xl font-semibold mb-6 text-pink-500 text-center">
             Menu administrador
@@ -123,7 +164,10 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
           </nav>
-          <button className="flex items-center justify-between bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-700  w-full hover:scale-110 transition duration-500">
+          <button
+            onClick={handleAdmin}
+            className="flex items-center justify-between bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-700  w-full hover:scale-110 transition duration-500"
+          >
             <span className="m-2">Crear administrador</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

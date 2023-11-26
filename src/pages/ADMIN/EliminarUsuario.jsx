@@ -2,11 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { RiSearchLine } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import React, { useState } from 'react';
+import axios from "axios";
 
 const EliminarUsuario = () =>{
     const [busqueda, setBusqueda] = useState('');
     const [resultados, setResultados] = useState([]);
-      const navigate = useNavigate();
+    const [usuario, setUsuario]  = useState('');
+    const navigate = useNavigate();
 
 
 const goToInicio = () => {
@@ -15,42 +17,58 @@ const goToInicio = () => {
 
 
 const eliminar = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Token no disponible");
+    return;
+  }
+  axios.delete(`http://localhost:4000/deleteUser/${encodeURIComponent(usernameABorrar)}`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
         Swal.fire({
             title: 'Eliminar',
             text: '¿Está seguro de que quiere eliminar el usuario?',
             icon: 'warning',
-            showCancelButton: true,  // Muestra el botón de cancelar
-            confirmButtonColor: '#3085d6',  // Color del botón de confirmación
-            cancelButtonColor: '#d33',  // Color del botón de cancelar
-            confirmButtonText: 'Sí, eliminar',  // Texto del botón de confirmación
-            cancelButtonText: 'Cancelar'  // Texto del botón de cancelar
+            showCancelButton: true,  
+            confirmButtonColor: '#3085d6',  
+            cancelButtonColor: '#d33', 
+            confirmButtonText: 'Sí, eliminar', 
+            cancelButtonText: 'Cancelar'  
         }).then((result) => {
             if (result.isConfirmed) {
-                // Lógica a ejecutar si se hace clic en confirmar
-                // Por ejemplo, llamar a una función para eliminar el usuario
-                // Ejemplo: eliminarUsuario();
             }
         });
     };
 
-const buscar = () => {
-        Swal.fire({
-            title: 'Buscar',
-            text: '¿Está seguro de que quiere eliminar el usuario?',
-            icon: 'warning',
-            showCancelButton: true,  // Muestra el botón de cancelar
-            confirmButtonColor: '#3085d6',  // Color del botón de confirmación
-            cancelButtonColor: '#d33',  // Color del botón de cancelar
-            confirmButtonText: 'Sí, eliminar',  // Texto del botón de confirmación
-            cancelButtonText: 'Cancelar'  // Texto del botón de cancelar
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Lógica a ejecutar si se hace clic en confirmar
-                // Por ejemplo, llamar a una función para eliminar el usuario
-                // Ejemplo: eliminarUsuario();
-            }
+const buscar = async () => {
+      try {
+        const token = localStorage.getItem("token");
+    
+        if (!token) {
+          console.error("Token no disponible");
+          return;
+        }
+    
+        // Realizar la petición para buscar usuarios por nombre de usuario
+        const response = await axios.get(`http://localhost:4000/buscarUsuario/${busqueda}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
+    
+        // Actualizar el estado de resultados con los usuarios encontrados
+        setResultados(response.data);
+    
+      } catch (error) {
+        console.error("Error al buscar usuarios", error);
+        // Puedes agregar aquí lógica para mostrar un mensaje de error al usuario
+      }
     };
+    
 
 
 return (
@@ -67,7 +85,7 @@ return (
         className="absolute top-4 left-4 bg-pink-500 text-white p-4 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
         onClick={goToInicio}
       >
-        <svg
+          <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -78,7 +96,7 @@ return (
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
           />
         </svg>
       </button>
@@ -98,7 +116,7 @@ return (
       placeholder="Buscar Usuario..."
     />
     <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-      <buton >
+      <buton onClick={buscar} >
       <RiSearchLine className="text-black-500" />
       </buton>
     </div>

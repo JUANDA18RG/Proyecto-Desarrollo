@@ -17,6 +17,7 @@ import DetallesReserva from "./pages/RESERVAS/detallesReserva";
 import EditReservation from "./pages/RESERVAS/editReservation";
 import EditarComentarios from "./pages/USUARIO/EditarComentarios";
 import ContenidoAdmin from "./pages/ADMIN/ContenidoAdmin";
+import FormularioAdmin from "./pages/ADMIN/FormularioAdmin";
 import EliminarUsuario from "./pages/ADMIN/EliminarUsuario";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/editReserva/:id" element={<EditReservation />} />
         <Route path="/editarComentario/:isbn" element={<EditarComentarios />} />
         <Route path="/ContenidoAdmin" element={<ContenidoAdmin />} />
+        <Route path="/FormularioAdmin" element={<FormularioAdmin />} />
         <Route path="/EliminarUsuario" element={<EliminarUsuario />} />
       </Routes>
     </div>
