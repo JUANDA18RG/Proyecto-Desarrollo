@@ -125,6 +125,7 @@ const HistorialComentarios = ({ usuario }) => {
     }
     return <div className="flex items-center space-x-1">{stars}</div>;
   };
+  
   //eliminar comentarios
   const handleDeleteComment = async () => {
     try {
