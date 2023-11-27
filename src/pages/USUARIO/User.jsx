@@ -41,36 +41,39 @@ const HistorialReservas = ({ usuario }) => {
             reservas.map((reserva) => (
               <div
                 key={reserva.id}
-                className="mb-8 border p-8 rounded shadow-md flex"
+                className="p-4 border-4 border-pink-500 shadow-xl flex items-center justify-center max-w-3xl mx-auto mb-8"
               >
-                <div>
-                  <h1 className="text-2xl text-gray-800 font-semibold ml-2">
-                    ID de la reserva: {reserva.id}
-                  </h1>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    Titulo: {reserva.libro.titulo}
-                  </p>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    ISBN: {reserva.libro.isbn}
-                  </p>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    Estado: {reserva.estado}
-                  </p>
+                <div className="flex items-center justify-center mb-4">
+                  <img
+                    src={`http://localhost:4000/${reserva.libro.portada}`}
+                    alt={`Portada de ${reserva.libro.titulo}`}
+                    className="w-96 h-96 object-contain rounded"
+                  />
                 </div>
-
-                <img
-                  src={`http://localhost:4000/${reserva.libro.portada}`}
-                  alt={`Portada de ${reserva.libro.titulo}`}
-                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
-                />
-
-                <div className="mt-auto">
-                  <button
-                    onClick={() => navigate(`/detalleReserva/${reserva.id}`)}
-                    className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
-                  >
-                    Ver detalles
-                  </button>
+                <div className=" flex flex-col items-center">
+                  <h3 className="text-2xl text-gray-800 font-semibold m-2">
+                    ID de la reserva: {reserva.id}
+                  </h3>
+                  <p className="text-gray-600 text-2xl m-2">
+                    <span className="text-gray-800 font-semibold">Título:</span>{" "}
+                    {reserva.libro.titulo}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2 m-2">
+                    <span className="text-gray-800 font-semibold">ISBN:</span>{" "}
+                    {reserva.libro.isbn}
+                  </p>
+                  <p className="text-gray-600 text-2xl ml-2 m-2">
+                    <span className="text-gray-800 font-semibold">Estado:</span>{" "}
+                    {reserva.estado}
+                  </p>
+                  <div className="mt-5">
+                    <button
+                      onClick={() => navigate(`/detalleReserva/${reserva.id}`)}
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold p-6 rounded hover:scale-105 transition duration-500 ease-in-out"
+                    >
+                      Ver detalles
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
@@ -227,29 +230,34 @@ const HistorialComentarios = ({ usuario }) => {
             valoracion.map((comentarios) => (
               <div
                 key={comentarios.id}
-                className="comment-container mb-8 border p-8 rounded shadow-md flex"
+                className="comment-container mb-8 p-8 rounded  flex items-center border-4 border-pink-500 shadow-xl"
               >
-                <div className="comment-details">
-                  <h3 className="text-2xl text-gray-800 font-semibold ml-2">
-                    ISBN: {comentarios.libro.isbn}
-                  </h3>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    Titulo: {comentarios.libro.titulo}
-                  </p>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    Comentario: {comentarios.comentario}
-                  </p>
-                  <p className="text-gray-600 text-2xl ml-2">
-                    Valoracion: <StarRating rating={comentarios.valoracion} />
-                  </p>
-                </div>
                 <img
                   src={`http://localhost:4000/${comentarios.libro.portada}`}
                   alt={`Portada de ${comentarios.libro.titulo}`}
-                  className="max-w-xs max-h-xs mt-4 mx-auto border-4 border-pink-500"
+                  className="w-96 h-96 object-contain rounded"
                 />
-                <div className="mt-auto">
-                  <div className="flex flex-col space-y-4">
+                <div className="flex-1">
+                  <h3 className="text-2xl text-gray-800 font-semibold m-2">
+                    ISBN: {comentarios.libro.isbn}
+                  </h3>
+                  <p className="text-gray-600 text-2xl m-2">
+                    <span className="text-gray-800 font-semibold">Título:</span>{" "}
+                    {comentarios.libro.titulo}
+                  </p>
+                  <p className="text-gray-600 text-2xl text-justify m-2">
+                    <span className="text-gray-800 font-semibold">
+                      Comentario:
+                    </span>{" "}
+                    {comentarios.comentario}
+                  </p>
+                  <p className="text-gray-600 text-2xl flex items-center m-2">
+                    <span className="font-semibold text-gray-800 mr-2 ">
+                      Valoración:
+                    </span>
+                    <StarRating rating={comentarios.valoracion} />
+                  </p>
+                  <div className="flex  items-center justify-center space-x-4 mt-3">
                     <button
                       onClick={() => {
                         navigate(
@@ -259,19 +267,19 @@ const HistorialComentarios = ({ usuario }) => {
                           }
                         );
                       }}
-                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
                     >
                       Editar comentario
                     </button>
                     <button
                       onClick={() => showCommentConfirmation(comentarios)}
-                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
                     >
                       Eliminar comentario
                     </button>
                     <button
                       onClick={() => showRatingConfirmation(comentarios)}
-                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out"
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
                     >
                       Eliminar valoración
                     </button>
@@ -285,7 +293,6 @@ const HistorialComentarios = ({ usuario }) => {
     </div>
   );
 };
-
 const LibraryProfile = () => {
   const navigate = useNavigate();
   const [UserData, setUserData] = useState({
@@ -318,7 +325,7 @@ const LibraryProfile = () => {
   }, []);
 
   return (
-    <>
+    <div className=" overflow-hidden">
       <button
         className="absolute top-4 left-4 bg-pink-500 text-white p-6 shadow-lg rounded-full hover:bg-pink-700 hover:text-white"
         onClick={goBack}
@@ -376,102 +383,100 @@ const LibraryProfile = () => {
           />
         </svg>
       </button>
-      <div className=" bg-gray-100">
-        <div className="bg-pink-500 h-96 w-screen ">
-          <div
-            className="bg-cover bg-center h-full w-screen"
-            style={{
-              backgroundImage: `url('https://c1.wallpaperflare.com/preview/821/335/782/book-reading-hand-legs.jpg')`,
-            }}
-          >
-            <div className="bg-pink-500 bg-opacity-50 h-full  w-full p-4 text-center">
-              <div className="m-5 mt-16 inline-block">
-                <h1 className="text-5xl font-bold sm:text-5xl bg-white bg-opacity-60 rounded-lg p-4">
-                  {username}
-                </h1>
-              </div>
-              <h2 className="text-2xl font-semibold">{UserData.Name}</h2>
-              <p className="text-gray-600">{UserData.email}</p>
-              <div className="flex items-center justify-center">
-                <Link
-                  to={"/EditUser"}
-                  className="bg-white text-pink-600 font-semibold py-2 px-4 rounded-full hover:scale-110 transition duration-300 flex items-center m-2"
+      <div className="bg-pink-500 h-96 w-screen">
+        <div
+          className="bg-cover bg-center h-full w-screen"
+          style={{
+            backgroundImage: `url('https://c1.wallpaperflare.com/preview/821/335/782/book-reading-hand-legs.jpg')`,
+          }}
+        >
+          <div className="bg-pink-500 bg-opacity-50 h-full  w-full p-4 text-center">
+            <div className="m-5 mt-16 inline-block">
+              <h1 className="text-5xl font-bold sm:text-5xl bg-white bg-opacity-60 rounded-lg p-4">
+                {username}
+              </h1>
+            </div>
+            <h2 className="text-2xl font-semibold">{UserData.Name}</h2>
+            <p className="text-gray-600">{UserData.email}</p>
+            <div className="flex items-center justify-center">
+              <Link
+                to={"/EditUser"}
+                className="bg-white text-pink-600 font-semibold py-2 px-4 rounded-full hover:scale-110 transition duration-300 flex items-center m-2"
+              >
+                Editar Perfil
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 ml-2"
                 >
-                  Editar Perfil
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 ml-2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
-                    />
-                  </svg>
-                </Link>
-              </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
+                  />
+                </svg>
+              </Link>
             </div>
-          </div>
-        </div>
-        <div className="container mx-auto mt-8 p-4">
-          <div className="bg-white p-4 rounded-lg shadow-md">
-            <div className="mb-4 flex justify-center space-x-4">
-              <button
-                className={`${
-                  activeOption === "comments"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("comments")}
-              >
-                Historial de comentarios
-              </button>
-              <button
-                className={`${
-                  activeOption === "recommended"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("recommended")}
-              >
-                Mis favoritos
-              </button>
-              <button
-                className={`${
-                  activeOption === "reservations"
-                    ? "bg-pink-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                } font-semibold py-2 px-4 rounded`}
-                onClick={() => setActiveOption("reservations")}
-              >
-                Historial de Reservas
-              </button>
-            </div>
-
-            {activeOption === "recommended" && (
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Mis Favoritos</h2>
-                <ul>
-                  {recommendedBooks.map((book) => (
-                    <li key={book.id}>{book.title}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {activeOption === "reservations" && (
-              <HistorialReservas usuario={username} />
-            )}
-            {activeOption === "comments" && (
-              <HistorialComentarios usuario={username} />
-            )}
           </div>
         </div>
       </div>
-    </>
+      <div className="container mx-auto mt-8 p-4">
+        <div className="bg-white p-4 rounded-lg">
+          <div className="mb-4 flex justify-center space-x-4">
+            <button
+              className={`${
+                activeOption === "comments"
+                  ? "bg-pink-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              } font-semibold py-2 px-4 rounded`}
+              onClick={() => setActiveOption("comments")}
+            >
+              Historial de comentarios
+            </button>
+            <button
+              className={`${
+                activeOption === "recommended"
+                  ? "bg-pink-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              } font-semibold py-2 px-4 rounded`}
+              onClick={() => setActiveOption("recommended")}
+            >
+              Mis favoritos
+            </button>
+            <button
+              className={`${
+                activeOption === "reservations"
+                  ? "bg-pink-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              } font-semibold py-2 px-4 rounded`}
+              onClick={() => setActiveOption("reservations")}
+            >
+              Historial de Reservas
+            </button>
+          </div>
+
+          {activeOption === "recommended" && (
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Mis Favoritos</h2>
+              <ul>
+                {recommendedBooks.map((book) => (
+                  <li key={book.id}>{book.title}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {activeOption === "reservations" && (
+            <HistorialReservas usuario={username} />
+          )}
+          {activeOption === "comments" && (
+            <HistorialComentarios usuario={username} />
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
