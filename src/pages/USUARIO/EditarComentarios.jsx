@@ -113,19 +113,21 @@ const EditarComentario = () => {
               />
             </svg>
           </button>
-          <div className="w-full md:w-1/2 pr-4 m-4 z-20">
-            <div className="bg-white border-4 border-pink-500 m-5 p-4 flex items-center">
+          <div className="w-full md:w-1/2 pr-5 m-4 z-20">
+            <div className="flex items-center">
               <img
                 src={`http://localhost:4000/${Comentario.libro.portada}`}
                 alt={`Portada de ${Comentario.libro.titulo}`}
-                className="w-60 h-80 object-contain mb-2 mx-auto mt-5"
+                className="w-96 h-96 object-contain mb-2 mx-auto mt-5 mr-5"
               />
-              <div className="ml-4">
-                <p className="text-gray-600 text-2xl mb-2">
-                  Comentario: {Comentario.comentario}
+              <div className="ml-4 bg-white border-4 border-pink-500 m-5 p-4 overflow-x-auto max-h-96 max-w-96">
+                <p className="text-gray-600 text-2xl m-3 text-justify">
+                  <span className="font-semibold text-black">Comentario:</span>{" "}
+                  {Comentario.comentario}
                 </p>
                 <p className="text-gray-600 text-2xl flex items-center">
-                  Valoracion: <StarRating rating={Comentario.valoracion} />
+                  <span className="font-semibold text-black">Valoracion:</span>{" "}
+                  <StarRating rating={Comentario.valoracion} />
                 </p>
               </div>
             </div>
