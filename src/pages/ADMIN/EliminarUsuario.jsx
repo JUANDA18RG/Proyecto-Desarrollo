@@ -196,8 +196,8 @@ return (
           </div>
            ))
       ): busqueda.trim() !== '' && (
-      <di className="text-center mt-4 text-red-500">
-      No se encontraron resultados para la búsqueda "{busqueda}"</di>
+        <div className="text-center mt-4 text-red-500 text-lg font-bold">
+      No se encontraron resultados para la búsqueda "{busqueda}"</div>
       )
  }
          </div>

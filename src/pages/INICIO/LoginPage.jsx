@@ -33,12 +33,12 @@ export default function LoginPage() {
             Authorization: `Bearer ${token}`,
           },
     });
-        console.log('Respuesta de completarFormulario:', formResponse.data);
+        
         const isFirstLogin = formResponse.data.form;
       
       if (isAdmin) {
         if (isFirstLogin) {
-          navigate("/completarFormulario");
+          navigate("/completarFormulario"); //Si es la primera vez que se logue el admi
         } else {
           navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin      
         }
