@@ -20,11 +20,28 @@ export default function LoginPage() {
       const token = response.data.token;
       const username = response.data.username;
       const isAdmin = response.data.isAdmin; // Asume que el servidor envía esta información
+      
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
+      
+      const formResponse = await axios.get("http://localhost:4000/completarFormulario", {
+      params: {
+            correo: email, 
+         },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+    });
+        console.log('Respuesta de completarFormulario:', formResponse.data);
+        const isFirstLogin = formResponse.data.form;
+      
       if (isAdmin) {
-        navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin
+        if (isFirstLogin) {
+          navigate("/completarFormulario");
+        } else {
+          navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin      
+        }
       } else {
         navigate("/Contenido"); // Si el usuario no es administrador, redirige a /Contenido
       }
