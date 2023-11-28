@@ -55,10 +55,17 @@ const BookList = () => {
                         {libro.titulo}
                       </h2>
                       <p className="text-gray-600 m-1 text-center">
-                        Author: {libro.autor}
+                        <span className="font-semibold text-black">
+                          {" "}
+                          Author:
+                        </span>{" "}
+                        {libro.autor}
                       </p>
                       <p className="text-gray-600 m-1 text-center">
-                        Categoria: {libro.genero}
+                        <span className="font-semibold text-black">
+                          Categoria:
+                        </span>{" "}
+                        {libro.genero}
                       </p>
                     </div>
                     <div className="flex justify-center items-center text-gray-700 p-2 mx-auto">
