@@ -89,25 +89,21 @@ const CompletarFormulario = () => {
             } catch (error) {
               console.error("Error al enviar formulario:", error);
               if (error.response) {
-                // La solicitud fue hecha y el servidor respondió con un código de estado diferente de 2xx
                 console.log("Respuesta del servidor:", error.response.data);
             
                 if (error.response.status === 400 && error.response.data.message === "El usuario no existe") {
-                  // Mostrar un mensaje significativo al usuario
+                  
                   Swal.fire({
                     title: 'Error',
                     text: 'El usuario no existe. Por favor, verifica tus credenciales.',
                     icon: 'error',
                   });
-                } else {
-                  // Manejar otros errores del servidor
-                  // ...
                 }
               } else if (error.request) {
-                // La solicitud fue hecha pero no se recibió ninguna respuesta
+                
                 console.error("No se recibió ninguna respuesta del servidor.");
               } else {
-                // Algo sucedió en la configuración de la solicitud que desencadenó un error
+                
                 console.error("Error de configuración de la solicitud:", error.message);
               }
             }
