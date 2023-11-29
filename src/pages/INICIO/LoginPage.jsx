@@ -17,33 +17,31 @@ export default function LoginPage() {
         correo: email,
         password: password,
       });
+
       const token = response.data.token;
       const username = response.data.username;
-      const isAdmin = response.data.isAdmin; // Asume que el servidor envía esta información
-      const isSuperAdmin = response.data.isSuperAdmin; // Asume que el servidor envía esta información
+      const isAdmin = response.data.isAdmin;
+      const isSuperAdmin = response.data.isSuperAdmin;
 
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
 
-      const formResponse = await axios.get(
-        "http://localhost:4000/completarFormulario",
-        {
-          params: {
-            correo: email,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const isFirstLogin = formResponse.data.form;
-
       if (isAdmin) {
-        navigate(`/ContenidoAdmin/${isSuperAdmin}`); //Si es la primera vez que se logue el admi
+        const formResponse = await axios.get(
+          "http://localhost:4000/completarFormulario",
+          {
+            params: {
+              correo: email,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        navigate(`/ContenidoAdmin/${isSuperAdmin}`);
       } else {
-        navigate("/Contenido"); // Si el usuario no es administrador, redirige a /Contenido
+        navigate("/Contenido");
       }
     } catch (error) {
       if (error.response) {
