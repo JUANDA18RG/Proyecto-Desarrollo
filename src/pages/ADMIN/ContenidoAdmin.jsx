@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function ContenidoAdmin() {
   const navigate = useNavigate();
+  const { isSuperAdmin } = useParams();
+  const isSuperAdminBool = isSuperAdmin === "true";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -166,6 +168,7 @@ export default function ContenidoAdmin() {
           </nav>
           <button
             onClick={handleAdmin}
+            disabled={!isSuperAdminBool}
             className="flex items-center justify-between bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-700  w-full hover:scale-110 transition duration-500"
           >
             <span className="m-2">Crear administrador</span>
