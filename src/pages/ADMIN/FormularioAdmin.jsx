@@ -13,9 +13,10 @@ export default function FormularioAdmin() {
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [error, setError] = useState(""); //Traidos del backend
+  const [error, setError] = useState("");
   const [errors, setErrors] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const isSuperAdmin = localStorage.getItem("isSuperAdmin");
 
   const handleChange = (e) => {
     setFormData({
@@ -28,25 +29,22 @@ export default function FormularioAdmin() {
     const newErrors = {};
     let isValid = true;
 
-    // Validación para que el username no comience con números
     if (!/^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/.test(formData.username)) {
       newErrors.username = "Username should not start with numbers";
       isValid = false;
     }
 
-    //Validacion correo
     if (
       !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.correo)
     ) {
-      newErrors.correo = "Debes ingresar un correo valido";
+      newErrors.correo = "Debes ingresar un correo válido";
       isValid = false;
     }
 
-    // Validación para que la contraseña tenga al menos una mayúscula, una minúscula y un carácter especial
     const expresionRegular = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$-_%^&*]).{8,}$/;
     if (!expresionRegular.test(formData.password)) {
       newErrors.password =
-        "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long";
+        "La contraseña debe contener al menos una mayúscula, una minúscula, un carácter especial y tener al menos 8 caracteres";
       isValid = false;
     }
 
@@ -57,7 +55,6 @@ export default function FormularioAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación adicional para comprobar que los campos obligatorios no estén vacíos
     if (
       formData.correo.trim() === "" ||
       formData.username.trim() === "" ||
@@ -71,7 +68,42 @@ export default function FormularioAdmin() {
       });
       return;
     }
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/createUser",
+        {
+          username: formData.username,
+          correo: formData.correo,
+          password: formData.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setRegistrationSuccess(true);
+      Swal.fire({
+        title: "Registro Exitoso",
+        text: "El administrador se ha registrado correctamente.",
+        icon: "success",
+      });
+
+      navigate(`/ContenidoAdmin/${isSuperAdmin}`);
+    } catch (error) {
+      console.error("Error al registrar al administrador:", error);
+      setError(
+        error.response?.data?.message || "Error al procesar la solicitud"
+      );
+    }
   };
+
   const goBack = () => {
     window.history.back();
   };
@@ -243,10 +275,9 @@ export default function FormularioAdmin() {
               Crear
             </button>
             {
-              <div
-                id="error-message"
-                className="text-red-500 text-center mt-2"
-              ></div>
+              <div id="error-message" className="text-red-500 text-center mt-2">
+                {error}
+              </div>
             }
           </form>
         </div>

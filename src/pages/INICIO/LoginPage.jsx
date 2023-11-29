@@ -17,33 +17,40 @@ export default function LoginPage() {
         correo: email,
         password: password,
       });
+
       const token = response.data.token;
       const username = response.data.username;
-      const isAdmin = response.data.isAdmin; // Asume que el servidor envía esta información
-      
+      const isAdmin = response.data.isAdmin;
+      const isSuperAdmin = response.data.isSuperAdmin;
+
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
-      
-      const formResponse = await axios.get("http://localhost:4000/completarFormulario", {
-      params: {
-            correo: email, 
-         },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-    });
-        
-        const isFirstLogin = formResponse.data.form;
-      
+      localStorage.setItem("isSuperAdmin", isSuperAdmin);
+
       if (isAdmin) {
+<<<<<<< HEAD
         if (isFirstLogin) {
           navigate("/completarFormulario"); //Si es la primera vez que se loguea el admi
         } else {
           navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin      
         }
+=======
+        const formResponse = await axios.get(
+          "http://localhost:4000/completarFormulario",
+          {
+            params: {
+              correo: email,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        navigate(`/ContenidoAdmin/${isSuperAdmin}`);
+>>>>>>> 221c9c039097ebf8ab8e3e372a100a86e20d24b1
       } else {
-        navigate("/Contenido"); // Si el usuario no es administrador, redirige a /Contenido
+        navigate("/Contenido");
       }
     } catch (error) {
       if (error.response) {
