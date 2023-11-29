@@ -38,7 +38,7 @@ export default function LoginPage() {
       
       if (isAdmin) {
         if (isFirstLogin) {
-          navigate("/completarFormulario"); //Si es la primera vez que se logue el admi
+          navigate("/completarFormulario"); //Si es la primera vez que se loguea el admi
         } else {
           navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin      
         }
