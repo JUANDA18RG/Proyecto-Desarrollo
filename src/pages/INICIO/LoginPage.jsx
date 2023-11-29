@@ -26,6 +26,7 @@ export default function LoginPage() {
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
+      localStorage.setItem("isSuperAdmin", isSuperAdmin);
 
       if (isAdmin) {
         const formResponse = await axios.get(

@@ -11,6 +11,7 @@ export default function ContenidoAdmin() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isSuperAdmin");
     navigate("/");
   };
 
