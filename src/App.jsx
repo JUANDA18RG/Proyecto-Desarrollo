@@ -19,7 +19,7 @@ import EditarComentarios from "./pages/USUARIO/EditarComentarios";
 import ContenidoAdmin from "./pages/ADMIN/ContenidoAdmin";
 import FormularioAdmin from "./pages/ADMIN/FormularioAdmin";
 import EliminarUsuario from "./pages/ADMIN/EliminarUsuario";
-import CompletarFormulario  from "./pages/ADMIN/CompletarFormulario";
+import CompletarFormulario from "./pages/ADMIN/CompletarFormulario";
 
 function App() {
   return (
@@ -40,7 +40,10 @@ function App() {
         <Route path="/detalleReserva/:id" element={<DetallesReserva />} />
         <Route path="/editReserva/:id" element={<EditReservation />} />
         <Route path="/editarComentario/:isbn" element={<EditarComentarios />} />
-        <Route path="/ContenidoAdmin" element={<ContenidoAdmin />} />
+        <Route
+          path="/ContenidoAdmin/:isSuperAdmin"
+          element={<ContenidoAdmin />}
+        />
         <Route path="/FormularioAdmin" element={<FormularioAdmin />} />
         <Route path="/EliminarUsuario" element={<EliminarUsuario />} />
         <Route path="/CompletarFormulario" element={<CompletarFormulario />} />
