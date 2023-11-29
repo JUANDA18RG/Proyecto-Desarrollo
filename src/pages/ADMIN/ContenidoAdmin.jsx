@@ -169,7 +169,11 @@ export default function ContenidoAdmin() {
           <button
             onClick={handleAdmin}
             disabled={!isSuperAdminBool}
-            className="flex items-center justify-between bg-blue-500 text-white py-2 px-4 rounded-lg mt-6 hover:bg-blue-700  w-full hover:scale-110 transition duration-500"
+            className={`flex items-center justify-between py-2 px-4 rounded-lg mt-6 w-full hover:scale-110 transition duration-500 ${
+              isSuperAdminBool
+                ? "bg-blue-500 hover:bg-blue-700 text-white"
+                : "bg-gray-500 text-gray-300 cursor-not-allowed"
+            }`}
           >
             <span className="m-2">Crear administrador</span>
             <svg
