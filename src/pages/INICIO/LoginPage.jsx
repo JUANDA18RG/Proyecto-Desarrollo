@@ -29,13 +29,6 @@ export default function LoginPage() {
       localStorage.setItem("isSuperAdmin", isSuperAdmin);
 
       if (isAdmin) {
-<<<<<<< HEAD
-        if (isFirstLogin) {
-          navigate("/completarFormulario"); //Si es la primera vez que se loguea el admi
-        } else {
-          navigate("/ContenidoAdmin"); // Si el usuario es administrador, redirige a /ContenidoAdmin      
-        }
-=======
         const formResponse = await axios.get(
           "http://localhost:4000/completarFormulario",
           {
@@ -48,7 +41,6 @@ export default function LoginPage() {
           }
         );
         navigate(`/ContenidoAdmin/${isSuperAdmin}`);
->>>>>>> 221c9c039097ebf8ab8e3e372a100a86e20d24b1
       } else {
         navigate("/Contenido");
       }
