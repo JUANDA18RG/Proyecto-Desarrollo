@@ -16,6 +16,7 @@ export default function FormularioAdmin() {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const isSuperAdmin = localStorage.getItem("isSuperAdmin");
 
   const handleChange = (e) => {
     setFormData({
@@ -73,11 +74,19 @@ export default function FormularioAdmin() {
     }
 
     try {
-      const response = await axios.post("http://localhost:4000/createUser", {
-        username: formData.username,
-        correo: formData.correo,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/createUser",
+        {
+          username: formData.username,
+          correo: formData.correo,
+          password: formData.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       setRegistrationSuccess(true);
       Swal.fire({
@@ -86,7 +95,7 @@ export default function FormularioAdmin() {
         icon: "success",
       });
 
-      navigate("/ContenidoAdmin");
+      navigate(`/ContenidoAdmin/${isSuperAdmin}`);
     } catch (error) {
       console.error("Error al registrar al administrador:", error);
       setError(
