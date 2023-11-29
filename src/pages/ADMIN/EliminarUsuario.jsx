@@ -11,7 +11,7 @@ const EliminarUsuario = () =>{
     const navigate = useNavigate();
 
 const goToInicio = () => {
-        navigate("/ContenidoAdmin");
+        navigate("/ContenidoAdmin/false");
       };
 
 

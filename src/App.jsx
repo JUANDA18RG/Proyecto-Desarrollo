@@ -46,7 +46,7 @@ function App() {
         />
         <Route path="/FormularioAdmin" element={<FormularioAdmin />} />
         <Route path="/EliminarUsuario" element={<EliminarUsuario />} />
-        <Route path="/CompletarFormulario" element={<CompletarFormulario />} />
+        <Route path="/login/CompletarFormulario" element={<CompletarFormulario />} />
       </Routes>
     </div>
   );

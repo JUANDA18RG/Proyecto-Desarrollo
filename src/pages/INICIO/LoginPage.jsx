@@ -40,7 +40,15 @@ export default function LoginPage() {
             },
           }
         );
-        navigate(`/ContenidoAdmin/${isSuperAdmin}`);
+        if(formResponse.data.form)
+        {
+          navigate("/login/completarFormulario");
+        }
+        else
+        {
+          navigate(`/ContenidoAdmin/${isSuperAdmin}`);
+        }
+        
       } else {
         navigate("/Contenido");
       }
