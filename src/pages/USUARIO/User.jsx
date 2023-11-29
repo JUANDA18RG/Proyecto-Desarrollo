@@ -128,6 +128,7 @@ const HistorialComentarios = ({ usuario }) => {
     }
     return <div className="flex items-center space-x-1">{stars}</div>;
   };
+  
   //eliminar comentarios
   const handleDeleteComment = async () => {
     try {
@@ -257,7 +258,7 @@ const HistorialComentarios = ({ usuario }) => {
                     </span>
                     <StarRating rating={comentarios.valoracion} />
                   </p>
-                  <div className="flex  items-center justify-center space-x-4 mt-3">
+                  <div className="flex p-4 items-center justify-center space-x-4 mt-3">
                     <button
                       onClick={() => {
                         navigate(

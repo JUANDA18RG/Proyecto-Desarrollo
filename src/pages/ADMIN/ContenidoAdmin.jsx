@@ -144,7 +144,7 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/"
+              to="/EliminarUsuario"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Eliminar usuario</span>
