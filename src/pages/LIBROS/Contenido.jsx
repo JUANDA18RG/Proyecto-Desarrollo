@@ -24,8 +24,8 @@ export default function Contenido() {
       {/*-----------------Carruseles-----------------*/}
       <Carruseles />
       {/*-----------------Busqueda-----------------*/}
-      <Busqueda onBuscar={handleBuscarLibro} />
       {/*-----------------Libros mas reservados-----------------*/}
+      <Busqueda onBuscar={handleBuscarLibro} />
       <Books />
       {/*-----------------Info sobre los libros-----------------*/}
       <InfoLibro />

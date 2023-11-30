@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Busqueda from './Busqueda';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const handleBuscarLibro = (busqueda, filtro, disponibilidadFiltro) => {
+    console.log('Búsqueda:', busqueda);
+    console.log('Filtro:', filtro);
+    console.log('Disponibilidad Filtro:', disponibilidadFiltro);
+  };
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/Books")
@@ -28,6 +34,10 @@ const BookList = () => {
             BUSQUEDA DE LIBROS
           </h2>
         </div>
+
+        <h1> aqui deberia ir el buscador</h1>
+        <Busqueda onBuscar={handleBuscarLibro} />
+
         <div className="container m-auto py-10">
           {loading ? (
             <div class="flex items-center justify-center min-h-screen">
