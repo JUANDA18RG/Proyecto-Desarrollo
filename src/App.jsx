@@ -23,6 +23,7 @@ import CompletarFormulario from "./pages/ADMIN/CompletarFormulario";
 import EliminarCuenta from "./pages/USUARIO/EliminarCuenta";
 import EliminarLibro from "./pages/ADMIN/EliminarLibro";
 
+
 function App() {
   return (
     <div>
@@ -53,7 +54,7 @@ function App() {
           element={<CompletarFormulario />}
         />
         <Route path="/EliminarCuenta" element={<EliminarCuenta />} />
-        <Route path="/Eliminarlibro" element={<Eliminarlibro />} />
+        <Route path="/EliminarLibro" element={<EliminarLibro />} />
       </Routes>
     </div>
   );
