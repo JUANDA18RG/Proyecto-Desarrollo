@@ -20,6 +20,7 @@ import ContenidoAdmin from "./pages/ADMIN/ContenidoAdmin";
 import FormularioAdmin from "./pages/ADMIN/FormularioAdmin";
 import EliminarUsuario from "./pages/ADMIN/EliminarUsuario";
 import CompletarFormulario from "./pages/ADMIN/CompletarFormulario";
+import EliminarCuenta from "./pages/USUARIO/EliminarCuenta";
 import EliminarLibro from "./pages/ADMIN/EliminarLibro";
 
 function App() {
@@ -47,8 +48,12 @@ function App() {
         />
         <Route path="/FormularioAdmin" element={<FormularioAdmin />} />
         <Route path="/EliminarUsuario" element={<EliminarUsuario />} />
-        <Route path="/login/CompletarFormulario" element={<CompletarFormulario />} />
-        <Route path="/EliminarLibro" element={<EliminarLibro />} />
+        <Route
+          path="/login/CompletarFormulario"
+          element={<CompletarFormulario />}
+        />
+        <Route path="/EliminarCuenta" element={<EliminarCuenta />} />
+        <Route path="/Eliminarlibro" element={<Eliminarlibro />} />
       </Routes>
     </div>
   );
