@@ -33,8 +33,7 @@ const eliminar = async (ISBN) => {
       if (!token) {
         console.error("Token no disponible");
         return;
-      }
-      
+      }    
       const response = await axios.delete(`http://localhost:4000/BorrarLibros`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -42,7 +41,6 @@ const eliminar = async (ISBN) => {
         data: {
           book: ISBN,
         },
-
       });
       if (response.status === 200) {
         Swal.fire({
