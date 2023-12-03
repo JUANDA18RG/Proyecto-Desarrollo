@@ -72,7 +72,7 @@ const eliminar = async (ISBN) => {
         eliminar(ISBN);
       }
     });
-  };
+  }
 
 
 return (
