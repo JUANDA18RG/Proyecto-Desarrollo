@@ -17,6 +17,7 @@ const goToInicio = () => {
 
 const mostrarUsuarios = async () => {
   try {
+    setLoading(true);
     const token = localStorage.getItem("token");
     if (!token) {
      console.error("Token no disponible");
@@ -89,9 +90,9 @@ const buscar = async () => {
           console.error("Token no disponible");
           return;
         }
-        const response = await axios.get(`http://localhost:4000/returnUsuario/${busqueda}`, {
+        const response = await axios.get(`http://localhost:4000/returnUsuario/${encodeURIComponent(busqueda)}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,                       
           },
         });
         if (response.data && Object.keys(response.data).length > 0) {
@@ -103,7 +104,9 @@ const buscar = async () => {
       } catch (error) {
         console.error("Error al buscar usuario", error);
         }finally {
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
         }
 };
     

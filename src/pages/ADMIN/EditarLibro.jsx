@@ -4,6 +4,7 @@ import axios from "axios";
 import { RiSearchLine } from 'react-icons/ri';
 import Swal from "sweetalert2";
 
+{/*Falta poder editar la imagen */}
 
 const EditarLibro = () => {
     const [books, setBooks] = useState ([]);
@@ -44,54 +45,62 @@ const handleEditClick = (libro) => {
       
       
 const handleEditFormChange = (e) => { 
+  if (e.target.name === 'portada') {
     setEditFormData({
           ...editFormData,
-          [e.target.name]: e.target.value,     
-        });
+          portada: e.target.files[0],
+          
+        })
+      }else{
+        setEditFormData({
+          ...editFormData,
+        [e.target.name]: e.target.value,     
+             })};
 };
 
 
 const handleEditFormSubmit = async () => {
-    try {
-      const isbn = editFormData.isbn;
-      const token = localStorage.getItem("token");
-  
-      if (!token) {
-        console.error("Token no disponible");
-        return;
-      }
-  
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-  
-      const response = await axios.put(`http://localhost:4000/libros/${isbn}`, editFormData, headers);
-  
-      if (response.status === 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Actualización exitosa',
-          text: 'La información del libro ha sido actualizada correctamente.',
-        });
-        cargarLibros();
-      } else {
-        console.error("Error al actualizar la información del libro. Estado:", response.status);
-      }
-    } catch (error) {
-      console.error("Error durante la actualización:", error);
-  
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un error al actualizar la información del libro.',
-      });
-    } finally {
-      setShowEditForm(false);
+  try {
+    const isbn = editFormData.isbn;
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("Token no disponible");
+      return;
     }
- };
-;
+
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      
+      },
+    };
+    
+    const response = await axios.put(`http://localhost:4000/libros/${isbn}`, editFormData, headers);
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Actualización exitosa',
+        text: 'La información del libro ha sido actualizada correctamente.',
+      });
+      cargarLibros();
+    } else {
+      console.error("Error al actualizar la información del libro. Estado:", response.status);
+    }
+  } catch (error) {
+    console.error("Error durante la actualización:", error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Hubo un error al actualizar la información del libro.',
+    });
+  } finally {
+    setShowEditForm(false);
+  }
+};
+
 
 const calculateTextareaRows = (content) => {
   const numberOfLines = content.split('\n').length;
@@ -106,6 +115,7 @@ useEffect(() => {
   }
 }, [busqueda]);
 
+
 const buscar = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -113,29 +123,35 @@ const buscar = async () => {
       console.error("Token no disponible");
       return;
     }
+    setLoading(true);
     const response = await axios.get(`http://localhost:4000/libros/${busqueda}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.data && Object.keys(response.data).length > 0) {
-        setBooks([response.data]);
-      } else {
-        console.log("No se encontraron resultados para la búsqueda:", busqueda);
-        setBooks([]);
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Respuesta del servidor:", response.data);
+    if (response.data && Object.keys(response.data).length > 0) {
+      setBooks([response.data]);
       }
+     else {
+      console.log("No se encontraron resultados para la búsqueda:", busqueda);
+      setBooks([]);
+    }
   } catch (error) {
     console.error("Error al buscar libro", error.message);
   } finally {
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   }
 };
 
+
 return (
         <div className="relative">
-             <div className={`absolute inset-0 ${books.length > 0 ? 'bg-pink-500 h-screen' : 'bg-pink-500 h-34'} z-0`}></div>
-
-        <div className="flex flex-col relative w-full mx-auto top-0  z-10">
+        <div className={`absolute inset-0 bg-pink-500 z-0`}></div>
+        <div className="flex flex-col relative w-full mx-auto top-0  z-10 min-h-screen">
         
         <div className="bg-white shadow-xl h-34">
            <button
@@ -158,17 +174,17 @@ return (
               </svg>
             </button>
          <h1 className="text-4xl font-bold mt-6 text-center text-gray-800">
-             Editar libros
+         📚 Editar libros
           </h1>
          
           <div className="grid place-items-center ml-auto relative p-4">
-          <div className="relative flex items-center">
+          <div className="relative flex items-center flex-grow">
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="text-center px-16 py-3 w-96 italic border border-pink-300 rounded-full shadow-md bg-white" 
-              placeholder="Buscar ISBN..."
+              placeholder="Buscar titulo..."
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
               <button onClick={buscar} >
@@ -190,80 +206,78 @@ return (
                   </div>
                 ) : (
                 
-               
                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5 overflow-hidden">
                {books.length > 0 ? (
                  books.map((libro) => (
                      <div
-                      key={libro.ISBN}
-                     className="group bg-white rounded-xl m-5 shadow-2xl transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-black relative"
+                      key={libro.isbn}
+                     className="group bg-white rounded-xl m-5 shadow-2xl transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-black relative p-4"
                       >
-                <div className="flex">
-                <div className="w-2/3 flex flex-col items-center">
-                  <h2 className="text-xl font-semibold text-center mb-4">
-                   {libro.titulo}
-                    </h2>
-                    <p className="text-gray-600 m-1 text-center">
-                    <span className="font-semibold text-black">
-                    {" "}
-                    ISBN:
-                    </span>{" "}
-                     {libro.isbn}
-                     </p>
-                    <p className="text-gray-600 m-1 text-center">
-                    <span className="font-semibold text-black">
-                    {" "}
-                    Author:
-                    </span>{" "}
-                     {libro.autor}
-                     </p>
-                    <p className="text-gray-600 m-1 text-center">
-                    <span className="font-semibold text-black">                   
-                   Categoria:
-                   </span>{" "}
-                    {libro.genero}
-                    </p>
-                    <p className="text-gray-600 m-1 text-center">
-                    <span className="font-semibold text-black">                   
-                    Año:
-                    </span>{" "}
-                    {libro.aniopublicacion}
-                    </p>
-                    <div className="flex items-center bg-green-400 rounded m-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6 m-1 text-green-800"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        <p className="m-1 text-black">
-                          {libro.copiasdisponibles}
-                        </p>
-                      </div>
-                      <p className="text-gray-600 m-1 text-center">
-                      <span className="font-semibold text-black text-justify overflow-hidden max-h-48">
-                      Sinopsis:
-                      </span>{" "}
-                      {libro.sinopsis}
-                      </p>
-                    </div>  
+                      <div className="flex">
+                      <div className="w-2/3 flex flex-col items-center pr-8">
+                        <h2 className="text-xl font-semibold text-center  mb-4">
+                        {libro.titulo}
+                          </h2>
+                          <p className="text-gray-600 m-1 text-center">
+                          <span className="font-semibold text-black">
+                          ISBN:
+                          </span>{" "}
+                          {libro.isbn}
+                          </p>
+                          <p className="text-gray-600 m-1 text-center">
+                          <span className="font-semibold text-black">
+                          Author:
+                          </span>{" "}
+                          {libro.autor}
+                          </p>
+                          <p className="text-gray-600 m-1 text-center">
+                          <span className="font-semibold text-black">                   
+                        Categoria:
+                        </span>{" "}
+                          {libro.genero}
+                          </p>
+                          <p className="text-gray-600 m-1 text-center">
+                          <span className="font-semibold text-black">                   
+                          Año:
+                          </span>{" "}
+                          {libro.aniopublicacion}
+                          </p>
+                          <div className="flex items-center bg-blue-300 rounded m-2">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6 m-1 text-blue-800"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M4.5 12.75l6 6 9-13.5"
+                                />
+                              </svg>
+                              <p className="m-1 text-black">
+                                {libro.cantcopias}
+                              </p>
+                            </div>
+                            <p className="text-gray-600 m-1 text-center text-justify overflow-hidden">
+                            <span className="font-semibold text-black">
+                            Sinopsis:
+                            </span>{" "}
+                            {libro.sinopsis}
+                            </p>
+                             </div>  
 
-                    <div className="w-1/3 flex items-center justify-center mr-10 mb-4">
-                    <img
-                    src={`http://localhost:4000${libro.portada}`}
-                    alt={libro.titulo}
-                    className="w-80 h-80 object-contain  mt-5 rounded items-center mx-auto"
-                    />
-                  </div>
-                  </div>
+                            <div className="w-1/3 flex items-center justify-center mr-10 mb-4">
+                            <img
+                            src={`http://localhost:4000${libro.portada}`}
+                            alt={libro.titulo}
+                            className="w-80 h-80 object-contain  mt-5 rounded items-center mx-auto"
+                            />  
+                           </div>
+
+                    </div>
                     <button
                     className="absolute top-1 right-1 bg-transparent text-red-500 p-0 rounded-full transition duration-300 ease-in-out hover:bg-red-100 hover:text-red-700"
                     onClick={() => handleEditClick(libro)}
@@ -289,8 +303,6 @@ return (
                         <div className="text-center mt-4 text-black text-lg font-bold">
                         No se encontraron resultados para la búsqueda "{busqueda}"</div>
                         )}
-            
-                      
                   </div>
                 )}
               </div>
@@ -356,11 +368,11 @@ return (
                 />
               </label>
               <label>
-              <span className="text-gray-700 font-semibold">Copias disponibles:</span>
+              <span className="text-gray-700 font-semibold">Cantidad de copias:</span>
                 <input
                   type="text"
-                  name="copiasdisponibles"
-                  value={editFormData.copiasdisponibles || ''}
+                  name="cantcopias"
+                  value={editFormData.cantcopias || ''}
                   onChange={handleEditFormChange}
                   className="border p-2 w-full"
                 />
@@ -382,6 +394,7 @@ return (
                 <input
                   type="file"
                   accept="image/*"
+                  name = "portada"
                   onChange={handleEditFormChange}
                   className="border p-24"
                 />
@@ -402,7 +415,7 @@ return (
                 onClick={() => setShowEditForm(false)}
                 className="bg-pink-500 text-white py-2 px-4 rounded-md"
               >
-                Salir
+              Go out
               </button>
               </div>
             </form>
@@ -411,9 +424,6 @@ return (
       )}
 </div>    
 );
-
-
-
 }
 
 

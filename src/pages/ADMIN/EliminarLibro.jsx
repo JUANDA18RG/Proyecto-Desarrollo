@@ -49,11 +49,17 @@ const eliminar = async (ISBN) => {
           icon: 'success',
         })
         setBooks((prevBooks) => prevBooks.filter((libro) => libro.ISBN !== ISBN));
-      } else {
+      }
+      else {
         console.error("Error al eliminar libro. Estado:", response.status)
       }
     } catch (error) {
       console.error("Error al eliminar libro", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error en la eliminacion",
+        text: error.response.data.message,
+      })
     }
   };
 
