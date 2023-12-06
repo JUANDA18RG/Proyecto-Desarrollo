@@ -22,6 +22,8 @@ import EliminarUsuario from "./pages/ADMIN/EliminarUsuario";
 import CompletarFormulario from "./pages/ADMIN/CompletarFormulario";
 import EliminarCuenta from "./pages/USUARIO/EliminarCuenta";
 import AgregarLibro from "./pages/ADMIN/AgregarLibro";
+import EditarLibro from "./pages/ADMIN/EditarLibro";
+import EliminarLibro from "./pages/ADMIN/EliminarLibro";
 
 function App() {
   return (
@@ -54,6 +56,8 @@ function App() {
         />
         <Route path="/EliminarCuenta" element={<EliminarCuenta />} />
         <Route path="/AgregarLibro" element={<AgregarLibro />} />
+        <Route path="/EditarLibro" element={<EditarLibro />} />
+        <Route path="/EliminarLibro" element={<EliminarLibro/>} />
       </Routes>
     </div>
   );

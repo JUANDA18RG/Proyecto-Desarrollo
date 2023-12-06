@@ -9,11 +9,7 @@ import Footer from './Footer';
 import Busqueda from './Busqueda';
 
 export default function Contenido() {
-  const handleBuscarLibro = (busqueda, filtro, disponibilidadFiltro) => {
-    console.log('Búsqueda:', busqueda);
-    console.log('Filtro:', filtro);
-    console.log('Disponibilidad Filtro:', disponibilidadFiltro);
-  };
+  
 
   return (
     <>
@@ -25,7 +21,6 @@ export default function Contenido() {
       <Carruseles />
       {/*-----------------Busqueda-----------------*/}
       {/*-----------------Libros mas reservados-----------------*/}
-      <Busqueda onBuscar={handleBuscarLibro} />
       <Books />
       {/*-----------------Info sobre los libros-----------------*/}
       <InfoLibro />
