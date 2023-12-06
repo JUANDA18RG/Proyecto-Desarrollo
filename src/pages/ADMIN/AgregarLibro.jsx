@@ -50,6 +50,18 @@ export default function AgregarLibro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Verificar que todos los campos están llenos
+    const values = Object.values(libro);
+    if (values.includes("") || !imagenPortada) {
+      Swal.fire({
+        icon: "error",
+        title: "Todos los campos son obligatorios",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
     const formData = new FormData();
     Object.keys(libro).forEach((key) => formData.append(key, libro[key]));
 
@@ -138,6 +150,7 @@ export default function AgregarLibro() {
                 placeholder="ISBN"
                 name="ISBN"
                 value={libro.ISBN}
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
               <input
@@ -146,6 +159,7 @@ export default function AgregarLibro() {
                 placeholder="Titulo"
                 name="Titulo"
                 value={libro.Titulo}
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
               <input
@@ -154,6 +168,7 @@ export default function AgregarLibro() {
                 placeholder="Autor"
                 name="Autor"
                 value={libro.Autor}
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
               <input
@@ -162,6 +177,7 @@ export default function AgregarLibro() {
                 placeholder="Genero"
                 name="Genero"
                 value={libro.Genero}
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
               <input
@@ -170,12 +186,16 @@ export default function AgregarLibro() {
                 placeholder="Cantidad de copias"
                 name="Cantcopias"
                 value={libro.Cantcopias}
+                min="0"
+                max="infinito"
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
               <select
                 onChange={handleInputChange}
                 name="anioPublicacion"
                 value={libro.anioPublicacion}
+                required
                 className="border-2 border-gray-400 p-2 rounded-lg m-2 w-80 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               >
                 <option className="text-gray-400">año de publicacion</option>
@@ -195,6 +215,7 @@ export default function AgregarLibro() {
                 placeholder="Descripción"
                 name="descripcion"
                 value={libro.descripcion}
+                required
                 className="border-2 resize-none border-gray-400 p-2 rounded-lg m-2 w-80 h-32 focus:outline-none focus:border-pink-500 transition duration-300 ease-in-out focus:ring-2 focus:ring-pink-500"
               />
             </form>
@@ -208,6 +229,7 @@ export default function AgregarLibro() {
                       name="imagenPortada"
                       id="imagenPortada"
                       accept="image/*"
+                      required
                       className="absolute opacity-0 w-full h-full cursor-pointer"
                     />
                     {previewImagen ? (
