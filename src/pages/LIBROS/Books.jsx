@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Busqueda from './Busqueda';
- 
+import Busqueda from "./Busqueda";
+
 const BookList = () => {
   const [allBooks, setAllBooks] = useState([]);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
- 
+  const [error, setError] = useState("");
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/Books")
@@ -22,40 +22,55 @@ const BookList = () => {
         setLoading(false);
       });
   }, []);
- 
+
   const quitarAcentosYSepararEspacios = (texto) => {
     // Elimina tildes
-    const textoSinTildes = texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const textoSinTildes = texto
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     // Elimina espacios y convierte a minúsculas
     return textoSinTildes.toLowerCase().replace(/\s/g, "");
   };
-  
-  const handleBuscarLibro = ({ busqueda, filtroCategoria, filtroAutor, disponibilidadFiltro }) => {
+
+  const handleBuscarLibro = ({
+    busqueda,
+    filtroCategoria,
+    filtroAutor,
+    disponibilidadFiltro,
+  }) => {
     const busquedaNormalizada = quitarAcentosYSepararEspacios(busqueda);
-    console.log(quitarAcentosYSepararEspacios('prueba')); // Prueba para la función de normalización
-  
+    console.log(quitarAcentosYSepararEspacios("prueba")); // Prueba para la función de normalización
+
     const librosFiltrados = allBooks.filter((libro) => {
       const autorNormalizado = quitarAcentosYSepararEspacios(libro.autor);
       const tituloNormalizado = quitarAcentosYSepararEspacios(libro.titulo);
-      console.log(`Busqueda: ${busquedaNormalizada}, Titulo: ${tituloNormalizado}`); // Depuración de la comparación de búsqueda
-  
+      console.log(
+        `Busqueda: ${busquedaNormalizada}, Titulo: ${tituloNormalizado}`
+      ); // Depuración de la comparación de búsqueda
+
       return (
-        (autorNormalizado.includes(busquedaNormalizada) || tituloNormalizado.includes(busquedaNormalizada)) &&
-        (filtroCategoria === '' || quitarAcentosYSepararEspacios(libro.genero) === quitarAcentosYSepararEspacios(filtroCategoria)) &&
-        (filtroAutor === '' || autorNormalizado === quitarAcentosYSepararEspacios(filtroAutor)) &&
-        (disponibilidadFiltro === '' || quitarAcentosYSepararEspacios(libro.disponibilidad) === quitarAcentosYSepararEspacios(disponibilidadFiltro))
+        (autorNormalizado.includes(busquedaNormalizada) ||
+          tituloNormalizado.includes(busquedaNormalizada)) &&
+        (filtroCategoria === "" ||
+          quitarAcentosYSepararEspacios(libro.genero) ===
+            quitarAcentosYSepararEspacios(filtroCategoria)) &&
+        (filtroAutor === "" ||
+          autorNormalizado === quitarAcentosYSepararEspacios(filtroAutor)) &&
+        (disponibilidadFiltro === "" ||
+          quitarAcentosYSepararEspacios(libro.disponibilidad) ===
+            quitarAcentosYSepararEspacios(disponibilidadFiltro))
       );
     });
- 
+
     setBooks(librosFiltrados);
- 
+
     if (librosFiltrados.length === 0) {
-      setError('No se encontraron resultados.');
+      setError("No se encontraron resultados.");
     } else {
-      setError('');
+      setError("");
     }
   };
- 
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div id="Busqueda" className="px-5 py-5"></div>
@@ -65,9 +80,9 @@ const BookList = () => {
             BUSQUEDA DE LIBROS
           </h2>
         </div>
- 
+
         <Busqueda onBuscar={handleBuscarLibro} />
- 
+
         <div className="container m-auto py-10">
           {loading ? (
             <div className="flex items-center justify-center min-h-screen">
@@ -181,5 +196,5 @@ const BookList = () => {
     </div>
   );
 };
- 
+
 export default BookList;

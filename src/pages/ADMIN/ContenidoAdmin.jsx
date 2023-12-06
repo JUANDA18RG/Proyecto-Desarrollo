@@ -66,7 +66,7 @@ export default function ContenidoAdmin() {
           </h2>
           <nav className="space-y-3">
             <Link
-              to="/"
+              to="/agregarLibro"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Agregar Libro</span>
