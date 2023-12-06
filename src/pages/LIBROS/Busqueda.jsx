@@ -1,42 +1,57 @@
 import React, { useState } from 'react';
 import { LibrosData } from '../../data';
-
+ 
 const Busqueda = ({ onBuscar }) => {
   const [busqueda, setBusqueda] = useState('');
   const [filtroCategoria, setFiltroCategoria] = useState('');
   const [filtroAutor, setFiltroAutor] = useState('');
   const [disponibilidadFiltro, setDisponibilidadFiltro] = useState('');
   const [resultados, setResultados] = useState([]);
-
+ 
   const categoriasUnicas = [...new Set(LibrosData.map((libro) => libro.categoria))];
   const autor = [...new Set(LibrosData.map((libro) => libro.Author))];
-
+ 
   const handleChange = (e) => {
     const nuevaBusqueda = e.target.value;
     setBusqueda(nuevaBusqueda);
-    onBuscar(nuevaBusqueda, filtroCategoria, filtroAutor, disponibilidadFiltro);
+    realizarBusqueda(); // Realizar la búsqueda en cada cambio del input
   };
-
+ 
   const handleFiltroCategoriaChange = (e) => {
     const nuevoFiltroCategoria = e.target.value;
     setFiltroCategoria(nuevoFiltroCategoria);
-    onBuscar(busqueda, nuevoFiltroCategoria, filtroAutor, disponibilidadFiltro);
+    realizarBusqueda(); // Realizar la búsqueda al cambiar la categoría
   };
-
+ 
   const handleFiltroAutorChange = (e) => {
     const nuevoFiltroAutor = e.target.value;
     setFiltroAutor(nuevoFiltroAutor);
-    onBuscar(busqueda, filtroCategoria, nuevoFiltroAutor, disponibilidadFiltro);
+    realizarBusqueda(); // Realizar la búsqueda al cambiar el autor
   };
-
+ 
   const handleDisponibilidadFiltroChange = (e) => {
     const nuevaDisponibilidadFiltro = e.target.value;
     setDisponibilidadFiltro(nuevaDisponibilidadFiltro);
-    onBuscar(busqueda, filtroCategoria, filtroAutor, nuevaDisponibilidadFiltro);
+    realizarBusqueda(); // Realizar la búsqueda al cambiar la disponibilidad
   };
-
+ 
   const realizarBusqueda = () => {
     const busquedaMinuscula = busqueda.toLowerCase();
+    
+    if (busquedaMinuscula === '') {
+      // Si la búsqueda está vacía, mostrar todos los libros
+      setResultados([]);
+      if (onBuscar) {
+        onBuscar({
+          busqueda: '',
+          filtroCategoria: '',
+          filtroAutor: '',
+          disponibilidadFiltro: '',
+        });
+      }
+      return;
+    }
+ 
     const librosFiltrados = LibrosData.filter((libro) => {
       const autorMinuscula = libro.Author.toLowerCase();
       return (
@@ -46,14 +61,19 @@ const Busqueda = ({ onBuscar }) => {
         (disponibilidadFiltro === '' || libro.disponibilidad === disponibilidadFiltro)
       );
     });
-
+ 
     setResultados(librosFiltrados);
-
+ 
     if (onBuscar) {
-      onBuscar(librosFiltrados);
+      onBuscar({
+        busqueda: busqueda,
+        filtroCategoria: filtroCategoria,
+        filtroAutor: filtroAutor,
+        disponibilidadFiltro: disponibilidadFiltro,
+      });
     }
   };
-
+ 
   return (
     <div className="mb-4 flex items-center">
       <div className="bg-pink-500 rounded-l-md px-2 py-1 animate-bounce text-xl font-bold m-4 rounded text-white">
@@ -67,14 +87,14 @@ const Busqueda = ({ onBuscar }) => {
           onChange={handleChange}
           className="px-4 py-6 rounded-l-md border-4 border-pink-500 w-[300px]"
         />
-
+ 
         <button
           onClick={realizarBusqueda}
           className="px-4 py-6 bg-pink-500 rounded-r-md text-black font-bold"
         >
           BUSCAR
         </button>
-
+ 
         <div className="absolute inset-y-0 right-0 flex items-center pr-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +108,7 @@ const Busqueda = ({ onBuscar }) => {
           </svg>
         </div>
       </div>
-
+ 
       <div className="px-2">
         <label className="text-black m-2">Filtro por Categoría:</label>
         <select
@@ -104,7 +124,7 @@ const Busqueda = ({ onBuscar }) => {
           ))}
         </select>
       </div>
-
+ 
       <div className="px-2">
         <label className="text-black m-2">Filtro por Autor:</label>
         <select
@@ -120,7 +140,7 @@ const Busqueda = ({ onBuscar }) => {
           ))}
         </select>
       </div>
-
+ 
       <div className="px-2">
         <label className="text-black m-2">Disponibilidad:</label>
         <select
@@ -133,15 +153,8 @@ const Busqueda = ({ onBuscar }) => {
           <option value="No Disponible">No Disponible</option>
         </select>
       </div>
-
-      <div>
-        {/* Mostrar resultados */}
-        {resultados.map((libro) => (
-          <div key={libro.isbn}>{libro.Author}</div>
-        ))}
-      </div>
     </div>
   );
 };
-
+ 
 export default Busqueda;
