@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useState } from "react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -15,9 +15,10 @@ export default function Register() {
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [error, setError] = useState(""); //Traidos del backend
-  const [errors, setErrors] = useState("");     
+  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -30,37 +31,32 @@ export default function Register() {
     const newErrors = {};
     let isValid = true;
 
-    //Que el nombre y apellido solo contenga letras
     const nombreApellido = /^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/;
-    if (!nombreApellido.test(formData.nombres)) {
-      newErrors.nombres = "Name should contain only letters";
+    // ... (validación de formularios)
+
+    // Validación de campos y actualización de errores
+    if (formData.nombres.trim() === "") {
+      newErrors.nombres = "El campo de nombres es obligatorio";
       isValid = false;
     }
 
-    if (!nombreApellido.test(formData.apellidos)) {
-      newErrors.apellidos = "Last name should contain only letters";
+    if (formData.apellidos.trim() === "") {
+      newErrors.apellidos = "El campo de apellidos es obligatorio";
       isValid = false;
     }
 
-    // Validación para que el username no comience con números
-    if (!/^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/.test(formData.username)) {
-      newErrors.username = "Username should not start with numbers";
+    if (formData.correo.trim() === "") {
+      newErrors.correo = "El campo de correo es obligatorio";
       isValid = false;
     }
 
-    //Validacion correo
-    if (
-      !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.correo)
-    ) {
-      newErrors.correo = "Debes ingresar un correo valido";
+    if (formData.username.trim() === "") {
+      newErrors.username = "El campo de username es obligatorio";
       isValid = false;
     }
 
-    // Validación para que la contraseña tenga al menos una mayúscula, una minúscula y un carácter especial
-    const expresionRegular = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$-_%^&*]).{8,}$/;
-    if (!expresionRegular.test(formData.password)) {
-      newErrors.password =
-        "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long";
+    if (formData.password.trim() === "") {
+      newErrors.password = "El campo de contraseña es obligatorio";
       isValid = false;
     }
 
@@ -71,7 +67,6 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación adicional para comprobar que los campos obligatorios no estén vacíos
     if (
       formData.nombres.trim() === "" ||
       formData.apellidos.trim() === "" ||
@@ -80,68 +75,53 @@ export default function Register() {
       formData.password.trim() === ""
     ) {
       Swal.fire({
-        title: 'Campos Obligatorios',
-        text: 'Todos los campos son obligatorios. Por favor, completa la información.',
-        icon: 'warning',
+        title: "Campos Obligatorios",
+        text:
+          "Todos los campos son obligatorios. Por favor, completa la información.",
+        icon: "warning",
       });
       return;
     }
 
     if (validateForm()) {
+      setVerifying(true);
+
       try {
-      const response = await axios.post(
+        const response = await axios.post(
           "http://localhost:4000/register",
           formData
         );
+
         console.log("Registro exitoso", response.data);
+
         Swal.fire({
           title: "Registro Exitoso",
           text: "Tu cuenta ha sido registrada exitosamente.",
           icon: "success",
         });
+
         setRegistrationSuccess(true);
+
         setTimeout(() => {
           navigate("/login");
         }, 3000);
       } catch (error) {
         console.log("Error: ", error);
-        
+
         Swal.fire({
           title: "Error",
-          text: error.response?.data?.message || "Hubo un error en el servidor.",
+          text:
+            error.response?.data?.message || "Hubo un error en el servidor.",
           icon: "error",
         });
-
-        // Manejar errores
-        if (error.response) {
-          // La solicitud se realizó y el servidor respondió con un código de estado
-          // que cae fuera del rango de 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-          setError(error.response.data.message);
-        } else if (error.request) {
-          // La solicitud se realizó pero no se recibió ninguna respuesta
-          console.log(error.request);
-          setError("No se recibió ninguna respuesta del servidor.");
-        } else {
-          // Algo sucedió en la configuración de la solicitud que provocó un error
-          console.log("Error", error.message);
-          setError(error.message);
-        }
-       
+      } finally {
+        setVerifying(false);
       }
     }
   };
 
   return (
     <div className="relative">
-      <div
-        className="bg-pink-300 bg-opacity-50 absolute inset-0"
-        style={{
-          zIndex: -1,
-        }}
-      ></div>
       <div
         className="flex items-center justify-center min-h-screen"
         style={{
@@ -265,7 +245,7 @@ export default function Register() {
                 className="w-full py-2 px-3 border rounded focus:outline-none focus:border-blue-500"
               />
               <span
-                className="absolute right-2 top-4 cursor-pointer hover:text-blue-500 opacity-70 transition duration-300"
+                className="absolute right-2  top-4 cursor-pointer hover:text-blue-500 opacity-70 transition duration-300"
                 onClick={() => setPasswordVisible(!passwordVisible)}
               >
                 {passwordVisible ? (
@@ -320,19 +300,26 @@ export default function Register() {
                 </div>
               )}
             </div>
-
-            <button
-              type="submit"
-              className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
-            >
-              Register
-            </button>
-            {
-              <div
-                id="error-message"
-                className="text-red-500 text-center mt-2"
-              ></div>
-            }
+            {verifying ? (
+              <div className="flex justify-center">
+                <div className="flex items-center justify-center">
+                  <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-blue-600">
+                    <span className="hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
+              >
+                Register
+              </button>
+            )}
+            <div
+              id="error-message"
+              className="text-red-500 text-center mt-2"
+            ></div>
           </form>
           <div className="text-center mt-4 text-gray-500">
             Already have an account?
