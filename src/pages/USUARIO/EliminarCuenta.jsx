@@ -40,8 +40,8 @@ export default function EliminarCuenta() {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "Algo salió mal!",
-            });
+              text: error.response.data.message,
+            })
           });
       }
     });

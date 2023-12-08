@@ -7,6 +7,7 @@ const DetallesReserva = () => {
   const { id } = useParams();
   const [reserva, setReserva] = useState(null);
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
+  const [reservaCancelada, setReservaCancelada] = useState(false);
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -26,11 +27,6 @@ const DetallesReserva = () => {
   }, [id]);
 
   const handleCancelarReserva = () => {
-    if (!id) {
-      console.error("ID de reserva no definido");
-      // Puedes mostrar un mensaje al usuario o redirigir a otra página
-      return;
-    }
     if (reserva.estado === "Reservado") {
       Swal.fire({
         title: "Confirmar cancelación",
@@ -60,37 +56,33 @@ const DetallesReserva = () => {
         console.error("Token no disponible");
         return;
       }
-      if (!reserva) {
-        console.error("La reserva es nula");
-        return;
-      }
-
       const response = await axios.put(
-        `http://localhost:4000/cancelarReserva/${id}`,
+        `http://localhost:4000/reserva/cancelarReserva/${id}`,
+        {},  
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
+  
       if (response.data.message === 'La reserva ha sido cancelada exitosamente') {
         setReserva({ ...reserva, estado: 'Cancelado' });
+        setReservaCancelada(true);
       }
-
       Swal.fire({
-        icon: response.ok ? 'success' : 'error',
+        icon: response.ok ? 'success' : 'success',
         title: response.data.message,
       });
     } catch (error) {
       console.error('Error al cancelar la reserva', error);
-
+  
       if (error.response) {
         // El servidor respondió con un estado de error
         const errorMessage = error.response.data.message;
         Swal.fire({
           icon: 'error',
-          title: errorMessage || 'Error de respuesta del servidor',
+          title: errorMessage,
         });
       } else if (error.request) {
         // La solicitud fue hecha pero no se recibió respuesta
@@ -106,45 +98,9 @@ const DetallesReserva = () => {
         });
       }
     }
-
     setConfirmacionVisible(false);
   };
   
-  
-  
-  
-  
- {/*
-    const handleConfirmarCancelacion = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("Token no disponible");
-          return;
-        }
-        const response = await axios.put(`http://localhost:4000/cancelarReserva/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,                       
-        }});
-  
-        if (response.data.message === 'La reserva ha sido cancelada exitosamente') {
-          setReserva({ ...reserva, estado: 'Cancelado' });
-        }
-  
-        Swal.fire({
-          icon: response.ok ? 'success' : 'error',
-          title: response.data.message,
-        });
-      } catch (error) {
-        console.error('Error al cancelar la reserva', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al cancelar la reserva',
-        });
-      }
-    setConfirmacionVisible(false);
-  };
-*/}
   if (!reserva) {
     return (
       <p>
@@ -191,7 +147,7 @@ const DetallesReserva = () => {
               />
             </svg>
           </button>
-          <div className="w-1/2 bg-white p-8 m-4 rounded z-10">
+          <div className="w-full sm:w-1/2 bg-white p-8 m-4 rounded z-10">
             <div className="mb-8 text-center">
               <h1 className="text-3xl font-bold mb-4">
                 Detalles de la Reserva
@@ -207,26 +163,25 @@ const DetallesReserva = () => {
             </div>
             <div className="flex items-center justify-center space-x-24">
               <div>
-                <button
-                  onClick={handleCancelarReserva}
-                  disabled={reserva.estado === "Entregado"}
-                  style={{
-                    backgroundColor:
-                      reserva.estado === "Entregado" ? "gray" : "pink-700",
-                  }}
-                  className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
-                >
-                  Cancelar{" "}
-                </button>{" "}
+              <button
+              onClick={handleCancelarReserva}
+              disabled={reserva.estado === "Entregado" || reserva.estado === "Cancelado"}
+              style={{
+                backgroundColor: reserva.estado === "Entregado" || reserva.estado === "Cancelado" ? "gray" : "pink-700",
+              }}
+              className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
+            >
+              Cancelar
+            </button>
               </div>
               <div>
                 <button
                   onClick={() => {
-                    if (reserva.estado === "Entregado") {
+                    if (reserva.estado === "Entregado" || reserva.estado === "Cancelado" ) {
                       Swal.fire({
                         icon: "info",
-                        title: "Reserva Entregada",
-                        text: "No puedes editar una reserva entregada.",
+                        title: "Reserva Entregada o cancelada",
+                        text: "No puedes editar una reserva entregada o cancelada .",
                       });
                     } else {
                       navigate(`/EditReserva/${id}`);
@@ -234,6 +189,7 @@ const DetallesReserva = () => {
                   }}
                   className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-6 px-8 rounded hover:scale-105 transition duration-500 ease-in-out ml-auto"
                 >
+                
                   Editar
                 </button>
               </div>
