@@ -186,7 +186,7 @@ return (
               className="text-center px-16 py-3 w-96 italic border border-pink-300 rounded-full shadow-md bg-white" 
               placeholder="Buscar titulo..."
             />
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <div className="absolute right-4 top-1/2 transform-translate-y-1/2">
               <button onClick={buscar} >
               <RiSearchLine className="text-black-500" />
               </button>

@@ -126,15 +126,14 @@ useEffect(() => {
     }, [busqueda]);
 
 return (
-     <div className="relative">
-     <div className="absolute inset-0 bg-pink-500 z-0"></div>
-     <div className="flex flex-col relative w-full mx-auto top-0  z-10 min-h-screen">
-
-      <div className="bg-white shadow-xl h-44">
-        <button
-            className="absolute top-4 left-4 bg-pink-500 text-white p-4 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
-            onClick={goToInicio}
-          >
+  <div className="relative">
+  <div className={`absolute inset-0 bg-pink-500 z-0`}></div>
+  <div className="flex flex-col relative w-full mx-auto top-0  z-10 min-h-screen">
+  <div className="bg-white shadow-xl h-34">
+           <button
+              className="absolute top-4 left-4 bg-pink-500 text-white p-4 shadow-lg rounded-full hover:bg-pink-600 hover:scale-105 transition duration-300 ease-in-out"
+              onClick={goToInicio}
+            >
               <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -151,12 +150,12 @@ return (
             </svg>
           </button>
         
-          <h1 className="text-4xl font-bold mt-10 text-center">
+          <h1 className="text-4xl font-bold mt-6 text-center text-gray-800">
           🗑️ Eliminar Usuarios 
           </h1>
         
-        <div className="grid place-items-center ml-auto relative p-4">
-          <div className="relative flex items-center">
+          <div className="grid place-items-center ml-auto relative p-4">
+          <div className="relative flex items-center flex-grow">
             <input
               type="text"
               value={busqueda}
@@ -173,22 +172,23 @@ return (
         </div>
       </div>
 
-      <div className="container">
-      {loading ? (
-            <div class="flex items-center justify-center min-h-screen">
-              <div class="flex items-center justify-center">
-                <div class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-black">
-                  <span class="hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
-       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 overflow-hidden">
+      <div className="container m-2">
+                {loading ? (
+                  <div className="flex items-center justify-center min-h-screen">
+                    <div className="flex items-center justify-center">
+                      <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-black">
+                        <span className="hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 overflow-hidden" style={{alignItems: 'flex-start'}}>
          {!loading && Array.isArray(resultados) && resultados.length > 0 ? (
            resultados.map((user) => (
-            <div key={user.id} className="group bg-white rounded-xl m-5 p-2 transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-black relative">
-             <div className="p-2 flex items-center justify-between">
-             <div className="text-xl font-semibold overflow-hidden">
+            <div key={user.id} className="group bg-white rounded-xl m-8 p-2 transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-black relative"
+            style={{ width: '250px' }} >
+             <div className="p-2 flex items-start">
+             <div className="text-xl p-2 font-semibold overflow-hidden">
               <h2 className="text-2xl font-bold overflow-hidden whitespace-nowrap overflow-ellipsis">
               {user.username}
             </h2>

@@ -26,6 +26,11 @@ const DetallesReserva = () => {
   }, [id]);
 
   const handleCancelarReserva = () => {
+    if (!id) {
+      console.error("ID de reserva no definido");
+      // Puedes mostrar un mensaje al usuario o redirigir a otra página
+      return;
+    }
     if (reserva.estado === "Reservado") {
       Swal.fire({
         title: "Confirmar cancelación",
@@ -47,12 +52,99 @@ const DetallesReserva = () => {
       );
     }
   };
-
+  
   const handleConfirmarCancelacion = async () => {
-    //Implementacion del backend
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token no disponible");
+        return;
+      }
+      if (!reserva) {
+        console.error("La reserva es nula");
+        return;
+      }
+
+      const response = await axios.put(
+        `http://localhost:4000/cancelarReserva/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.message === 'La reserva ha sido cancelada exitosamente') {
+        setReserva({ ...reserva, estado: 'Cancelado' });
+      }
+
+      Swal.fire({
+        icon: response.ok ? 'success' : 'error',
+        title: response.data.message,
+      });
+    } catch (error) {
+      console.error('Error al cancelar la reserva', error);
+
+      if (error.response) {
+        // El servidor respondió con un estado de error
+        const errorMessage = error.response.data.message;
+        Swal.fire({
+          icon: 'error',
+          title: errorMessage || 'Error de respuesta del servidor',
+        });
+      } else if (error.request) {
+        // La solicitud fue hecha pero no se recibió respuesta
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de red, no se pudo completar la solicitud',
+        });
+      } else {
+        // Se produjo un error al configurar la solicitud
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al configurar la solicitud',
+        });
+      }
+    }
+
     setConfirmacionVisible(false);
   };
-
+  
+  
+  
+  
+  
+ {/*
+    const handleConfirmarCancelacion = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Token no disponible");
+          return;
+        }
+        const response = await axios.put(`http://localhost:4000/cancelarReserva/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,                       
+        }});
+  
+        if (response.data.message === 'La reserva ha sido cancelada exitosamente') {
+          setReserva({ ...reserva, estado: 'Cancelado' });
+        }
+  
+        Swal.fire({
+          icon: response.ok ? 'success' : 'error',
+          title: response.data.message,
+        });
+      } catch (error) {
+        console.error('Error al cancelar la reserva', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cancelar la reserva',
+        });
+      }
+    setConfirmacionVisible(false);
+  };
+*/}
   if (!reserva) {
     return (
       <p>
