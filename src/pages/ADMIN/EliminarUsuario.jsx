@@ -87,16 +87,7 @@ const eliminar = async (username) => {
 
 const buscar = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("Token no disponible");
-          return;
-        }
-        const response = await axios.get(`http://localhost:4000/returnUsuario/${encodeURIComponent(busqueda)}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,                       
-          },
-        });
+        const response = await axios.get(`http://localhost:4000/returnUsuario/${encodeURIComponent(busqueda)}`);
         if (response.data && Object.keys(response.data).length > 0) {
         setResultados([response.data]);
         }else {
@@ -154,7 +145,7 @@ return (
           🗑️ Eliminar Usuarios 
           </h1>
         
-          <div className="grid place-items-center ml-auto relative p-4">
+          <div className="grid place-items-center ml-auto relative p-2">
           <div className="relative flex items-center flex-grow">
             <input
               type="text"
