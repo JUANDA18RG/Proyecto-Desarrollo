@@ -112,12 +112,12 @@ const BookDetails = () => {
             </span>
             {book.categoria}
           </h4>
-          <h4 className="text-gray-700 text-lg flex items-center">
+          <h4 className="text-yellow-500 text-lg flex items-center">
             <span className="text-black text-xl font-semibold mr-2">
               Valoración:{" "}
             </span>
             {book.valoracion}
-            <span className="p-2 bg-white rounded-full">
+            <span className="p-2 bg-white rounded-full ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
