@@ -107,10 +107,11 @@ const BookDetails = () => {
             {book.year}
           </h4>
           <h4 className="text-gray-700 text-lg mt-2">
-            <span className="text-black text-xl font-semibold">Categoria: </span>
+            <span className="text-black text-xl font-semibold">
+              Categoria:{" "}
+            </span>
             {book.categoria}
           </h4>
-
           <h4 className="text-gray-700 text-lg flex items-center">
             <span className="text-black text-xl font-semibold mr-2">
               Valoración:{" "}

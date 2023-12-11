@@ -1,69 +1,34 @@
-import React, { useState } from 'react';
-import { LibrosData } from '../../data';
- 
+import React, { useState } from "react";
+import { LibrosData } from "../../data";
+
 const Busqueda = ({ onBuscar }) => {
-  const [busqueda, setBusqueda] = useState('');
-  const [filtroCategoria, setFiltroCategoria] = useState('');
-  const [filtroAutor, setFiltroAutor] = useState('');
-  const [disponibilidadFiltro, setDisponibilidadFiltro] = useState('');
+  const [busqueda, setBusqueda] = useState("");
+  const [filtroCategoria, setFiltroCategoria] = useState("");
+  const [filtroAutor, setFiltroAutor] = useState("");
+  const [disponibilidadFiltro, setDisponibilidadFiltro] = useState("");
   const [resultados, setResultados] = useState([]);
- 
-  const categoriasUnicas = [...new Set(LibrosData.map((libro) => libro.categoria))];
-  const autor = [...new Set(LibrosData.map((libro) => libro.Author))];
- 
-  const handleChange = (e) => {
-    const nuevaBusqueda = e.target.value;
-    setBusqueda(nuevaBusqueda);
-    realizarBusqueda(); // Realizar la búsqueda en cada cambio del input
-  };
- 
-  const handleFiltroCategoriaChange = (e) => {
-    const nuevoFiltroCategoria = e.target.value;
-    setFiltroCategoria(nuevoFiltroCategoria);
-    realizarBusqueda(); // Realizar la búsqueda al cambiar la categoría
-  };
- 
-  const handleFiltroAutorChange = (e) => {
-    const nuevoFiltroAutor = e.target.value;
-    setFiltroAutor(nuevoFiltroAutor);
-    realizarBusqueda(); // Realizar la búsqueda al cambiar el autor
-  };
- 
-  const handleDisponibilidadFiltroChange = (e) => {
-    const nuevaDisponibilidadFiltro = e.target.value;
-    setDisponibilidadFiltro(nuevaDisponibilidadFiltro);
-    realizarBusqueda(); // Realizar la búsqueda al cambiar la disponibilidad
-  };
- 
+
+  const categoriasUnicas = [
+    ...new Set(LibrosData.map((libro) => libro.categoria)),
+  ];
+  const autoresUnicos = [...new Set(LibrosData.map((libro) => libro.Author))];
+
   const realizarBusqueda = () => {
     const busquedaMinuscula = busqueda.toLowerCase();
-    
-    if (busquedaMinuscula === '') {
-      // Si la búsqueda está vacía, mostrar todos los libros
-      setResultados([]);
-      if (onBuscar) {
-        onBuscar({
-          busqueda: '',
-          filtroCategoria: '',
-          filtroAutor: '',
-          disponibilidadFiltro: '',
-        });
-      }
-      return;
-    }
- 
+
     const librosFiltrados = LibrosData.filter((libro) => {
       const autorMinuscula = libro.Author.toLowerCase();
       return (
         autorMinuscula.includes(busquedaMinuscula) &&
-        (filtroCategoria === '' || libro.categoria === filtroCategoria) &&
-        (filtroAutor === '' || libro.Author === filtroAutor) &&
-        (disponibilidadFiltro === '' || libro.disponibilidad === disponibilidadFiltro)
+        (filtroCategoria === "" || libro.categoria === filtroCategoria) &&
+        (filtroAutor === "" || libro.Author === filtroAutor) &&
+        (disponibilidadFiltro === "" ||
+          libro.disponibilidad === disponibilidadFiltro)
       );
     });
- 
+
     setResultados(librosFiltrados);
- 
+
     if (onBuscar) {
       onBuscar({
         busqueda: busqueda,
@@ -73,88 +38,87 @@ const Busqueda = ({ onBuscar }) => {
       });
     }
   };
- 
+
+  const handleInputChange = (e) => {
+    const nuevaBusqueda = e.target.value;
+    setBusqueda(nuevaBusqueda);
+    realizarBusqueda();
+  };
+
+  const handleCategoriaChange = (e) => {
+    const nuevaCategoria = e.target.value;
+    setFiltroCategoria(nuevaCategoria);
+    realizarBusqueda();
+  };
+
+  const handleAutorChange = (e) => {
+    const nuevoAutor = e.target.value;
+    setFiltroAutor(nuevoAutor);
+    realizarBusqueda();
+  };
+
+  const handleDisponibilidadChange = (e) => {
+    const nuevaDisponibilidad = e.target.value;
+    setDisponibilidadFiltro(nuevaDisponibilidad);
+    realizarBusqueda();
+  };
+
   return (
-    <div className="mb-4 flex items-center">
-      <div className="bg-pink-500 rounded-l-md px-2 py-1 animate-bounce text-xl font-bold m-4 rounded text-white">
-        ¿Qué libro buscas?
-      </div>
-      <div className="flex-grow relative">
+    <div className="mt-5 p-4 bg-pink-300 rounded-lg shadow-xl">
+      <h2 className="text-2xl font-bold mb-4 m-1">Buscar Libros:</h2>
+      <div className="flex items-center space-x-4">
         <input
           type="text"
           placeholder="Buscar libro"
           value={busqueda}
-          onChange={handleChange}
-          className="px-4 py-6 rounded-l-md border-4 border-pink-500 w-[300px]"
+          onChange={handleInputChange}
+          className="flex-grow px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-pink-500"
         />
- 
-        <button
-          onClick={realizarBusqueda}
-          className="px-4 py-6 bg-pink-500 rounded-r-md text-black font-bold"
-        >
-          BUSCAR
-        </button>
- 
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 text-gray-400"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-          </svg>
-        </div>
-      </div>
- 
-      <div className="px-2">
-        <label className="text-black m-2">Filtro por Categoría:</label>
         <select
           value={filtroCategoria}
-          onChange={handleFiltroCategoriaChange}
-          className="border rounded-r-md px-2 py-1"
+          onChange={handleCategoriaChange}
+          className="w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-pink-500"
         >
-          <option value="">Todos</option>
+          <option value="">Todas las categorías</option>
           {categoriasUnicas.map((categoria) => (
             <option key={categoria} value={categoria}>
               {categoria}
             </option>
           ))}
         </select>
-      </div>
- 
-      <div className="px-2">
-        <label className="text-black m-2">Filtro por Autor:</label>
         <select
           value={filtroAutor}
-          onChange={handleFiltroAutorChange}
-          className="border rounded-r flex px-2 py-1"
+          onChange={handleAutorChange}
+          className="w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-pink-500"
+          dir="auto"
         >
-          <option value="">Todos</option>
-          {autor.map((Author) => (
-            <option key={Author} value={Author}>
-              {Author}
+          <option value="">Todos los autores</option>
+          {autoresUnicos.map((autor) => (
+            <option key={autor} value={autor}>
+              {autor}
             </option>
           ))}
         </select>
-      </div>
- 
-      <div className="px-2">
-        <label className="text-black m-2">Disponibilidad:</label>
         <select
           value={disponibilidadFiltro}
-          onChange={handleDisponibilidadFiltroChange}
-          className="border rounded-r-md px-2 py-1"
+          onChange={handleDisponibilidadChange}
+          className="w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-pink-500"
         >
-          <option value="">Cualquiera</option>
+          <option value="">Cualquier disponibilidad</option>
           <option value="Disponible">Disponible</option>
           <option value="No Disponible">No Disponible</option>
         </select>
+        <button
+          onClick={realizarBusqueda}
+          className="
+          hover:scale-105 transition-all duration-200 ease-in
+          px-6 py-3 bg-pink-500 text-white font-semibold rounded-md hover:bg-pink-700 focus:outline-none focus:bg-pink-600"
+        >
+          Buscar
+        </button>
       </div>
     </div>
   );
 };
- 
+
 export default Busqueda;
