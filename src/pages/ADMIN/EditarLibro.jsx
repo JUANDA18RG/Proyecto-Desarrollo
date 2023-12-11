@@ -16,7 +16,16 @@ const EditarLibro = () => {
     const [books, setBooks] = useState ([]);
     const [loading, setLoading] = useState(true);
     const [showEditForm, setShowEditForm] = useState(false);
-    const [busqueda, setBusqueda] = useState('');  
+    const [busqueda, setBusqueda] = useState(''); 
+    const [editFormData, setEditFormData] = useState({
+      isbn: "",
+      titulo: "",
+      autor: "",
+      genero: "",
+      cantcopias: "",
+      aniopublicacion: "",
+      sinopsis: "",
+    });   
     const navigate = useNavigate();
 
 const goToInicio = () => {
