@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const EliminarUsuario = () => {
+const EliminarAdmin = () => {
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,22 +17,11 @@ const EliminarUsuario = () => {
 
   const mostrarUsuarios = async () => {
     try {
-      setLoading(true);
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("Token no disponible");
-        return;
-      }
-      const response = await axios.get("http://localhost:4000/returnUsuarios", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get("http://localhost:4000/administradores");
       setResultados(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error al obtener usuario", error);
-      setLoading(false);
+      console.error("Error al obtener admin", error);
     }
   };
 
@@ -61,7 +50,7 @@ const EliminarUsuario = () => {
         return;
       }
       const response = await axios.delete(
-        `http://localhost:4000/deleteUser/${encodeURIComponent(username)}`,
+        `http://localhost:4000/eliminarAdmin/${username}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -71,34 +60,27 @@ const EliminarUsuario = () => {
       if (response.status === 200) {
         Swal.fire({
           title: "Eliminado",
-          text: "Usuario eliminado correctamente",
+          text: "Administrador eliminado correctamente",
           icon: "success",
         });
         setResultados((prevResultados) =>
           prevResultados.filter((user) => user.username !== username)
         );
       } else {
-        console.error("Error al eliminar usuario. Estado:", response.status);
+        console.error("Error al eliminar Admin. Estado:", response.status);
       }
     } catch (error) {
-      console.error("Error al eliminar usuario", error);
+      console.error("Error al eliminar Admin", error);
     }
   };
 
   const buscar = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("Token no disponible");
-        return;
-      }
+      setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/returnUsuario/${encodeURIComponent(busqueda)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:4000/returnAdministrador/${encodeURIComponent(
+          busqueda
+        )}`
       );
       if (response.data && Object.keys(response.data).length > 0) {
         setResultados([response.data]);
@@ -152,8 +134,8 @@ const EliminarUsuario = () => {
             </svg>
           </button>
 
-          <h1 className="text-4xl font-bold mt-6 text-center text-gray-800">
-            🗑️ Eliminar Usuarios
+          <h1 className="text-4xl font-bold mt-10 text-center">
+            🗑️ Eliminar Administradores
           </h1>
 
           <div className="grid place-items-center ml-auto relative p-4">
@@ -234,4 +216,4 @@ const EliminarUsuario = () => {
   );
 };
 
-export default EliminarUsuario;
+export default EliminarAdmin;

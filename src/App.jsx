@@ -11,7 +11,6 @@ import EditUser from "./pages/USUARIO/EditUser";
 import ForgotPassword from "./pages/USUARIO/ForgotPassword";
 import ReservationPage from "./pages/RESERVAS/Reservationpage";
 import SesionExpirada from "./pages/USUARIO/SesionExpirada";
-
 import Reseñas from "./pages/LIBROS/Reseñas";
 import DetallesReserva from "./pages/RESERVAS/detallesReserva";
 import EditReservation from "./pages/RESERVAS/editReservation";
@@ -24,6 +23,7 @@ import EliminarCuenta from "./pages/USUARIO/EliminarCuenta";
 import AgregarLibro from "./pages/ADMIN/AgregarLibro";
 import EditarLibro from "./pages/ADMIN/EditarLibro";
 import EliminarLibro from "./pages/ADMIN/EliminarLibro";
+import EliminarAdmin from "./pages/ADMIN/EliminarAdmin";
 
 function App() {
   return (
@@ -57,7 +57,8 @@ function App() {
         <Route path="/EliminarCuenta" element={<EliminarCuenta />} />
         <Route path="/AgregarLibro" element={<AgregarLibro />} />
         <Route path="/EditarLibro" element={<EditarLibro />} />
-        <Route path="/EliminarLibro" element={<EliminarLibro/>} />
+        <Route path="/EliminarLibro" element={<EliminarLibro />} />
+        <Route path="/EliminarAdmin" element={<EliminarAdmin />} />
       </Routes>
     </div>
   );
