@@ -2,26 +2,49 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setVerifying(true);
+
+    if (!email) {
+      setError("El campo de correo electrónico es obligatorio");
+      setVerifying(false);
+      Swal.fire({
+        title: "Error",
+        text: "El campo de correo electrónico es obligatorio",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (!password) {
+      setError("El campo de contraseña es obligatorio");
+      setVerifying(false);
+      Swal.fire({
+        title: "Error",
+        text: "El campo de contraseña es obligatorio",
+        icon: "error",
+      });
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:4000/api/login", {
         correo: email,
         password: password,
       });
 
-      const token = response.data.token;
-      const username = response.data.username;
-      const isAdmin = response.data.isAdmin;
-      const isSuperAdmin = response.data.isSuperAdmin;
+      const { token, username, isAdmin, isSuperAdmin } = response.data;
 
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
@@ -32,38 +55,28 @@ export default function LoginPage() {
         const formResponse = await axios.get(
           "http://localhost:4000/completarFormulario",
           {
-            params: {
-              correo: email,
-            },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            params: { correo: email },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-        if(formResponse.data.form)
-        {
+        if (formResponse.data.form) {
           navigate("/login/completarFormulario");
-        }
-        else
-        {
+        } else {
           navigate(`/ContenidoAdmin/${isSuperAdmin}`);
         }
-        
       } else {
         navigate("/Contenido");
       }
-    } catch (error) {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        setError(error.response.data.error);
-      } else if (error.request) {
-        console.log(error.request);
-        setError("No se recibió ninguna respuesta del servidor.");
-      } else {
-        console.log("Error", error.message);
-        setError(error.message);
-      }
+    } catch (err) {
+      console.log("Error: ", error);
+
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Hubo un error en el servidor.",
+        icon: "error",
+      });
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -146,14 +159,26 @@ export default function LoginPage() {
               )}
             </span>
           </div>
-          <button
-            onClick={handleLogin}
-            className="w-full py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-300"
-          >
-            Login
-          </button>
+          {verifying ? (
+            <div className="flex justify-center">
+              <div className="flex items-center justify-center">
+                <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+                  <span className="hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="w-full py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition duration-300"
+            >
+              Login
+            </button>
+          )}
         </form>
-        {error && <p className="text-red-500 text-center m-1">{error}</p>}
+        {error && (
+          <div className="text-red-500  text-center text-lg m-2">{error}</div>
+        )}
         <div className="text-center mt-4 text-gray-600">
           Don't have an account?
           <Link to="/register" className="ml-1 text-blue-500 hover:underline">

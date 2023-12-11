@@ -4,26 +4,28 @@ export default function InfoSection() {
       <div className="w-1/2 ml-32">
         <div className="text-center mx-auto">
           <h2 className="bg-pink-600 inline-block mt-10 backdrop-blur-lg rounded-lg px-4 py-10 text-white text-5xl font-bold sm:text-5xl m-3 text-center">
-            INFORMACION DE LOS LIBROS
+            INFORMACION DE LA PAGINA
           </h2>
         </div>
         <div className="bg-white p-7 rounded-lg mt-4">
           <p className="text-2xl text-justify">
             {/* Contenido de la izquierda */}
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum
-            qui quas, iste ut aperiam mollitia maiores, distinctio dolores animi
-            laudantium nobis aut! Iste aspernatur perspiciatis necessitatibus?
-            Vero veritatis accusantium excepturi. Lorem ipsum, dolor sit amet
-            consectetur adipisicing elit. Assumenda qui omnis odio laudantium
-            iusto nam nulla excepturi quod, fugit optio neque deserunt sed
-            aperiam? Fugit quidem ducimus quisquam voluptatem libero. Lorem
-            ipsum dolor, sit amet consectetur adipisicing elit. Quae neque
-            mollitia tempora consequuntur, quas odit placeat dolor est aperiam
-            non eligendi laborum aliquam ex tenetur ratione. Laborum repudiandae
-            perferendis inventore! Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit. Iste, voluptatem! Facilis alias, assumenda eum sed
-            labore, unde quidem accusamus, fuga suscipit similique quos eaque
-            quo minus libero. Deleniti, sit vitae.
+            BookFinder es mucho más que una plataforma web; 
+            es una revolución en la gestión de bibliotecas y 
+            la forma en que los usuarios interactúan con la 
+            vasta riqueza de conocimientos que estas albergan.
+            Tanto para los administradores como para los usuarios,
+            BookFinder se erige como un faro de eficiencia, simplificando 
+            cada paso del proceso, desde la búsqueda hasta la reserva y 
+            el seguimiento de libros.
+
+            Con una interfaz amigable y dinámica, BookFinder se ha creado 
+            pensando en la comodidad del usuario. La complejidad se reduce
+            a la esencia, permitiendo a los usuarios navegar fácilmente por
+            la plataforma y descubrir tesoros literarios con apenas unos clics. 
+            La experiencia de reserva de libros se ha optimizado para ser intuitiva, 
+            ágil y, sobre todo, gratificante.
+           
           </p>
         </div>
       </div>
@@ -55,11 +57,14 @@ export default function InfoSection() {
                 </div>
                 <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
                   <h2 class="font-medium title-font text-gray-900 mb-1 text-xl">
-                    Shooting Stars
+                  Reserva de Libros
                   </h2>
-                  <p class="leading-relaxed">
-                    VHS cornhole pop-up, try-hard 8-bit iceland helvetica.
-                    Kinfolk bespoke try-hard cliche palo santo offal.
+                  <p class="leading-relaxed text-justify text-sm">
+                  La reserva de libros se ha simplificado hasta el último clic. 
+                  Los usuarios pueden verificar fácilmente la disponibilidad de 
+                  los libros deseados y reservarlos con un proceso claro y directo.
+                  Las fechas de finalización de préstamos se presentan de manera prominente, 
+                  brindando a los usuarios un control total sobre sus lecturas planificadas.
                   </p>
                 </div>
               </div>
@@ -87,11 +92,15 @@ export default function InfoSection() {
                 </div>
                 <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
                   <h2 class="font-medium title-font text-gray-900 mb-1 text-xl">
-                    The Catalyzer
+                  Gestión de Perfil
                   </h2>
-                  <p class="leading-relaxed">
-                    VHS cornhole pop-up, try-hard 8-bit iceland helvetica.
-                    Kinfolk bespoke try-hard cliche palo santo offal.
+                  <p class="leading-relaxed text-justify text-sm">
+                  El perfil del usuario es su espacio personal, y BookFinder 
+                  se asegura de que sea completamente gestionable. El registro
+                  es rápido y seguro, y una vez dentro, los usuarios pueden ver
+                  de un vistazo los libros que tienen reservados, las fechas de
+                  devolución y su historial de comentarios. La experiencia de usuario
+                  se adapta a las preferencias individuales, haciendo que cada interacción sea única y memorable.
                   </p>
                 </div>
               </div>
@@ -120,48 +129,21 @@ export default function InfoSection() {
                 </div>
                 <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
                   <h2 class="font-medium title-font text-gray-900 mb-1 text-xl">
-                    The 400 Blows
+                  Exploración de la Biblioteca:
                   </h2>
-                  <p class="leading-relaxed">
-                    VHS cornhole pop-up, try-hard 8-bit iceland helvetica.
-                    Kinfolk bespoke try-hard cliche palo santo offal.
+                  <p class="leading-relaxed text-justify text-sm">
+                  La colección completa de la biblioteca se presenta 
+                  de manera atractiva, con portadas vibrantes, descripciones
+                  detalladas y opciones de filtrado que permiten a los usuarios
+                  personalizar su búsqueda. Ya sea que estén buscando un género
+                  específico, siguiendo a un autor favorito o simplemente explorando,
+                  BookFinder ofrece una experiencia de exploración que va más allá de
+                   las expectativas.
                   </p>
                 </div>
               </div>
             </div>
-            <div class="flex relative pb-10 sm:items-center md:w-2/3 mx-auto">
-              <div class="h-full w-6 absolute inset-0 flex items-center justify-center">
-                <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-              </div>
-              <div class="flex-shrink-0 w-6 h-6 rounded-full mt-10 sm:mt-0 inline-flex items-center justify-center bg-pink-500 text-white relative z-5 title-font font-medium text-sm">
-                4
-              </div>
-              <div class="flex-grow md:pl-8 pl-6 flex sm:items-center items-start flex-col sm:flex-row">
-                <div class="flex-shrink-0 w-24 h-24 bg-pink-100 text-pink-500 rounded-full inline-flex items-center justify-center animate-bounce">
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    class="w-12 h-12"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                </div>
-                <div class="flex-grow sm:pl-6 mt-6 sm:mt-0">
-                  <h2 class="font-medium title-font text-gray-900 mb-1 text-xl">
-                    Neptune
-                  </h2>
-                  <p class="leading-relaxed">
-                    VHS cornhole pop-up, try-hard 8-bit iceland helvetica.
-                    Kinfolk bespoke try-hard cliche palo santo offal.
-                  </p>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </section>
       </div>

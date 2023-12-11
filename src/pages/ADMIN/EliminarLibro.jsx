@@ -10,7 +10,8 @@ const EliminarLibro = () => {
    const navigate = useNavigate();
  
 const goToInicio = () => {
-    navigate("/ContenidoAdmin/false");
+  const admin = localStorage.getItem("isSuperAdmin");
+  navigate("/ContenidoAdmin/" + admin);
   }; 
 
 useEffect(() => {

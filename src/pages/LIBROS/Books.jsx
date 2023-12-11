@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Busqueda from './Busqueda';
- 
+import Busqueda from "./Busqueda";
+
 const BookList = () => {
   const [allBooks, setAllBooks] = useState([]);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
- 
+  const [error, setError] = useState("");
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/Books")
@@ -22,40 +22,55 @@ const BookList = () => {
         setLoading(false);
       });
   }, []);
- 
+
   const quitarAcentosYSepararEspacios = (texto) => {
     // Elimina tildes
-    const textoSinTildes = texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const textoSinTildes = texto
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     // Elimina espacios y convierte a minúsculas
     return textoSinTildes.toLowerCase().replace(/\s/g, "");
   };
-  
-  const handleBuscarLibro = ({ busqueda, filtroCategoria, filtroAutor, disponibilidadFiltro }) => {
+
+  const handleBuscarLibro = ({
+    busqueda,
+    filtroCategoria,
+    filtroAutor,
+    disponibilidadFiltro,
+  }) => {
     const busquedaNormalizada = quitarAcentosYSepararEspacios(busqueda);
-    console.log(quitarAcentosYSepararEspacios('prueba')); // Prueba para la función de normalización
-  
+    console.log(quitarAcentosYSepararEspacios("prueba")); // Prueba para la función de normalización
+
     const librosFiltrados = allBooks.filter((libro) => {
       const autorNormalizado = quitarAcentosYSepararEspacios(libro.autor);
       const tituloNormalizado = quitarAcentosYSepararEspacios(libro.titulo);
-      console.log(`Busqueda: ${busquedaNormalizada}, Titulo: ${tituloNormalizado}`); // Depuración de la comparación de búsqueda
-  
+      console.log(
+        `Busqueda: ${busquedaNormalizada}, Titulo: ${tituloNormalizado}`
+      ); // Depuración de la comparación de búsqueda
+
       return (
-        (autorNormalizado.includes(busquedaNormalizada) || tituloNormalizado.includes(busquedaNormalizada)) &&
-        (filtroCategoria === '' || quitarAcentosYSepararEspacios(libro.genero) === quitarAcentosYSepararEspacios(filtroCategoria)) &&
-        (filtroAutor === '' || autorNormalizado === quitarAcentosYSepararEspacios(filtroAutor)) &&
-        (disponibilidadFiltro === '' || quitarAcentosYSepararEspacios(libro.disponibilidad) === quitarAcentosYSepararEspacios(disponibilidadFiltro))
+        (autorNormalizado.includes(busquedaNormalizada) ||
+          tituloNormalizado.includes(busquedaNormalizada)) &&
+        (filtroCategoria === "" ||
+          quitarAcentosYSepararEspacios(libro.genero) ===
+            quitarAcentosYSepararEspacios(filtroCategoria)) &&
+        (filtroAutor === "" ||
+          autorNormalizado === quitarAcentosYSepararEspacios(filtroAutor)) &&
+        (disponibilidadFiltro === "" ||
+          quitarAcentosYSepararEspacios(libro.disponibilidad) ===
+            quitarAcentosYSepararEspacios(disponibilidadFiltro))
       );
     });
- 
+
     setBooks(librosFiltrados);
- 
+
     if (librosFiltrados.length === 0) {
-      setError('No se encontraron resultados.');
+      setError("No se encontraron resultados.");
     } else {
-      setError('');
+      setError("");
     }
   };
- 
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div id="Busqueda" className="px-5 py-5"></div>
@@ -65,24 +80,22 @@ const BookList = () => {
             BUSQUEDA DE LIBROS
           </h2>
         </div>
- 
+
         <Busqueda onBuscar={handleBuscarLibro} />
- 
-        <div className="container m-auto py-10">
-          {loading ? (
-            <div className="flex items-center justify-center min-h-screen">
-              <div className="flex items-center justify-center">
-                <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
-                  <span className="hidden">Loading...</span>
-                </div>
-              </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-middle text-pink-600">
+              <span className="hidden">Loading...</span>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 overflow-hidden">
+          </div>
+        ) : (
+          <>
+            <div className="container m-auto py-10 grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {books.map((libro) => (
                 <div
                   key={libro.ISBN}
-                  className="group bg-white rounded-xl m-5 shadow-2xl transition-transform duration-300 ease-in-out transform hover:scale-90 hover:border-4 hover:border-pink-500 relative"
+                  className="bg-white rounded-xl shadow-xl overflow-hidden duration-300 transform hover:scale-105 mt-5 hover:bg-pink-300"
                 >
                   <Link to={`/book/${libro.ISBN}`} className="block">
                     <img
@@ -149,7 +162,7 @@ const BookList = () => {
                       </div>
                     </div>
                   </Link>
-                  <div className="flex items-center justify-center m-2">
+                  <div className="flex items-center justify-center m-2 bg-white rounded ">
                     <span className="text-yellow-500 text-lg">
                       Valoración: {libro.valoracion}
                     </span>
@@ -174,12 +187,12 @@ const BookList = () => {
                 </div>
               ))}
             </div>
-          )}
-          {error && <p className="text-red-500">{error}</p>}
-        </div>
+          </>
+        )}
+        {error && <p className="text-red-500">{error}</p>}
       </div>
     </div>
   );
 };
- 
+
 export default BookList;

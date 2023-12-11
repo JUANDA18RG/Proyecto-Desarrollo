@@ -34,124 +34,103 @@ export default function Meritos() {
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-18 mx-auto m-10">
           <div class="flex flex-wrap -m-4">
-            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
-              <div class="h-full text-center">
-                <img
-                  alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/302x302"
-                ></img>
-                <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
-                </p>
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
-                  Juan David Ramirez Grismaldo
-                </h2>
-                <p class="text-gray-500">Senior Product Designer</p>
-              </div>
-            </div>
-            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
-              <div class="h-full text-center">
-                <img
-                  alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/300x300"
-                ></img>
-                <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
-                </p>
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
-                  Santiago Garcia Gil
-                </h2>
-                <p class="text-gray-500">UI Develeoper</p>
-              </div>
-            </div>
+           
             <div class="lg:w-1/3 lg:mb-0 p-4">
               <div class="h-full text-center">
-                <img
+              <img
                   alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/305x305"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Jennifer.png" 
                 ></img>
                 <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
+                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>  
                 </p>
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Jennifer castaño ledesma
                 </h2>
-                <p class="text-gray-500">CTO</p>
+                <p class="text-gray-500">Desarrollador Backend</p>
               </div>
             </div>
             <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
               <div class="h-full text-center">
-                <img
+              <img
                   alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/300x300"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Nicolas.png" 
                 ></img>
                 <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
-                </p>
                 <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
-                  Kevin andres acosta
-                </h2>
-                <p class="text-gray-500">UI Develeoper</p>
-              </div>
-            </div>
-            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
-              <div class="h-full text-center">
-                <img
-                  alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/300x300"
-                ></img>
-                <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
                 </p>
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
-                  Monica andrea cifuentes
-                </h2>
-                <p class="text-gray-500">UI Develeoper</p>
-              </div>
-            </div>
-            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
-              <div class="h-full text-center">
-                <img
-                  alt="testimonial"
-                  class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="https://dummyimage.com/300x300"
-                ></img>
-                <p class="leading-relaxed">
-                  Edison bulb retro cloud bread echo park, helvetica stumptown
-                  taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee
-                  ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut
-                  adaptogen squid fanny pack vaporware.
-                </p>
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
-                <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Nicolas arturo valencia
                 </h2>
-                <p class="text-gray-500">UI Develeoper</p>
+                <p class="text-gray-500">Desarrollador Backend</p>
+              </div>
+            </div>
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+              <div class="h-full text-center">
+              <img
+                  alt="testimonial"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Kevin.png" 
+                ></img>
+                <p class="leading-relaxed">
+                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                </p>
+               
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
+                  Kevin andres acosta
+                </h2>
+                <p class="text-gray-500">Desarrollador Backend</p>
+              </div>
+            </div>
+            
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+              <div class="h-full text-center">
+              <img
+                  alt="testimonial"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Andrea.png" 
+                ></img>
+                <p class="leading-relaxed">
+                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                </p>
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
+                  Mónica andrea cifuentes
+                </h2>
+                <p class="text-gray-500">Desarrollador Frontend</p>
+              </div>
+            </div>
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+              <div class="h-full text-center">
+                <img
+                  alt="testimonial"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Juan.png" 
+                ></img>
+                <p class="leading-relaxed">
+                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span> 
+                </p>
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
+                  Juan David Ramirez Grismaldo
+                </h2>
+                <p class="text-gray-500">Desarrollador Frontend</p>
+              </div>
+            </div>
+            <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+              <div class="h-full text-center">
+              <img
+                  alt="testimonial"
+                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Santiago.png" 
+                ></img>
+                <p class="leading-relaxed">
+                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                </p>
+                <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
+                  Santiago Garcia Gil
+                </h2>
+                <p class="text-gray-500">Desarrollador Frontend</p>
               </div>
             </div>
           </div>

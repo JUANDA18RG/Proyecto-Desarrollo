@@ -15,7 +15,8 @@ const EditarLibro = () => {
     const navigate = useNavigate();
 
 const goToInicio = () => {
-        navigate("/ContenidoAdmin/false");
+        const admin = localStorage.getItem("isSuperAdmin");
+        navigate("/ContenidoAdmin/" + admin);
       }; 
     
       
@@ -118,17 +119,9 @@ useEffect(() => {
 
 const buscar = async () => {
   try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("Token no disponible");
-      return;
-    }
+    
     setLoading(true);
-    const response = await axios.get(`http://localhost:4000/libros/${busqueda}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(`http://localhost:4000/libros/${busqueda}`);
 
     console.log("Respuesta del servidor:", response.data);
     if (response.data && Object.keys(response.data).length > 0) {
@@ -183,10 +176,10 @@ return (
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              className="text-center px-16 py-3 w-96 italic border border-pink-300 rounded-full shadow-md bg-white" 
+              className="text-center px-16 py-2 w-96 italic border border-pink-300 rounded-full shadow-md bg-white" 
               placeholder="Buscar titulo..."
             />
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <div className="absolute right-3 top-1/3 transform-translate-y-1/2">
               <button onClick={buscar} >
               <RiSearchLine className="text-black-500" />
               </button>
@@ -430,3 +423,4 @@ return (
 
 
 export default EditarLibro;
+
