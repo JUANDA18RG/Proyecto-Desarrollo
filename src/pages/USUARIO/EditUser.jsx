@@ -12,8 +12,6 @@ const UserProfileEdit = () => {
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const [nameError, setNameError] = useState("");
   const [apellidoError, setApellidoError] = useState("");
   const [passwordError, setPasswordError] = useState("");
