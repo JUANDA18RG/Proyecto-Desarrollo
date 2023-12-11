@@ -6,15 +6,10 @@ import Books from './Books';
 import Carruseles from './Carruseles/Carruseles';
 import Chat from './Help';
 import Footer from './Footer';
-import Busqueda from './Busqueda';
+
 
 export default function Contenido() {
-  const handleBuscarLibro = (busqueda, filtro, disponibilidadFiltro) => {
-    console.log('Búsqueda:', busqueda);
-    console.log('Filtro:', filtro);
-    console.log('Disponibilidad Filtro:', disponibilidadFiltro);
-  };
-
+ 
   return (
     <>
       {/*-----------------Header-----------------*/}
@@ -25,7 +20,6 @@ export default function Contenido() {
       <Carruseles />
       {/*-----------------Busqueda-----------------*/}
       {/*-----------------Libros mas reservados-----------------*/}
-      <Busqueda onBuscar={handleBuscarLibro} />
       <Books />
       {/*-----------------Info sobre los libros-----------------*/}
       <InfoLibro />

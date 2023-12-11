@@ -23,6 +23,7 @@ import CompletarFormulario from "./pages/ADMIN/CompletarFormulario";
 import EliminarCuenta from "./pages/USUARIO/EliminarCuenta";
 import EliminarLibro from "./pages/ADMIN/EliminarLibro";
 import EditarLibro from "./pages/ADMIN/EditarLibro";
+import CambiarEstadoReserva from "./pages/ADMIN/cambiarestadoreserva";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/EliminarCuenta" element={<EliminarCuenta />} />
         <Route path="/EliminarLibro" element={<EliminarLibro />} />
         <Route path="/EditarLibro" element={<EditarLibro />} />
+        <Route path="/CambiarEstadoReserva" element={<CambiarEstadoReserva />} />
       </Routes>
     </div>
   );

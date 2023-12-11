@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+ 
 export default function ContenidoAdmin() {
   const navigate = useNavigate();
   const { isSuperAdmin } = useParams();
   const isSuperAdminBool = isSuperAdmin === "true";
-
+ 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -14,11 +14,11 @@ export default function ContenidoAdmin() {
     localStorage.removeItem("isSuperAdmin");
     navigate("/");
   };
-
+ 
   const handleAdmin = () => {
     navigate("/FormularioAdmin");
   };
-
+ 
   return (
     <div className="min-h-screen flex">
       <button className="absolute  border-4 border-pink-500 top-4 left-4 bg-white p-6 shadow-lg rounded-full hover:bg-pink-500 hover:scale-105 hover:border-4 hover:border-white transition duration-300 ease-in-out z-20">
@@ -58,7 +58,7 @@ export default function ContenidoAdmin() {
           SECCION ADMINISTRADOR
         </h1>
       </div>
-
+ 
       <div className="w-1/2 bg-pink-500 flex flex-col justify-center items-center p-8 z-10">
         <div className="bg-white shadow-2xl rounded-lg p-10 w-150">
           <h2 className="text-4xl font-semibold mb-6 text-pink-500 text-center">
@@ -86,7 +86,7 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/EliminarLibro"
+              to="/"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Eliminar Libro</span>
@@ -106,7 +106,7 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/EditarLibro"
+              to="/"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Editar Libro</span>
@@ -126,11 +126,11 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/"
+              to="/cambiarestadoreserva"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Cambiar estado de reserva</span>
-
+ 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -197,3 +197,4 @@ export default function ContenidoAdmin() {
     </div>
   );
 }
+ 
