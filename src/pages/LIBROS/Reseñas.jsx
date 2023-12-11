@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Reseñas({ libroId }) {
   const [comentario, setComentario] = useState("");
@@ -68,8 +69,24 @@ export default function Reseñas({ libroId }) {
           },
         ]);
       })
+      .then(() => {
+        Swal.fire({
+          title: "Comentario enviado",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      })
+      //hacer uno para que cuando el usuario ya tenga un comentario no pueda comentar de nuevo y se le muestre un mensaje
       .catch((error) => {
         console.error("Error al enviar comentario:", error);
+        Swal.fire({
+          title: "Error",
+          text: "Ya tienes un comentario en este libro",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       });
   };
 

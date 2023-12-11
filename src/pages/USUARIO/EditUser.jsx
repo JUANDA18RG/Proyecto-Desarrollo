@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-  
+import Swal from "sweetalert2";
+
 const UserProfileEdit = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -85,16 +86,22 @@ const UserProfileEdit = () => {
               },
             }
           );
-          setRegistrationSuccess(true);
-          setTimeout(() => {
-            navigate("/User");
-          }, 3000);
+          Swal.fire({
+            title: "Exito",
+            text: "Datos actualizados",
+            icon: "success",
+          }).then(() => {
+            navigate("/user");
+          });
         }
-      } else {
-        console.error("username no encontrado");
       }
-    } catch (error) {
-      console.log("Error: ", error);
+    } catch (err) {
+      console.log("Error: ", err);
+      Swal.fire({
+        title: "Error",
+        text: err.response?.data?.message || "Hubo un error en el servidor.",
+        icon: "error",
+      });
     }
   };
 
@@ -103,7 +110,7 @@ const UserProfileEdit = () => {
       <div
         style={{
           backgroundImage:
-            'url("https://www.comunidadbaratz.com/wp-content/uploads/2022/04/Lectura-de-libro-en-biblioteca.jpg")',
+            'url("https://img.freepik.com/foto-gratis/abundante-coleccion-libros-antiguos-estantes-madera-generados-ia_188544-29660.jpg")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

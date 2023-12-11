@@ -18,17 +18,10 @@ const EditarLibro = () => {
     const [showEditForm, setShowEditForm] = useState(false);
     const [busqueda, setBusqueda] = useState('');  
     const navigate = useNavigate();
-    const [editFormData, setEditFormData] = useState({
-    isbn: "",
-    titulo: "",
-    autor: "",
-    genero: "",
-    cantcopias: "",
-    aniopublicacion: "",
-    sinopsis: "",
-  });
-      const goToInicio = () => {
-        navigate("/ContenidoAdmin/false");
+
+const goToInicio = () => {
+        const admin = localStorage.getItem("isSuperAdmin");
+        navigate("/ContenidoAdmin/" + admin);
       }; 
     
       const handleImagenChange = (e) => {

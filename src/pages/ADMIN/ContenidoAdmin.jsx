@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+ 
 export default function ContenidoAdmin() {
   const navigate = useNavigate();
   const { isSuperAdmin } = useParams();
   const isSuperAdminBool = isSuperAdmin === "true";
-
+ 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -14,9 +14,14 @@ export default function ContenidoAdmin() {
     localStorage.removeItem("isSuperAdmin");
     navigate("/");
   };
-
+ 
   const handleAdmin = () => {
     navigate("/FormularioAdmin");
+  };
+ 
+
+  const EliminarAdmin = () => {
+    navigate("/EliminarAdmin");
   };
 
   return (
@@ -58,7 +63,7 @@ export default function ContenidoAdmin() {
           SECCION ADMINISTRADOR
         </h1>
       </div>
-
+ 
       <div className="w-1/2 bg-pink-500 flex flex-col justify-center items-center p-8 z-10">
         <div className="bg-white shadow-2xl rounded-lg p-10 w-150">
           <h2 className="text-4xl font-semibold mb-6 text-pink-500 text-center">
@@ -86,7 +91,7 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/EliminarLibro"
+              to="/"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Eliminar Libro</span>
@@ -106,7 +111,7 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/EditarLibro"
+              to="/"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Editar Libro</span>
@@ -126,11 +131,11 @@ export default function ContenidoAdmin() {
               </svg>
             </Link>
             <Link
-              to="/"
+              to="/cambiarestadoreserva"
               className="flex rounded items-center justify-between text-blue-500 hover:bg-pink-600 transition duration-500 border-b hover:text-white border-gray-200 py-4 text-lg"
             >
               <span className="m-2">Cambiar estado de reserva</span>
-
+ 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -168,6 +173,31 @@ export default function ContenidoAdmin() {
             </Link>
           </nav>
           <button
+            onClick={EliminarAdmin}
+            disabled={!isSuperAdminBool}
+            className={`flex items-center justify-between py-2 px-4 rounded-lg mt-6 w-full hover:scale-110 transition duration-500 ${
+              isSuperAdminBool
+                ? "bg-blue-500 hover:bg-blue-700 text-white"
+                : "bg-gray-500 text-gray-300 cursor-not-allowed"
+            }`}
+          >
+            <span className="m-2">Eliminar administrador</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8 m-2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+              />
+            </svg>
+          </button>
+          <button
             onClick={handleAdmin}
             disabled={!isSuperAdminBool}
             className={`flex items-center justify-between py-2 px-4 rounded-lg mt-6 w-full hover:scale-110 transition duration-500 ${
@@ -197,3 +227,4 @@ export default function ContenidoAdmin() {
     </div>
   );
 }
+ 

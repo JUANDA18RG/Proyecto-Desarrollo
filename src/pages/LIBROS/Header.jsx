@@ -111,9 +111,7 @@ const NavBar = () => {
   const handleLogout = () => {
     console.log("Cierre de sesión solicitado");
     // Resto de la lógica
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-
+    localStorage.clear();
     // Reemplazar la entrada en el historial del navegador para evitar regresar a la página
     window.history.replaceState(null, null, "/");
 

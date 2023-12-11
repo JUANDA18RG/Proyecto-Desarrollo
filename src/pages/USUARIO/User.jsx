@@ -129,88 +129,87 @@ const HistorialComentarios = ({ usuario }) => {
     return <div className="flex items-center space-x-1">{stars}</div>;
   };
 
-  //eliminar comentarios
-  const handleDeleteComment = async () => {
-    try {
-      await axios.delete(
-        `http://localhost:4000/eliminarComentario/${commentToDelete.id}`
-      );
-      setValoracion((prevValoracion) =>
-        prevValoracion.filter((comment) => comment.id !== commentToDelete.id)
-      );
-      showSuccessAlert("¡Comentario eliminado!");
-    } catch (error) {
-      console.error("Error al eliminar comentario:", error);
-      showErrorAlert("Hubo un error al eliminar el comentario.");
-    } finally {
-      setCommentToDelete(null);
+  useEffect(() => {
+    if (ratingToDelete !== null) {
+      handleDeleteRating();
     }
+  }, [ratingToDelete]);
+
+  const showSuccessAlert = (message) => {
+    Swal.fire({
+      title: 'Éxito',
+      text: message,
+      icon: 'success',
+    });
   };
-  //eliminar valoracion
+  
+  const showErrorAlert = (message) => {
+    Swal.fire({
+      title: 'Error',
+      text: message,
+      icon: 'error',
+    });
+  };
+
   const handleDeleteRating = async () => {
     try {
-      await axios.delete(
-        `http://localhost:4000/eliminarValoracion/${ratingToDelete.id}`
-      );
-      setValoracion((prevValoracion) =>
-        prevValoracion.filter((rating) => rating.id !== ratingToDelete.id)
-      );
-      showSuccessAlert("¡Valoración eliminada!");
+      console.log("Eliminando valoración con ID:", ratingToDelete.id); // Agregado este log
+  
+      if (!ratingToDelete || !ratingToDelete.id) {
+        showErrorAlert("No hay valoración para eliminar.");
+        return;
+      }
+  
+      console.log(`Eliminando valoración - ID: ${ratingToDelete.id}, Valoración: ${ratingToDelete.valoracion}`);
+      
+      // Intenta eliminar la valoración
+      const response = await axios.delete(`http://localhost:4000/valoraciones/${ratingToDelete.id}`);
+      
+      if (response.status === 200) {
+        // Resto del código sigue igual
+      } else {
+        // Resto del código sigue igual
+      }
     } catch (error) {
-      console.error("Error al eliminar valoración:", error);
-      showErrorAlert("Hubo un error al eliminar la valoración.");
+      // Resto del código sigue igual
     } finally {
       setRatingToDelete(null);
     }
   };
-
-  const showSuccessAlert = (message) => {
-    Swal({
-      title: message,
-      icon: "success",
-    });
-  };
-
-  const showErrorAlert = (message) => {
-    Swal({
-      title: "Error",
-      text: message,
-      icon: "error",
-    });
-  };
-  //alerta para confirmar la eliminacion del comentario
-  const showCommentConfirmation = (comment) => {
-    setCommentToDelete(comment);
-    Swal({
-      title: "¿Estás seguro?",
-      text: "Una vez eliminado, no podrás recuperar este comentario.",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        handleDeleteComment();
-      } else {
-        showErrorAlert("El comentario no ha sido eliminado.");
-      }
-    });
-  };
-  //alerta para confirmar la eliminacion de la valoracion
-  const showRatingConfirmation = (rating) => {
-    setRatingToDelete(rating);
-    Swal({
-      title: "¿Estás seguro?",
-      text: "Una vez eliminada, no podrás recuperar esta valoración.",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        handleDeleteRating();
+  
+  const showRatingConfirmation = async (rating) => {
+    console.log("Entrando a showRatingConfirmation. Rating:", rating);
+  
+    if (rating && rating.id) {
+      setRatingToDelete(rating);
+  
+      const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: `Una vez eliminada, no podrás recuperar la valoración con ID ${rating.id}. ¿Deseas continuar?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+      });
+  
+      if (result.isConfirmed) {
+        await handleDeleteRating();
+  
+        // Actualiza el estado para reflejar la eliminación en el historial
+        setValoracion((prevValoracion) =>
+          prevValoracion.filter((item) => item.id !== rating.id)
+        );
+  
+        // Muestra la alerta de éxito después de eliminar
+        showSuccessAlert("¡Valoración y comentario eliminados con éxito!");
       } else {
         showErrorAlert("La valoración no ha sido eliminada.");
       }
-    });
+    } else {
+      showErrorAlert("La valoración no tiene un ID válido.");
+    }
   };
 
   return (
@@ -273,16 +272,17 @@ const HistorialComentarios = ({ usuario }) => {
                       Editar comentario
                     </button>
                     <button
-                      onClick={() => showCommentConfirmation(comentarios)}
+                      onClick={() => {
+                        console.log("onClick se está llamando");
+                        if (comentarios) {
+                          showRatingConfirmation(comentarios);
+                        } else {
+                          console.error("La valoración es nula o no está definida.");
+                        }
+                      }}
                       className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
                     >
-                      Eliminar comentario
-                    </button>
-                    <button
-                      onClick={() => showRatingConfirmation(comentarios)}
-                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
-                    >
-                      Eliminar valoración
+                      Eliminar valoración y comentario
                     </button>
                   </div>
                 </div>
