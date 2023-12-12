@@ -69,10 +69,9 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.log("Error: ", error);
-
       Swal.fire({
         title: "Error",
-        text: err.response?.data?.message || "Hubo un error en el servidor.",
+        text: "Correo o contraseña incorrectos",
         icon: "error",
       });
     } finally {
