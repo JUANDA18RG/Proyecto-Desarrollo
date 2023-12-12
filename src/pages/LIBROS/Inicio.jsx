@@ -26,6 +26,24 @@ export default function Inicio() {
             nuestra colección y comienza a leer hoy mismo!
           </p>
         </div>
+        <div style={{ height: "100px" }}></div>{" "}
+        {/* Este div actúa como un espacio */}
+        <div className="flex justify-center flex-col items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-16 h-16 z-10 text-pink-500 animate-bounce"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
