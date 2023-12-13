@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
