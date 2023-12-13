@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 const HistorialReservas = ({ usuario }) => {
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -137,34 +136,38 @@ const HistorialComentarios = ({ usuario }) => {
 
   const showSuccessAlert = (message) => {
     Swal.fire({
-      title: 'Éxito',
+      title: "Éxito",
       text: message,
-      icon: 'success',
+      icon: "success",
     });
   };
-  
+
   const showErrorAlert = (message) => {
     Swal.fire({
-      title: 'Error',
+      title: "Error",
       text: message,
-      icon: 'error',
+      icon: "error",
     });
   };
 
   const handleDeleteRating = async () => {
     try {
       console.log("Eliminando valoración con ID:", ratingToDelete.id); // Agregado este log
-  
+
       if (!ratingToDelete || !ratingToDelete.id) {
         showErrorAlert("No hay valoración para eliminar.");
         return;
       }
-  
-      console.log(`Eliminando valoración - ID: ${ratingToDelete.id}, Valoración: ${ratingToDelete.valoracion}`);
-      
+
+      console.log(
+        `Eliminando valoración - ID: ${ratingToDelete.id}, Valoración: ${ratingToDelete.valoracion}`
+      );
+
       // Intenta eliminar la valoración
-      const response = await axios.delete(`http://localhost:4000/valoraciones/${ratingToDelete.id}`);
-      
+      const response = await axios.delete(
+        `http://localhost:4000/valoraciones/${ratingToDelete.id}`
+      );
+
       if (response.status === 200) {
         // Resto del código sigue igual
       } else {
@@ -176,13 +179,13 @@ const HistorialComentarios = ({ usuario }) => {
       setRatingToDelete(null);
     }
   };
-  
+
   const showRatingConfirmation = async (rating) => {
     console.log("Entrando a showRatingConfirmation. Rating:", rating);
-  
+
     if (rating && rating.id) {
       setRatingToDelete(rating);
-  
+
       const result = await Swal.fire({
         title: "¿Estás seguro?",
         text: `Una vez eliminada, no podrás recuperar la valoración con ID ${rating.id}. ¿Deseas continuar?`,
@@ -193,15 +196,15 @@ const HistorialComentarios = ({ usuario }) => {
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar",
       });
-  
+
       if (result.isConfirmed) {
         await handleDeleteRating();
-  
+
         // Actualiza el estado para reflejar la eliminación en el historial
         setValoracion((prevValoracion) =>
           prevValoracion.filter((item) => item.id !== rating.id)
         );
-  
+
         // Muestra la alerta de éxito después de eliminar
         showSuccessAlert("¡Valoración y comentario eliminados con éxito!");
       } else {
@@ -277,7 +280,9 @@ const HistorialComentarios = ({ usuario }) => {
                         if (comentarios) {
                           showRatingConfirmation(comentarios);
                         } else {
-                          console.error("La valoración es nula o no está definida.");
+                          console.error(
+                            "La valoración es nula o no está definida."
+                          );
                         }
                       }}
                       className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded hover:scale-105 transition duration-500 ease-in-out m-2"
@@ -297,9 +302,8 @@ const HistorialComentarios = ({ usuario }) => {
 const LibraryProfile = () => {
   const navigate = useNavigate();
   const [UserData, setUserData] = useState({
-    Name: "Nombre del usuario",
-    UserName: "UserName",
-    email: "correo@ejemplo.com",
+    UserName: localStorage.getItem("username"),
+    email: localStorage.getItem("email"),
   });
 
   const goBack = () => {
@@ -311,6 +315,7 @@ const LibraryProfile = () => {
   };
 
   const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
 
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
@@ -392,13 +397,14 @@ const LibraryProfile = () => {
           }}
         >
           <div className="bg-pink-500 bg-opacity-50 h-full  w-full p-4 text-center">
-            <div className="m-5 mt-16 inline-block">
+            <div className=" mt-16 inline-block">
               <h1 className="text-5xl font-bold sm:text-5xl bg-white bg-opacity-60 rounded-lg p-4">
                 {username}
               </h1>
             </div>
-            <h2 className="text-2xl font-semibold">{UserData.Name}</h2>
-            <p className="text-gray-600">{UserData.email}</p>
+
+            <p className="text-gray-700 text-2xl font-bold m-3">{email}</p>
+
             <div className="flex items-center justify-center">
               <Link
                 to={"/EditUser"}

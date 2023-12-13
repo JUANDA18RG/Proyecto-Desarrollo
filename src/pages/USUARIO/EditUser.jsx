@@ -64,9 +64,13 @@ const UserProfileEdit = () => {
           if (!password) {
             setPasswordError("Contraseña es obligatoria");
             isValid = false;
-          } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+          } else if (
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,}$/.test(
+              password
+            ) === false
+          ) {
             setPasswordError(
-              "Contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número"
+              "La contraseña debe tener 8 caracteres,contener por lo menos una mayuscula, una minuscula y un caracter especial"
             );
             isValid = false;
           }
@@ -86,6 +90,8 @@ const UserProfileEdit = () => {
               },
             }
           );
+          console.log(response);
+
           Swal.fire({
             title: "Exito",
             text: "Datos actualizados",
@@ -96,10 +102,11 @@ const UserProfileEdit = () => {
         }
       }
     } catch (err) {
+      console.log(err.response);
       console.log("Error: ", err);
       Swal.fire({
         title: "Error",
-        text: err.response?.data?.message || "Hubo un error en el servidor.",
+        text: "Hubo un error en el servidor.",
         icon: "error",
       });
     }

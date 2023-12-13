@@ -34,16 +34,15 @@ export default function Meritos() {
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-18 mx-auto m-10">
           <div class="flex flex-wrap -m-4">
-           
             <div class="lg:w-1/3 lg:mb-0 p-4">
               <div class="h-full text-center">
-              <img
+                <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Jennifer.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Jennifer.png"
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>  
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Jennifer castaño ledesma
@@ -53,13 +52,13 @@ export default function Meritos() {
             </div>
             <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
               <div class="h-full text-center">
-              <img
+                <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Nicolas.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Nicolas.png"
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Nicolas arturo valencia
@@ -69,31 +68,31 @@ export default function Meritos() {
             </div>
             <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
               <div class="h-full text-center">
-              <img
+                <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Kevin.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Kevin.png"
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
-               
+
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Kevin andres acosta
                 </h2>
                 <p class="text-gray-500">Desarrollador Backend</p>
               </div>
             </div>
-            
+
             <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
               <div class="h-full text-center">
-              <img
+                <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Andrea.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Andrea.png"
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Mónica andrea cifuentes
@@ -105,11 +104,11 @@ export default function Meritos() {
               <div class="h-full text-center">
                 <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Juan.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Juan.png"
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span> 
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Juan David Ramirez Grismaldo
@@ -119,13 +118,13 @@ export default function Meritos() {
             </div>
             <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
               <div class="h-full text-center">
-              <img
+                <img
                   alt="testimonial"
-                  class="w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
-                  src="src/assets/Santiago.png" 
+                  class="mt-5 animate-bounce w-40 h-40 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                  src="src/assets/Santiago.png "
                 ></img>
                 <p class="leading-relaxed">
-                <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
+                  <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
                   Santiago Garcia Gil
