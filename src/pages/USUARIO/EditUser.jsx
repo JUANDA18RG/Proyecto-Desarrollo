@@ -65,7 +65,7 @@ const UserProfileEdit = () => {
             setPasswordError("Contraseña es obligatoria");
             isValid = false;
           } else if (
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,}$/.test(
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*^&_+=!.-]).{8,}$/.test(
               password
             ) === false
           ) {
