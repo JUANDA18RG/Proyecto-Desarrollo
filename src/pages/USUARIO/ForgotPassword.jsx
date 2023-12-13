@@ -39,7 +39,7 @@ const validateForm = () => {
     }
   } else if (step === 3) {
 
-    const expresionContraseña = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*^&_+=!]).{8,}$/;
+    const expresionContraseña =/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*^&_+=!.-]).{8,}$/;
 
     if (!expresionContraseña.test(formData.nuevaContraseña)) {
       newErrors.nuevaContraseña =
