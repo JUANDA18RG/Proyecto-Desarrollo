@@ -45,7 +45,7 @@ export default function Meritos() {
                   <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
-                  Jennifer castaño ledesma
+                  Jennifer Castaño Ledesma
                 </h2>
                 <p class="text-gray-500">Desarrollador Backend</p>
               </div>
@@ -61,7 +61,7 @@ export default function Meritos() {
                   <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
-                  Nicolas arturo valencia
+                  Nicolas Arturo Valencia
                 </h2>
                 <p class="text-gray-500">Desarrollador Backend</p>
               </div>
@@ -78,7 +78,7 @@ export default function Meritos() {
                 </p>
 
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
-                  Kevin andres acosta
+                  Kevin Andrés Acosta
                 </h2>
                 <p class="text-gray-500">Desarrollador Backend</p>
               </div>
@@ -95,7 +95,7 @@ export default function Meritos() {
                   <span class="inline-block h-1 w-10 rounded bg-pink-500 mt-6 mb-4"></span>
                 </p>
                 <h2 class="text-gray-900 font-medium title-font tracking-wider text-xl">
-                  Mónica andrea cifuentes
+                  Mónica Andrea Cifuentes
                 </h2>
                 <p class="text-gray-500">Desarrollador Frontend</p>
               </div>
