@@ -50,6 +50,7 @@ export default function LoginPage() {
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
       localStorage.setItem("isSuperAdmin", isSuperAdmin);
+      localStorage.setItem("email", email);
 
       if (isAdmin) {
         const formResponse = await axios.get(
