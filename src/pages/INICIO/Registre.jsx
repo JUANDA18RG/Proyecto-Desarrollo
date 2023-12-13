@@ -33,7 +33,7 @@ export default function Register() {
   
     const nombreApellido = /^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/;
     const usernameRegex = /^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*-^&_+=!]).{8,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*^&_+=!]).{8,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     // Validación de campos y actualización de errores
