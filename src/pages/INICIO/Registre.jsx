@@ -30,35 +30,38 @@ export default function Register() {
   const validateForm = () => {
     const newErrors = {};
     let isValid = true;
-
+  
     const nombreApellido = /^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/;
-    // ... (validación de formularios)
+    const usernameRegex = /^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*-^&_+=!]).{8,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     // Validación de campos y actualización de errores
-    if (formData.nombres.trim() === "") {
-      newErrors.nombres = "El campo de nombres es obligatorio";
+    if (!nombreApellido.test(formData.nombres)) {
+      newErrors.nombres = "El campo de nombre debe contener solo letras.";
       isValid = false;
     }
-
-    if (formData.apellidos.trim() === "") {
-      newErrors.apellidos = "El campo de apellidos es obligatorio";
+  
+    if (!nombreApellido.test(formData.apellidos)) {
+      newErrors.apellidos = "El campo debe contener solo letras.";
       isValid = false;
     }
-
-    if (formData.correo.trim() === "") {
-      newErrors.correo = "El campo de correo es obligatorio";
+  
+    if (!usernameRegex.test(formData.correo)) {
+      newErrors.correo = "El campo debe ser correo valido";
       isValid = false;
     }
-
-    if (formData.username.trim() === "") {
-      newErrors.username = "El campo de username es obligatorio";
+  
+    if ( !usernameRegex.test(formData.username)) {
+      newErrors.username = "Debe cumplir no debe emepzar por numero o simbolo";
       isValid = false;
     }
-
-    if (formData.password.trim() === "") {
-      newErrors.password = "El campo de contraseña es obligatorio";
+  
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password = "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial y tener al menos 8 caracteres de longitud.";
       isValid = false;
     }
+    
 
     setErrors(newErrors);
     return isValid;
