@@ -52,7 +52,7 @@ export default function Register() {
       isValid = false;
     }
   
-    if ( !usernameRegex.test(formData.username)) {
+    if ( !emailRegex.test(formData.username)) {
       newErrors.username = "Debe cumplir no debe emepzar por numero o simbolo";
       isValid = false;
     }

@@ -27,7 +27,6 @@ export default function ForgotPassword(){
     });
   };
 
-  // ...
 
 const validateForm = () => {
   const newErrors = {};
@@ -39,12 +38,14 @@ const validateForm = () => {
       isValid = false;
     }
   } else if (step === 3) {
-    const expresiónRegular = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$-_%^&*]).{8,}$/;
-    if (!expresiónRegular.test(formData.nuevaContraseña)) {
+
+    const expresionContraseña = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*^&_+=!]).{8,}$/;
+
+    if (!expresionContraseña.test(formData.nuevaContraseña)) {
       newErrors.nuevaContraseña =
         "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial y tener al menos 8 caracteres de longitud.";
       isValid = false;
-    } else if (!expresiónRegular.test(formData.confirmarContraseña)) {
+    } else if (!expresionContraseña.test(formData.confirmarContraseña)) {
       newErrors.confirmarContraseña =
         "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter especial y tener al menos 8 caracteres de longitud.";
       isValid = false;
@@ -112,13 +113,16 @@ const handleSubmit = async (e) => {
             navigate("/login");
           }, 2000);
         } else {
+         if (response.data.status === 'contraseña no valida') {
+            setErrorMsg('La contraseña no cumple con los criterios de validez.');
+          } else {
           setErrorMsg(response.data.message);
           await Swal.fire({
             title: 'Error',
             text: response.data.msg,
             icon: 'error',
           })
-        }
+        }}
       }
     } catch (error) {
       if (error.response) {
