@@ -32,7 +32,7 @@ export default function Register() {
     let isValid = true;
   
     const nombreApellido = /^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/;
-    const usernameRegex = /^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/;
+    const usernameRegex = /^[A-Za-z][A-Za-z0-9!@#$-_%^&*]*$/
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%*-^&_+=!]).{8,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -43,17 +43,17 @@ export default function Register() {
     }
   
     if (!nombreApellido.test(formData.apellidos)) {
-      newErrors.apellidos = "El campo debe contener solo letras.";
+      newErrors.apellidos = "El campo de apellido debe contener solo letras.";
       isValid = false;
     }
   
-    if (!usernameRegex.test(formData.correo)) {
-      newErrors.correo = "El campo debe ser correo valido";
+    if (!emailRegex.test(formData.correo)) {
+      newErrors.correo = "El campo debe ser un correo valido";
       isValid = false;
     }
   
-    if ( !emailRegex.test(formData.username)) {
-      newErrors.username = "Debe cumplir no debe emepzar por numero o simbolo";
+    if (!usernameRegex.test(formData.username)) {
+      newErrors.username = "El username no debe empezar por número o simbolo";
       isValid = false;
     }
   
