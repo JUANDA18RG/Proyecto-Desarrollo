@@ -83,6 +83,17 @@ const handleEditFormChange = (e) => {
 
 const handleEditFormSubmit = async () => {
   try {
+    // Verificar que todos los campos están llenos
+    const values = Object.values(editFormData);
+    if (values.includes("")) {
+      Swal.fire({
+        icon: "error",
+        title: "Todos los campos son obligatorios",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     const isbn = editFormData.isbn;
     const token = localStorage.getItem("token");
 

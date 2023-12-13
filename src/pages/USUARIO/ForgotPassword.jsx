@@ -133,7 +133,7 @@ const handleSubmit = async (e) => {
       }
       await Swal.fire({
         title: 'Error',
-        text: error.response ? error.response.data.message : 'An error occurred',
+        text: error.response ? error.response.data.message : 'Ha ocurrido un error',
         icon: 'error',
       });
     } finally {
@@ -157,7 +157,7 @@ const handleSubmit = async (e) => {
       <div className="bg-pink-400 bg-opacity-50 absolute inset-0">
         </div>
         <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative z-10">
-          <h1 className="text-4xl text-center mb-4">RESET PASSWORD</h1>
+          <h1 className="text-4xl text-center mb-4">Cambiar contraseña</h1>
           <img
             src="https://png.pngtree.com/template/20190316/ourmid/pngtree-books-logo-image_80041.jpg" 
             alt="Logo"
@@ -243,7 +243,7 @@ const handleSubmit = async (e) => {
               <input
                 name="confirmarContraseña"
                 type={passwordVisible1 ? "text" : "password"}
-                placeholder="Recuperar Contraseña"
+                placeholder="Repetir Contraseña"
                 value={formData.confirmarContraseña}
                 onChange={handleChange}
                 className="w-full py-2 px-3 border rounded focus:outline-none focus:border-pink-500"
